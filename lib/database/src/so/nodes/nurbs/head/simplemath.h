@@ -53,7 +53,8 @@ min( REAL x, REAL y ) { return ( x > y ) ? y : x; }
 inline int 
 absi( int x ) { return ( x < 0 ) ? -x : x; }
 
-inline REAL 
-abs( REAL x ) { return ( x < 0.0 ) ? -x : x; }
+#ifdef DOESNT_CONFLICT_WITH_PREVIOUS_DECLARATION
+inline REAL abs( REAL x ) { return ( x < 0.0 ) ? -x : x; }
+#endif
 
 #endif /* __glusimplemath_h_ */
