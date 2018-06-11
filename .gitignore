@@ -1,0 +1,6 @@
+*.o
+/lib/
+/libFL/
+/libimage/
+/libSoXt/
+*.so
