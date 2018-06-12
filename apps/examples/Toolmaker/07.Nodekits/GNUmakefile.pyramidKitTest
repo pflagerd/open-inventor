@@ -5,7 +5,7 @@ PROGRAM = pyramidKitTest
 
 CXXFILES = PyramidKit.c++ pyramidKitTest.c++
 
-LLDLIBS = ../02.Nodes/Pyramid.o -lInventor -lInventorXt
+LLDLIBS = ../02.Nodes/Pyramid.o  -lInventor -lInventorXt -lXm -lXt -lX11 -lGLU -lGL
 
 all: all_ivbin
 

@@ -89,7 +89,7 @@ main(int, char **argv)
 
    // Read the object from a file and add to the scene
    SoInput myInput;
-   if (!myInput.openFile("/usr/share/src/Inventor/examples/data/parkbench.iv")) 
+   if (!myInput.openFile("examples/data/parkbench.iv"))
       exit (1);
    SoSeparator *fileContents = SoDB::readAll(&myInput);
    if (fileContents == NULL) 

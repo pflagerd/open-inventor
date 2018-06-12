@@ -17,8 +17,9 @@ PROGRAMS_1 = \
 	09.1.Print  09.2.Texture 09.3.Search \
 	09.4.PickAction 09.5.GenSph \
 	10.1.addEventCB 10.2.setEventCB \
-	10.3and4.MotifList 10.5.SelectionCB \
-        10.6.PickFilterTopLevel 10.7.PickFilterManip \
+	10.3and4.MotifList \
+	10.5.SelectionCB \
+    10.6.PickFilterTopLevel 10.7.PickFilterManip \
 	10.8.PickFilterNodeKit \
 	11.1.ReadFile 11.2.ReadString \
 	12.1.FieldSensor 12.2.NodeSensor \
@@ -34,7 +35,7 @@ PROGRAMS_1 = \
 	16.4.OneWindow 16.5.Examiner \
 	17.1.ColorIndex 17.2.GLCallback 17.3.GLFloor
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -lXm -lXt -lX11 -lGLU -lGL
 
 all: all_ivbin
 

@@ -5,7 +5,7 @@ PROGRAM = tumble
 
 CXXFILES = tumble.c++ SceneTumble.c++
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -lXm -lXt -lX11 -lGLU -lGL
 
 all: all_ivbin
 

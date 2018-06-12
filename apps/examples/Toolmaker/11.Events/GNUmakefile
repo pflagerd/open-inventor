@@ -7,7 +7,7 @@ CXXFILES = \
 	ButtonBoxEvent.c++ DialEvent.c++ \
 	DialNButton.c++ eventTest.c++
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -lXm -lXt -lX11 -lGLU -lGL -lXi
 
 all: all_ivbin
 
