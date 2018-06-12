@@ -95,7 +95,7 @@ main(int, char **argv)
 
    // Read an object from file. (as in example 4.2.Lights)
    SoInput myInput;
-   if (!myInput.openFile("/usr/share/src/Inventor/examples/data/temple.iv")) 
+   if (!myInput.openFile("apps/examples/data/temple.iv"))
       exit (1);
    SoSeparator *fileContents = SoDB::readAll(&myInput);
    if (fileContents == NULL) 

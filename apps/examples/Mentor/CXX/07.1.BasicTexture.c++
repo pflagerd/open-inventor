@@ -61,7 +61,7 @@ main(int , char **argv)
    // Choose a texture 
    SoTexture2 *rock = new SoTexture2;
    root->addChild(rock);
-   rock->filename.setValue("/usr/share/src/Inventor/examples/data/brick.1.rgb");
+   rock->filename.setValue("apps/examples/data/brick.1.rgb");
 
    // Make a cube
    root->addChild(new SoCube);

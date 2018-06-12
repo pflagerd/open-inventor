@@ -82,7 +82,7 @@ main(int argc, char **argv)
    sphereSep->addChild(myTexture2);
    sphereSep->addChild(sphereComplexity);
    sphereSep->addChild(new SoSphere);
-   myTexture2->filename = "/usr/share/src/Inventor/examples/data/globe.rgb";
+   myTexture2->filename = "app/examples/data/globe.rgb";
 
    // Add Text2 for AFRICA, translated to proper location.
    SoSeparator *africaSep = new SoSeparator;

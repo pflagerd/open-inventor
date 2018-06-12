@@ -66,7 +66,7 @@ main(int , char **argv)
    // Choose a texture 
    SoTexture2 *brick = new SoTexture2;
    root->addChild(brick);
-   brick->filename.setValue("/usr/share/src/Inventor/examples/data/brick.1.rgb");
+   brick->filename.setValue("app/examples/data/brick.1.rgb");
 
 #ifdef IV_STRICT
    // This is the preferred code for Inventor 2.1 
