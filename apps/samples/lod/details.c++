@@ -44,8 +44,7 @@
 #include <Inventor/nodes/SoSeparator.h>
 
 
-void
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     char *filename = "lod.iv";
 
@@ -128,4 +127,6 @@ main(int argc, char *argv[])
     // Loop forever
     SoXt::show(mainWindow);
     SoXt::mainLoop();
+
+    return 0;
 }

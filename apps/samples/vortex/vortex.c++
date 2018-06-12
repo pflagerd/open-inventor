@@ -445,12 +445,7 @@ eventHandler(Widget, XtPointer *data, XAnyEvent *xe, Boolean *)
 //    Mainline
 //
 
-void
-main(int argc, char **argv)
-
-//
-////////////////////////////////////////////////////////////////////////
-{
+int main(int argc, char **argv) {
     SoInput		in;
     SoNode		*root;
     SoXtExaminerViewer	*viewer;
@@ -503,4 +498,6 @@ main(int argc, char **argv)
 		      (XtEventHandler) eventHandler, (XtPointer) timer);
 
     SoXt::mainLoop();
+
+    return 0;
 }

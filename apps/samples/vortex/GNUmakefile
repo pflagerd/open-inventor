@@ -5,7 +5,7 @@ PROGRAM = vortex
 
 CXXFILES = vortex.c++
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -lXt
 
 all: all_ivbin
 

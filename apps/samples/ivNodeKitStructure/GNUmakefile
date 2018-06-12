@@ -5,7 +5,7 @@ PROGRAM = ivNodeKitStructure
 
 CXXFILES = ivNodeKitStructure.c++
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -ldl
 
 all: all_ivbin
 

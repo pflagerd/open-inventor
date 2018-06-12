@@ -241,8 +241,7 @@ valueChangedCB( void *stuff, SoDragger *dragger )
 	limitRotate( (SoSFRotation *)myField, myStuff ); 
 }
 
-void
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
    int curArg = 0;
 
@@ -361,4 +360,6 @@ main(int argc, char **argv)
 
    SoXt::show(myWindow);
    SoXt::mainLoop();
+
+   return 0;
 }

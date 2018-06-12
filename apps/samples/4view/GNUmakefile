@@ -5,7 +5,7 @@ PROGRAM = 4view
 
 CXXFILES = 4view.c++
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -lXm -lXt
 
 all: all_ivbin
 

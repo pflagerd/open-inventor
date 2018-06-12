@@ -1,7 +1,7 @@
 IVDEPTH = ../..
 include $(IVDEPTH)/make/ivcommondefs
 
-SUBDIRS = common widgets
+SUBDIRS = common widgets 4view clock ivNodeKitStructure ivToInclude linkages lod manip spaceball twoDisplays viewers vortex widgets
 
 all install:
 	$(SUBDIRS_MAKERULE)

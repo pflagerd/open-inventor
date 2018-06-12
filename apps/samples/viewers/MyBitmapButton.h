@@ -34,59 +34,56 @@
  *
  */
 
-/*-------------------------------------------------------------
- *  This sample shows displaying Inventor viewers on different
- *  X displays.
- *------------------------------------------------------------*/
+//  -*- C++ -*-
 
-#include <X11/StringDefs.h>
+/*
+ * Copyright (C) 1992   Silicon Graphics, Inc.
+ *
+ _______________________________________________________________________
+ ______________  S I L I C O N   G R A P H I C S   I N C .  ____________
+ |
+ |   $Revision: 1.1.1.1 $
+ |
+ |   Class:
+ |	MyBitmapButton - bitmap button convenience wrapper for the viewers
+ |
+ |   Description:
+ |	A Motif push button gadget with a bitmap displayed on it.
+ |	No border for the button is shown and the button can be selectable.
+ |
+ |   Author(s): Alain Dumesny
+ |
+ ______________  S I L I C O N   G R A P H I C S   I N C .  ____________
+ _______________________________________________________________________
+ */
+
+#ifndef _SO_PIXMAP_BUTTON_
+#define _SO_PIXMAP_BUTTON_
+
 #include <X11/Intrinsic.h>
-#include <Xm/Label.h>
-#include <cstdio>
+#include <Inventor/SbBasic.h>
 
-#include <Inventor/Xt/SoXt.h>
-#include <Inventor/Xt/viewers/SoXtExaminerViewer.h>
-#include <Inventor/nodes/SoCone.h>
-#include <Inventor/nodes/SoCube.h>
+class MyBitmapButton {
+  public:
+    MyBitmapButton(Widget parent, SbBool selectable);
+    ~MyBitmapButton();
+    
+    // return the motif push button
+    Widget	getWidget()	    { return widget; }
+    
+    // set the icon to use for the pixmap
+    void	setIcon(char *icon, int width, int height);
+    
+    // Highlight the pixmap to show it it selected (must pass TRUE
+    // to the constructor, in which case another pixmap with a highlight
+    // color will be created for the button).
+    void	select(SbBool onOrOff);
+    SbBool	isSelected()	    { return selectFlag; }
+    
+  private:
+    Widget	widget;
+    SbBool	selectFlag, selectable;
+    Pixmap	normalPixmap, selectPixmap;
+};
 
-int main(int argc, char *argv[])
-{
-   Widget mainWindow = SoXt::init(argv[0]);
-   XtAppContext appContext = SoXt::getAppContext();
-   
-   // Open another display
-   Display *altDisplay = NULL;
-   if (argc == 2) {
-       printf("Opening display %s\n", argv[1]);
-       altDisplay = XtOpenDisplay(
-	  appContext, 
-	  argv[1],     // display name
-	  argv[0],     // application name
-	  "Inventor",  // class name
-	  NULL, 0, 
-	  &argc, argv);
-   }
-
-   SoXtExaminerViewer *v1 = new SoXtExaminerViewer(mainWindow);
-   v1->setSceneGraph(new SoCone);
-   v1->show();	
-   XtRealizeWidget(mainWindow);
-
-   if (altDisplay != NULL) {
-      Widget altWindow = XtAppCreateShell(
-         argv[0],     // application name
-	 "Inventor",  // class name
-	 applicationShellWidgetClass, // widget class
-	 altDisplay, 
-	 NULL, 0);
-      SoXtExaminerViewer *v2 = new SoXtExaminerViewer(altWindow);
-      v2->setSceneGraph(new SoCube);
-      v2->show();		    
-      XtRealizeWidget(altWindow);
-   }
-         
-   SoXt::mainLoop();
-
-   return 1;
-}
-
+#endif // _SO_PIXMAP_BUTTON_

@@ -5,7 +5,7 @@ PROGRAM = example
 
 CXXFILES = example.c++
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -lXt
 
 all: all_ivbin
 

@@ -41,6 +41,8 @@
 //  See the README file in this directory for a complete explanation.
 //
 
+#include <time.h>
+
 #include <cstdlib>
 #include <X11/Intrinsic.h>
 #include <cmath>
@@ -200,8 +202,7 @@ setupHands(SoGroup *root)
     return (TRUE);
 }
 
-void
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     char *filename = "clockData.iv";
 
@@ -253,5 +254,7 @@ main(int argc, char **argv)
 
     SoXt::show(mainWindow);
     SoXt::mainLoop();
+
+    return 1;
 }
 

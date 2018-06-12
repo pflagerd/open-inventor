@@ -12,7 +12,7 @@ CXXFILES = \
 	MyBitmapButton.c++ \
 	viewerTest.c++
 
-LLDLIBS = -lInventor -lInventorXt
+LLDLIBS = -lInventor -lInventorXt -lGLU -lGL -lX11 -lXm -lXt
 
 all: all_ivbin
 
