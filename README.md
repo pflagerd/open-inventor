@@ -8,18 +8,15 @@ layered on top of OpenGL. It was originally developed by
 This Repository
 ===============
 
-The aim of this repository is to integrate patches applied by various Linux
-distributions and to apply build fixes for OS X.
+This repository is a fork of the original one which was put on github here: https://github.com/aumuell/open-inventor.
 
-It is based on an import of SGI's CVS repository at :pserver:cvs@oss.sgi.com:/cvs.
-Currently, patches from Fedora and Debian are included. It also includes fixes for
-font rendering on 64 bit Linux platforms.
+The initial work here is being done on Ubuntu 17.10 using eclipse oxygen for C/C++.  Hence the .project and .cproject files.
 
-For building on OS X, there is a [Homebrew](http://mxcl.github.com/homebrew/)
-[formula](https://github.com/aumuell/homebrew-tap) based on this repository.
+There is a directory called `LabBook` in which work progress is summarized and tracked.
 
-More Information
-================
 
-Refer to [SGI's Open Inventor page](http://oss.sgi.com/projects/inventor/)
-for more information and to the included README.FIRST for build instructions.
+
+# 1st Goal
+
+The first goal of this project is to get the current gnu-make build working in both release and debug modes, and to correct any misinformation in the makefiles or other documentation. 
+
