@@ -5,6 +5,9 @@ include $(IVDEPTH)/makeincs/commondefs
 
 IVCOMMONRULES = $(IVDEPTH)/makeincs/ivcommonrules
 
+
+LCXXDEFS += -D__USE_XOPEN
+
 #
 # Settings for systems without single-precision math functions.
 #
@@ -235,7 +238,7 @@ IVDEMODATADIR = $(IVROOT)$(_DEMODATADIR)
 
 # Set "local" C++ defines to specify pathnames.
 #
-LCXXDEFS = -DIVBINDIR=\"$(_BINDIR)\" \
+LCXXDEFS += -DIVBINDIR=\"$(_BINDIR)\" \
 	-DIVLIBDIR=\"$(_LIBDIR)\" \
 	-DIVHDRTOP=\"$(_HDRTOP)\" \
 	-DIVFONTPATH=\"$(_FONTPATH)\" \
