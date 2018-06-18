@@ -53,54 +53,54 @@
 #include <Inventor/nodes/SoPerspectiveCamera.h>
 #include <Inventor/nodes/SoSeparator.h>
 
-int
-main(int , char **argv)
-{
-   // Initialize Inventor and Xt
-   Widget myWindow = SoXt::init(argv[0]);
-   
-   // Build the render area in the applications main window
-   SoXtRenderArea *myRenderArea = new SoXtRenderArea(myWindow);
-   myRenderArea->setSize(SbVec2s(200, 200));
-   
-   // Build the material editor in its own window
-   SoXtMaterialEditor *myEditor = new SoXtMaterialEditor;
-   
-   // Create a scene graph
-   SoSeparator *root = new SoSeparator;
-   SoPerspectiveCamera *myCamera = new SoPerspectiveCamera;
-   SoMaterial *myMaterial = new SoMaterial;
-   
-   root->ref();
-   myCamera->position.setValue(0.212482, -0.881014, 2.5);
-   myCamera->heightAngle = M_PI/4;
-   root->addChild(myCamera);
-   root->addChild(new SoDirectionalLight);
-   root->addChild(myMaterial);
+int main(int, char **argv) {
+	// Initialize Inventor and Xt
+	Widget myWindow = SoXt::init(argv[0]);
 
-   // Read the geometry from a file and add to the scene
-   SoInput myInput;
-   if (!myInput.openFile("apps/examples/data/dogDish.iv"))
+	// Build the render area in the applications main window
+	SoXtRenderArea *myRenderArea = new SoXtRenderArea(myWindow);
+	myRenderArea->setSize(SbVec2s(200, 200));
+
+	// Build the material editor in its own window
+	SoXtMaterialEditor *myEditor = new SoXtMaterialEditor;
+
+	// Create a scene graph
+	SoSeparator *root = new SoSeparator;
+	SoPerspectiveCamera *myCamera = new SoPerspectiveCamera;
+	SoMaterial *myMaterial = new SoMaterial;
+
+	root->ref();
+	myCamera->position.setValue(0.212482, -0.881014, 2.5);
+	myCamera->heightAngle = M_PI / 4;
+	root->addChild(myCamera);
+	root->addChild(new SoDirectionalLight);
+	root->addChild(myMaterial);
+
+	// Read the geometry from a file and add to the scene
+	SoInput myInput;
+	if (!myInput.openFile("apps/examples/data/dogDish.iv"))
 		return 1;
 
-   SoSeparator *geomObject = SoDB::readAll(&myInput);
-   if (geomObject == NULL)
+	SoSeparator *geomObject = SoDB::readAll(&myInput);
+	if (geomObject == NULL)
 		return 1;
 
-   root->addChild(geomObject);
-   
-   // Set the scene graph 
-   myRenderArea->setSceneGraph(root);
-   
-   // Attach material editor to the material
-   myEditor->attach(myMaterial);
-   
-   // Show the application window and the material editor
-   myRenderArea->setTitle("Attach Editor");
-   myRenderArea->show();
-   SoXt::show(myWindow);
-   myEditor->show();
+	root->addChild(geomObject);
 
-   // Loop forever
-   SoXt::mainLoop();
+	// Set the scene graph
+	myRenderArea->setSceneGraph(root);
+
+	// Attach material editor to the material
+	myEditor->attach(myMaterial);
+
+	// Show the application window and the material editor
+	myRenderArea->setTitle("Attach Editor");
+	myRenderArea->show();
+	SoXt::show(myWindow);
+	myEditor->show();
+
+	// Loop forever
+	SoXt::mainLoop();
+
+	return 0;
 }
