@@ -62,7 +62,8 @@ main(int , char **argv)
 {
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    SoSeparator *root = new SoSeparator;
    root->ref();

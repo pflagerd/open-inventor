@@ -61,7 +61,8 @@ int
 main(int, char **argv)
 {
    Widget myWindow = SoXt::init(argv[0]);
-   if(myWindow == NULL) exit(1);
+   if(myWindow == NULL)
+		return 1;
 
    SoGroup *root = new SoGroup;
    root->ref();
@@ -92,7 +93,7 @@ main(int, char **argv)
    sphereSep->addChild(myTexture2);
    sphereSep->addChild(sphereComplexity);
    sphereSep->addChild(new SoSphere);
-   myTexture2->filename = "/usr/share/src/Inventor/examples/data/globe.rgb";
+   myTexture2->filename = "apps/examples/data/globe.rgb";
 
    // Add Text3 for AFRICA, transformed to proper location.
    SoSeparator *africaSep = new SoSeparator;

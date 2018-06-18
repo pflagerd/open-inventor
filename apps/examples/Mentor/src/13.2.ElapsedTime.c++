@@ -63,7 +63,8 @@ main(int , char **argv)
 {
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);  
-   if (myWindow == NULL) exit(1);     
+   if (myWindow == NULL)
+		return 1;     
 
    SoSeparator *root = new SoSeparator;
    root->ref();
@@ -88,7 +89,7 @@ main(int , char **argv)
 
    // Read the figure object from a file and add to the scene
    SoInput myInput;
-   if (!myInput.openFile("/usr/share/src/Inventor/examples/data/jumpyMan.iv")) 
+   if (!myInput.openFile("apps/examples/data/jumpyMan.iv"))
       exit (1);
    SoSeparator *figureObject = SoDB::readAll(&myInput);
    if (figureObject == NULL) 

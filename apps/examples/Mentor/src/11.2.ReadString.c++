@@ -128,7 +128,8 @@ main(int argc, char **argv)
 {
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    SoNode *root = makeDodecahedron();
    root->ref();

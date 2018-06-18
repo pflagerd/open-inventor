@@ -66,16 +66,19 @@ main(int argc, char **argv)
 {
    if (argc != 2) {
       fprintf(stderr, "Usage: %s filename.iv\n", argv[0]);
-      exit(1);
+     
+		return 1;
    }
 
    Widget myWindow = SoXt::init(argv[0]);
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    SoInput inputFile;
    if (inputFile.openFile(argv[1]) == FALSE) {
       fprintf(stderr, "Could not open file %s\n", argv[1]);
-      exit(1);
+     
+		return 1;
    }
    
    SoSeparator *root = SoDB::readAll(&inputFile);

@@ -116,7 +116,8 @@ main(int, char **argv)
 
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]); 
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    SoSeparator *root = new SoSeparator;
    root->ref();
@@ -128,7 +129,7 @@ main(int, char **argv)
 
    // Read object data from a file
    SoInput mySceneInput;
-   if (!mySceneInput.openFile("/usr/share/src/Inventor/examples/data/star.iv")) 
+   if (!mySceneInput.openFile("apps/examples/data/star.iv"))
       exit (1);
    SoSeparator *starObject = SoDB::readAll(&mySceneInput);
    if (starObject == NULL) exit (1);

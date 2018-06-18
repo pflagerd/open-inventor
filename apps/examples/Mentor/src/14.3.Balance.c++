@@ -144,7 +144,8 @@ int
 main(int , char **argv)
 {
    Widget myWindow = SoXt::init(argv[0]);
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    SoSceneKit *myScene = new SoSceneKit;
    myScene->ref();

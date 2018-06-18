@@ -174,12 +174,14 @@ main(int argc, char **argv)
       fprintf(stderr, "\t0 = PER_FACE\n");
       fprintf(stderr, "\t1 = PER_VERTEX_INDEXED\n");
       fprintf(stderr, "\t2 = PER_FACE_INDEXED\n");
-      exit(1);
+     
+		return 1;
    }
 
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    SoSeparator *root = makeStellatedDodecahedron();
    root->ref();

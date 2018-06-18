@@ -61,7 +61,8 @@ int
 main(int , char **argv)
 {
    Widget myWindow = SoXt::init(argv[0]);
-   if(myWindow == NULL) exit(1);
+   if(myWindow == NULL)
+		return 1;
 
    SoSeparator *root = new SoSeparator;
    root->ref();
@@ -69,7 +70,7 @@ main(int , char **argv)
    // Choose a texture.
    SoTexture2 *faceTexture = new SoTexture2;
    root->addChild(faceTexture);
-   faceTexture->filename.setValue("/usr/share/src/Inventor/examples/data/sillyFace.rgb");
+   faceTexture->filename.setValue("apps/examples/data/sillyFace.rgb");
 
    // Make the diffuse color pure white
    SoMaterial *myMaterial = new SoMaterial;

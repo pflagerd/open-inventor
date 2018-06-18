@@ -73,7 +73,7 @@
 #include <Inventor/nodes/SoTexture2.h>
 #include <Inventor/nodes/SoTranslation.h>
 
-static char *floorData = 
+static const char *floorData =
    "#Inventor V2.0 ascii\n"
    "Separator {\n"
    "   SpotLight {\n"
@@ -90,7 +90,7 @@ static char *floorData =
    "      scaleFactor 8 8\n"
    "   }\n"
    "   Texture2 {\n"
-   "      filename /usr/share/src/Inventor/examples/data/oak.rgb\n"
+   "      filename apps/examples/data/oak.rgb\n"
    "   }\n"
    "   NormalBinding {\n"
    "        value  PER_PART\n"
@@ -259,7 +259,8 @@ main(int, char **argv)
    // Initialize Inventor and Xt
    Widget appWindow = SoXt::init(argv[0]);
    if (appWindow == NULL)
-      exit(1);
+     
+		return 1;
 
    SoSeparator *root  = new SoSeparator;
    root->ref();
@@ -275,7 +276,7 @@ main(int, char **argv)
    SoTexture2   *tex    = new SoTexture2;
 
    tex->ref();
-   tex->filename.setValue("/usr/share/src/Inventor/examples/data/diamondRug.rgb");
+   tex->filename.setValue("app/examples/data/diamondRug.rgb");
    carpet->addChild(tex);
    carpet->addChild(surf);
    root->addChild(carpet);
@@ -287,7 +288,7 @@ main(int, char **argv)
    SoInput       in;
    SoNode        *result;
 
-   in.setBuffer(floorData, strlen(floorData));
+   in.setBuffer((void*)floorData, strlen(floorData));
    SoDB::read(&in, result);
    xlate->translation.setValue(SbVec3f(-12.0, -5.0, -5.0));
    scale->scaleFactor.setValue(SbVec3f(2.0, 1.0, 2.0));

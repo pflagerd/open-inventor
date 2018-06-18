@@ -84,7 +84,7 @@ main(int argc, char **argv)
    Widget myWindow = SoXt::init(argv[0]);
 
    // Read the file
-   SoSeparator *scene = readFile("/usr/share/src/Inventor/examples/data/bookshelf.iv");
+   SoSeparator *scene = readFile("apps/examples/data/bookshelf.iv");
 
    // Create a viewer
    SoXtExaminerViewer *myViewer = 

@@ -59,7 +59,7 @@ main(int argc, char **argv)
 
    // Open and read input scene graph
    SoInput sceneInput;
-   if (! sceneInput.openFile("/usr/share/src/Inventor/examples/data/bird.iv"))
+   if (! sceneInput.openFile("apps/examples/data/bird.iv"))
       return (1);
 
    SoSeparator *root = SoDB::readAll(&sceneInput);

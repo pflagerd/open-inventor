@@ -82,7 +82,7 @@ main(int argc, char **argv)
 
    // Read in the data for the windmill tower
    SoSeparator *windmillTower = 
-            readFile("/usr/share/src/Inventor/examples/data/windmillTower.iv");
+            readFile("apps/examples/data/windmillTower.iv");
    root->addChild(windmillTower);
 
    // Add a rotor node to spin the vanes
@@ -93,7 +93,7 @@ main(int argc, char **argv)
 
    // Read in the data for the windmill vanes
    SoSeparator *windmillVanes = 
-            readFile("/usr/share/src/Inventor/examples/data/windmillVanes.iv");
+            readFile("apps/examples/data/windmillVanes.iv");
    root->addChild(windmillVanes);
 
    // Create a viewer

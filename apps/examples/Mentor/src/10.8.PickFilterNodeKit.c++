@@ -44,6 +44,8 @@
  *  care of the part creation details.
  *------------------------------------------------------------*/
 
+#include <math.h>
+
 #include <X11/StringDefs.h>
 #include <X11/Intrinsic.h>
 

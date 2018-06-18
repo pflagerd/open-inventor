@@ -86,10 +86,11 @@ main(int argc, char *argv[])
     
    // Open the data file
    SoInput in;   
-   char *datafile = "/usr/share/src/Inventor/examples/data/parkbench.iv";
+   char *datafile = "apps/examples/data/parkbench.iv";
    if (! in.openFile(datafile)) {
       fprintf(stderr, "Cannot open %s for reading.\n", datafile);
-      exit(1);
+     
+		return 1;
    }
 
    // Read the input file

@@ -204,7 +204,8 @@ main(int argc, char **argv)
 
    // Initialize Inventor and Xt
    Widget appWindow = SoXt::init(argv[0]);
-   if (appWindow == NULL) exit(1);
+   if (appWindow == NULL)
+		return 1;
 
    // Create and set up the root node
    SoSeparator *root = new SoSeparator;

@@ -42,6 +42,7 @@
  *  Generate simple scene and grab the image to use as
  *  a texture map.
  *----------------------------------------------------------*/
+#include <math.h>
 
 #include <cstdlib>
 #include <Inventor/SoDB.h>
@@ -87,7 +88,8 @@ main(int, char **argv)
    // Initialize Inventor and Xt
    Widget appWindow = SoXt::init(argv[0]);
    if (appWindow == NULL)
-      exit(1);
+     
+		return 1;
 
    // Make a scene from reading in a file
    SoSeparator *texRoot = new SoSeparator;
@@ -95,7 +97,7 @@ main(int, char **argv)
    SoNode *result;
 
    texRoot->ref();
-   in.openFile("/usr/share/src/Inventor/examples/data/jumpyMan.iv");
+   in.openFile("apps/examples/data/jumpyMan.iv");
    SoDB::read(&in, result);
 
    SoPerspectiveCamera *myCamera = new SoPerspectiveCamera;

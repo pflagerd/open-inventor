@@ -64,7 +64,8 @@ main(int, char **argv)
 {
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    SoSeparator *root = new SoSeparator;
    root->ref();
@@ -89,7 +90,7 @@ main(int, char **argv)
 
    // Read the object from a file and add to the scene
    SoInput myInput;
-   if (!myInput.openFile("examples/data/parkbench.iv"))
+   if (!myInput.openFile("apps/examples/data/parkbench.iv"))
       exit (1);
    SoSeparator *fileContents = SoDB::readAll(&myInput);
    if (fileContents == NULL) 

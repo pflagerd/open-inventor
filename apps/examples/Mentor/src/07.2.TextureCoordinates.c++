@@ -58,7 +58,8 @@ int
 main(int , char **argv)
 {
    Widget myWindow = SoXt::init(argv[0]);
-   if(myWindow == NULL) exit(1);
+   if(myWindow == NULL)
+		return 1;
 
    SoSeparator *root = new SoSeparator;
    root->ref();
@@ -66,7 +67,7 @@ main(int , char **argv)
    // Choose a texture 
    SoTexture2 *brick = new SoTexture2;
    root->addChild(brick);
-   brick->filename.setValue("app/examples/data/brick.1.rgb");
+   brick->filename.setValue("apps/examples/data/brick.1.rgb");
 
 #ifdef IV_STRICT
    // This is the preferred code for Inventor 2.1 

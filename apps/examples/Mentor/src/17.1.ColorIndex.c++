@@ -90,7 +90,8 @@ main(int , char **argv)
    in.setBuffer((void *)sceneBuffer, (size_t) strlen(sceneBuffer));
    if (! SoDB::read(&in, scene) || scene == NULL) {
       printf("Couldn't read scene\n");
-      exit(1);
+     
+		return 1;
    }
    
    // create the color index visual
@@ -98,7 +99,8 @@ main(int , char **argv)
       XScreenNumberOfScreen(XtScreen(myWindow)), attribList);
    if (! vis) {
       printf("Couldn't create visual\n");
-      exit(1);
+     
+		return 1;
    }
    
    // allocate the viewer, set the scene, the visual and

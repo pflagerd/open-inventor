@@ -59,7 +59,8 @@ main(int , char **argv)
 {
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);  
-   if (myWindow == NULL) exit(1);     
+   if (myWindow == NULL)
+		return 1;     
 
    // Set up camera and light
    SoSeparator *root = new SoSeparator;
@@ -70,7 +71,7 @@ main(int , char **argv)
 
    // Read in the parts of the sign from a file
    SoInput myInput;
-   if (!myInput.openFile("/usr/share/src/Inventor/examples/data/eatAtJosies.iv")) 
+   if (!myInput.openFile("apps/examples/data/eatAtJosies.iv"))
       exit (1);
    SoSeparator *fileContents = SoDB::readAll(&myInput);
    if (fileContents == NULL) 

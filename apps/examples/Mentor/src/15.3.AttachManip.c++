@@ -100,7 +100,8 @@ main(int, char **argv)
 {
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    // create and set up the selection node
    SoSelection *selectionRoot = new SoSelection;
@@ -119,7 +120,7 @@ main(int, char **argv)
    SoWrapperKit *myWrapperKit = new SoWrapperKit;
    root->addChild(myWrapperKit);
    SoInput myInput;
-   if (!myInput.openFile("/usr/share/src/Inventor/examples/data/luxo.iv")) 
+   if (!myInput.openFile("apps/examples/data/luxo.iv"))
       exit (1);
    SoSeparator *objectFromFile = SoDB::readAll(&myInput);
    if (objectFromFile == NULL) 

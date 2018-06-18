@@ -56,7 +56,8 @@ main(int , char **argv)
    // Initialize Inventor. This returns a main window to use.
    // If unsuccessful, exit.
    Widget myWindow = SoXt::init(argv[0]); // pass the app name
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    // Make a scene containing a red cone
    SoSeparator *root = new SoSeparator;

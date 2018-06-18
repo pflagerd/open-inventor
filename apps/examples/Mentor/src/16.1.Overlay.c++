@@ -81,7 +81,8 @@ main(int , char **argv)
    in.setBuffer((void *)overlayScene, (size_t) strlen(overlayScene));
    if (! SoDB::read(&in, scene) || scene == NULL) {
       printf("Couldn't read scene\n");
-      exit(1);
+     
+		return 1;
    }
 
    // Allocate the viewer, set the overlay scene and

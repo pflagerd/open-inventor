@@ -69,7 +69,8 @@ int
 main(int , char **argv)
 {
    Widget myWindow = SoXt::init(argv[0]); // pass the app name
-   if (myWindow == NULL) exit(1);
+   if (myWindow == NULL)
+		return 1;
 
    ///////////////////////////////////////////////////////////
    // CODE FOR The Inventor Mentor STARTS HERE

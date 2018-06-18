@@ -81,7 +81,7 @@ static char *floorData =
    "      scaleFactor 8 8\n"
    "   }\n"
    "   Texture2 {\n"
-   "      filename /usr/share/src/Inventor/examples/data/oak.rgb\n"
+   "      filename apps/examples/data/oak.rgb\n"
    "   }\n"
    "   NormalBinding {\n"
    "        value  PER_PART\n"
@@ -196,7 +196,8 @@ main(int, char **argv)
    // Initialize Inventor and Xt
    Widget appWindow = SoXt::init(argv[0]);
    if (appWindow == NULL)
-      exit(1);
+     
+		return 1;
 
    SoSeparator *root  = new SoSeparator;
    root->ref();
@@ -212,7 +213,7 @@ main(int, char **argv)
    SoTexture2   *tex    = new SoTexture2;
 
    tex->ref();
-   tex->filename.setValue("/usr/share/src/Inventor/examples/data/diamondRug.rgb");
+   tex->filename.setValue("apps/examples/data/diamondRug.rgb");
    carpet->addChild(tex);
    carpet->addChild(surf);
    root->addChild(carpet);

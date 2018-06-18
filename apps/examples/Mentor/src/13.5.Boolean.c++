@@ -74,7 +74,8 @@ main(int , char **argv)
 
    // Initialize Inventor and Xt
    Widget myWindow = SoXt::init(argv[0]);  
-   if (myWindow == NULL) exit(1);     
+   if (myWindow == NULL)
+		return 1;     
 
    SoSeparator *root = new SoSeparator;
    root->ref();
@@ -118,7 +119,7 @@ main(int , char **argv)
 
    // Read the duck object from a file and add to the group
    SoInput myInput;
-   if (!myInput.openFile("/usr/share/src/Inventor/examples/data/duck.iv")) 
+   if (!myInput.openFile("apps/examples/data/duck.iv"))
       exit (1);
    SoSeparator *duckObject = SoDB::readAll(&myInput);
    if (duckObject == NULL) 
