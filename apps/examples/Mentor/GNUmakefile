@@ -1,7 +1,7 @@
 IVDEPTH = ../../..
 include $(IVDEPTH)/make/ivcommondefs
 
-SUBDIRS = CXX
+SUBDIRS = src
 
 all install:
 	$(SUBDIRS_MAKERULE)

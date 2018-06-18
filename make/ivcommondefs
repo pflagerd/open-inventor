@@ -1,9 +1,9 @@
+IVROOT = $(IVDEPTH)
+
 include $(IVDEPTH)/make/system
 include $(IVDEPTH)/make/commondefs
 
 IVCOMMONRULES = $(IVDEPTH)/make/ivcommonrules
-
-
 
 #
 # Settings for systems without single-precision math functions.
