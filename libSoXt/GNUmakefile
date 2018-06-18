@@ -92,6 +92,6 @@ install: install_ivlibdso
 
 COMMONPREF = xxx
 $(COMMONTARGS): %: $(COMMONPREF)%
-	$(SUBDIRS_MAKERULE)
+	+$(SUBDIRS_MAKERULE)
 
 include $(IVCOMMONRULES)

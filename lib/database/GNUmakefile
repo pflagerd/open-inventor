@@ -4,7 +4,7 @@ include $(IVDEPTH)/make/ivcommondefs
 SUBDIRS = src
 
 all:
-	$(SUBDIRS_MAKERULE)
+	+$(SUBDIRS_MAKERULE)
 
 HEADERS_SUBDIRS = include
 
@@ -13,6 +13,6 @@ install:
 
 COMMONPREF = xxx
 $(COMMONTARGS): %: $(COMMONPREF)%
-	$(SUBDIRS_MAKERULE)
+	+$(SUBDIRS_MAKERULE)
 
 include $(IVCOMMONRULES)
