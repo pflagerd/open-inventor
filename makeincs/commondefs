@@ -27,9 +27,9 @@
 #     NO_STARTOPT - don't set any of the DSO start option macros - this
 #	will keep the global so_locations files from being updated.
 #
-COMMONRULES= $(IVDEPTH)/make/commonrules
+COMMONRULES= $(IVDEPTH)/makeincs/commonrules
 COMMONTARGS= clobber clean rmtargets fluff tags
-RELEASEDEFS= $(IVDEPTH)/make/releasedefs
+RELEASEDEFS= $(IVDEPTH)/makeincs/releasedefs
 
 # include releasedefs by default
 ifndef NO_RELEASEDEFS

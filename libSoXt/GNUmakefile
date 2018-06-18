@@ -4,7 +4,7 @@ LIBMAJOR = 0
 LIBMINOR = 0.0
 LIBBASENAME = libInventorXt
 
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 ifeq ($(usingDarwin), 1)
 LIBNAME  = $(LIBBASENAME).dylib

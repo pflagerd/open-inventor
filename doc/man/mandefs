@@ -3,7 +3,7 @@
 # Common definitions for man page Makefiles
 #
 
-include $(ROOT)/usr/include/make/commondefs
+include $(ROOT)/usr/include/makeincs/commondefs
 #include $(PRODUCTDEFS)
 #include $(RELEASEDEFS)
 

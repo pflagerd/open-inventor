@@ -1,9 +1,9 @@
 IVROOT = $(IVDEPTH)
 
-include $(IVDEPTH)/make/system
-include $(IVDEPTH)/make/commondefs
+include $(IVDEPTH)/makeincs/system
+include $(IVDEPTH)/makeincs/commondefs
 
-IVCOMMONRULES = $(IVDEPTH)/make/ivcommonrules
+IVCOMMONRULES = $(IVDEPTH)/makeincs/ivcommonrules
 
 #
 # Settings for systems without single-precision math functions.
@@ -138,7 +138,7 @@ LDOPTS += -multiply_defined suppress -undefined error -L$(X11LIBDIR)
 CXXDSOOPTS += -bundle -flat_namespace -undefined error -L$(X11LIBDIR)
 GLDDSOOPTS += -undefined error
 
-LOCALRULES = $(IVDEPTH)/make/localrules.apple
+LOCALRULES = $(IVDEPTH)/makeincs/localrules.apple
 
 endif
 

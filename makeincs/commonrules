@@ -5,7 +5,7 @@
 # Common makefile rules.
 #
 # Notes:
-#	- After including $(IVDEPTH)/make/commondefs, a makefile may
+#	- After including $(IVDEPTH)/makeincs/commondefs, a makefile may
 #	  say ``include $(COMMONRULES)'' to get this file.
 #	- It is up to the including makefile to define a default rule before
 #	  including $(COMMONRULES).

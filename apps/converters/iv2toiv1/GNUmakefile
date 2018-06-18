@@ -1,5 +1,5 @@
 IVDEPTH = ../../..
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 SCRIPT = iv2toiv1
 

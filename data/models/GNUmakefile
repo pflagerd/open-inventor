@@ -1,5 +1,5 @@
 IVDEPTH = ../..
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 FILES = `find . -name "*.env" -o -name "*.iv" -o -name "README"`
 

@@ -1,5 +1,5 @@
 IVDEPTH = ../../../../..
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 LCXXINCS += -I$(FLDIR) -Inurbs/head
 LCXXDEFS += -DIRIX_6 -DLIBRARYBUILD

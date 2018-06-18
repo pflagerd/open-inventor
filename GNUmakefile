@@ -1,5 +1,5 @@
 IVDEPTH = .
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 
 # Use of LSUBDIRS is to allow override using environment variable without

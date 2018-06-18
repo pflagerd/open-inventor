@@ -1,5 +1,5 @@
 IVDEPTH = ../../../..
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 PROGRAMS_1 = \
 	02.1.HelloCone 02.2.EngineSpin \

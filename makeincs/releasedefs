@@ -19,7 +19,7 @@ RELEASE_NAME=2.2
 #
 # Note that 'make'-files (as opposed to 'smake'-files) will use
 #	DEF_CSTYLE and DEF_GLDOPTS - and OBJECT_STYLE will be set to
-#	DEF_OBJECT_STYLE - thus ALL 3 must agree for both make/smake-files
+#	DEF_OBJECT_STYLE - thus ALL 3 must agree for both makeincs/smake-files
 #	to produce the same results.
 # The 'DEF_GLDOPTS/DEF_CSTYLE' is for makefiles that have no specific
 #	ABI/ISA requirements

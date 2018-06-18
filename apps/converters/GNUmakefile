@@ -1,5 +1,5 @@
 IVDEPTH = ../..
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 SUBDIRS = iv2toiv1 ivdowngrade
 

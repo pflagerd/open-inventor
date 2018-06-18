@@ -1,5 +1,5 @@
 IVDEPTH = ../../../../..
-include $(IVDEPTH)/make/ivcommondefs
+include $(IVDEPTH)/makeincs/ivcommondefs
 
 CXXFILES = SoEventInit.c++ SoEvents.c++
 
