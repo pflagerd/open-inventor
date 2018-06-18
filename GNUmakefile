@@ -9,7 +9,7 @@ LSUBDIRS = libimage tools libFL lib libSoXt doc apps data
 SUBDIRS = $(LSUBDIRS)
 
 all install $(COMMONTARGS):
-	$(SUBDIRS_MAKERULE)
+	+$(SUBDIRS_MAKERULE)
 
 
 SPECS = sgi-OpenInventor-clients.rpm.spec \
