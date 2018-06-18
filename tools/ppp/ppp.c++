@@ -118,7 +118,7 @@
 // There is a nasty cyclic make dependency if we try to use libdatabase.a,
 // so instead just include the following code directly:
 #undef DEBUG
-#include "../../lib/database/src/sb/Sb.c++"
+#include "../../libInventor/database/src/sb/Sb.c++"
 
 // Special characters
 #define MAGIC_CHAR		'@'

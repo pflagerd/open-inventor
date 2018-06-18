@@ -7,7 +7,7 @@ CXXFILES = \
 	GeneralizedCylinder.c++ Triangulator.c++ \
 	NurbMaker.c++
 
-LLDLIBS = -L$(IVDEPTH)/lib -lInventor -L$(IVDEPTH)/libSoXt -lInventorXt
+LLDLIBS = -L$(IVDEPTH)/libInventor -lInventor -L$(IVDEPTH)/libSoXt -lInventorXt
 
 all install: all_ivbin
 

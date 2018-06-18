@@ -161,9 +161,9 @@ endif
 
 IVLIBHDRDIRS = \
 	-I. \
-	-I$(IVDEPTH)/lib/database/include \
-	-I$(IVDEPTH)/lib/interaction/include \
-	-I$(IVDEPTH)/lib/nodekits/include \
+	-I$(IVDEPTH)/libInventor/database/include \
+	-I$(IVDEPTH)/libInventor/interaction/include \
+	-I$(IVDEPTH)/libInventor/nodekits/include \
 	-I$(IVDEPTH)/libSoXt/include
 
 LCXXINCS += $(IVLIBHDRDIRS)
@@ -202,7 +202,7 @@ MAKEMANDIRS = $(IVMANDIR)/makeManDirs
 
 IVPREFIX = /usr
 _BINDIR = $(IVPREFIX)/bin
-_LIBDIR = $(IVPREFIX)/lib
+_LIBDIR = $(IVPREFIX)/libInventor
 _HDRTOP = $(IVPREFIX)/include/Inventor
 _MAN1DIR = $(IVPREFIX)/share/man/man1
 _MAN3DIR = $(IVPREFIX)/share/man/man3
@@ -211,7 +211,7 @@ _HELPDIR = $(IVPREFIX)/share/inventor/help
 _DATADIR = $(IVPREFIX)/share/inventor/data/models
 _MATERIALSDIR = $(IVPREFIX)/share/inventor/data/materials
 _TEXTURESDIR = $(IVPREFIX)/share/inventor/data/textures
-_DEMOBINDIR = $(IVPREFIX)/lib/inventor
+_DEMOBINDIR = $(IVPREFIX)/libInventor/inventor
 _DEMODATADIR = $(IVPREFIX)/share/inventor/data/demos
 ifeq ($(usingDarwin), 1)
 _PDFVIEWER = open
@@ -265,5 +265,5 @@ endif
 # Link against libraries not yet installed
 #
 
-LDDSOOPTS += -L$(IVDEPTH)/lib -L$(IVDEPTH)/libSoXt
-LDOPTS += -L$(IVDEPTH)/lib -L$(IVDEPTH)/libSoXt
+LDDSOOPTS += -L$(IVDEPTH)/libInventor -L$(IVDEPTH)/libSoXt
+LDOPTS += -L$(IVDEPTH)/libInventor -L$(IVDEPTH)/libSoXt
