@@ -49,8 +49,12 @@
  ______________  S I L I C O N   G R A P H I C S   I N C .  ____________
  _______________________________________________________________________
  */
-#include <cstdlib>
 #include <inttypes.h>
+#include <math.h>
+#include <stdlib.h>
+
+#include <cstdlib>
+
 #include <X11/Intrinsic.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
