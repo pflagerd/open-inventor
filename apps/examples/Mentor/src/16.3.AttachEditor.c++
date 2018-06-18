@@ -81,10 +81,12 @@ main(int , char **argv)
    // Read the geometry from a file and add to the scene
    SoInput myInput;
    if (!myInput.openFile("apps/examples/data/dogDish.iv"))
-      exit (1);
+		return 1;
+
    SoSeparator *geomObject = SoDB::readAll(&myInput);
    if (geomObject == NULL)
-      exit (1);
+		return 1;
+
    root->addChild(geomObject);
    
    // Set the scene graph 
