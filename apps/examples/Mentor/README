@@ -1,0 +1,71 @@
+Contains all the examples from the Inventor Mentor.
+
+Their current status is below:
+
+Example						Status
+02.1.HelloCone				OK
+02.2.EngineSpin				OK
+02.3.Trackball				OK
+02.4.Examiner				OK
+03.1.Molecule				OK
+03.2.Robot					OK
+03.3.Naming					OK
+04.1.Cameras				OK
+04.2.Lights					OK
+05.1.FaceSet				OK
+05.2.IndexedFaceSet			OK
+05.3.TriangleStripSet		OK
+05.4.QuadMesh				OK
+05.5.Binding				OK
+05.6.TransformOrdering		OK
+06.1.Text					OK
+06.2.Simple3DText			OK
+06.3.Complex3DText			OK
+07.1.BasicTexture			core dumps
+07.2.TextureCoordinates		core dumps
+07.3.TextureFunction		textures look incorrect
+08.1.BSCurve				core dumps
+08.2.UniCurve				core dumps
+08.3.BezSurf				texture looks wrong
+08.4.TrimSurf				core dumps
+09.1.Print					X Error of failed request:  BadValue (integer parameter out of range for operation)
+09.2.Texture				X Error of failed request:  BadValue (integer parameter out of range for operation)
+09.3.Search					OK
+09.4.PickAction				OK
+09.5.GenSph					OK
+10.1.addEventCB				OK
+10.2.setEventCB				OK
+10.3and4.MotifList			OK
+10.5.SelectionCB			OK
+10.6.PickFilterTopLevel     OK
+10.7.PickFilterManip		OK
+10.8.PickFilterNodeKit		OK
+11.1.ReadFile				OK
+11.2.ReadString				OK
+12.1.FieldSensor			OK
+12.2.NodeSensor				OK
+12.3.AlarmSensor			OK
+12.4.TimerSensor			OK
+13.1.GlobalFlds				OK
+13.2.ElapsedTime			OK
+13.3.TimeCounter			OK
+13.4.Gate					OK
+13.5.Boolean				OK
+13.6.Calculator				OK
+13.7.Rotor					OK
+13.8.Blinker				OK
+14.1.FrolickingWords		OK
+14.2.Editors				OK
+14.3.Balance				OK
+15.1.ConeRadius				OK
+15.2.SliderBox				OK
+15.3.AttachManip			OK
+15.4.Customize				OK
+16.1.Overlay				X Error of failed request:  BadWindow (invalid Window parameter)
+16.2.Callback				OK
+16.3.AttachEditor			OK
+16.4.OneWindow				OK
+16.5.Examiner				OK
+17.1.ColorIndex				Couldn't create visual
+17.2.GLCallback				OK
+17.3.GLFloor				OK

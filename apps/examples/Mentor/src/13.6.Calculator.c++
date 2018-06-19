@@ -100,7 +100,7 @@ main(int , char **argv)
    root->addChild(flowerGroup);
 
    // Read the flower object from a file and add to the group
-   if (!myInput.openFile("/usr/share/src/Inventor/examples/data/flower.iv")) 
+   if (!myInput.openFile("apps/examples/data/flower.iv"))
       exit (1);
    SoSeparator *flower= SoDB::readAll(&myInput);
    if (flower == NULL) exit (1);
