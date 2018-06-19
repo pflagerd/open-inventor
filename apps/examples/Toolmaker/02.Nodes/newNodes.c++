@@ -72,7 +72,7 @@ main(int, char **argv)
    Pyramid::initClass();
    Alternate::initClass();
 
-   if (! myInput.openFile("newNodes.iv")) {
+   if (! myInput.openFile("apps/examples/Toolmaker/02.Nodes/newNodes.iv")) {
       fprintf(stderr, "Can't open \"newNodes.iv\"\n");
       return 1;
    }

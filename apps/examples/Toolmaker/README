@@ -18,3 +18,9 @@ new Inventor object:
     09.Highlights - highlighting classes used by selection
     10.Viewers - Xt components used to view a scene
     11.Events - events and Xt devices
+
+Their current status follows:
+
+Example						Status
+02.Nodes					OK
+03.EngineSpin				OK (NO EXECUTABLE)
