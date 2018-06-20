@@ -11,9 +11,20 @@ textomatic  - 3D text modeling program
 
 These programs are distributed in source format to the Inventor customers.  
 Each subdirectory contains the source code and include files needed to
-make the program.  
+make the program.
 
 Note that you need superuser permissions to build or modify the installed
 demo programs.  Alternatively, you can copy the programs that interest you
 into your local directory.
 
+Example						Status
+drop						OK, except no instructions
+gview						OK
+maze						OK
+noodle						OK
+qmorf						qmorf - haven't got the right arguments
+							quadCube OK
+							quadSheet OK
+revo						OK
+Sceneviewer					OK
+textomatic					OK
