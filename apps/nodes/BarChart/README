@@ -8,3 +8,7 @@ ivview BarChart.iv
 
 ... to see an example use of the BarChart node.  You'll have to read
 the source (in BarChart.c++ and BarChart.h) for more information!
+
+Example						Status
+BarChart					
+

@@ -204,7 +204,7 @@ setupHands(SoGroup *root)
 
 int main(int argc, char **argv)
 {
-    char *filename = "clockData.iv";
+    const char *filename = "apps/samples/clock/clockData.iv";
 
     if (argc != 2) {
 	fprintf(stderr, "NOTE: You can specify your own geometry file.\n");
