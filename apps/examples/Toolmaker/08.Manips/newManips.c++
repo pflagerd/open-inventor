@@ -75,14 +75,14 @@ main(int, char **argv)
    RotTransManip::initClass();
    Coordinate3Manip::initClass();
 
-   if (! myInput.openFile("newManips.iv")) {
-      fprintf(stderr, "Can't open \"newManips.iv\"\n");
+   if (! myInput.openFile("apps/examples/Toolmaker/08.Manips/newManips.iv")) {
+      fprintf(stderr, "Can't open \"apps/examples/Toolmaker/08.Manips/newManips.iv\"\n");
       return 1;
    }
 
    root = SoDB::readAll(&myInput);
    if (root == NULL) {
-      printf("File \"newManips.iv\" contains bad data\n");
+      printf("File \"apps/examples/Toolmaker/08.Manips/newManips.iv\" contains bad data\n");
       return 2;
    }
 

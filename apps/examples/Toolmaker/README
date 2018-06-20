@@ -23,4 +23,14 @@ Their current status follows:
 
 Example						Status
 02.Nodes					OK
-03.EngineSpin				OK (NO EXECUTABLE)
+03.Fields					OK (NO EXECUTABLE)
+04.Actions					OK
+05.Elements					OK (NO EXECUTABLE)
+06.Engines					OK (NO EXECUTABLE)
+07.Nodekits					OK (2 EXECUTABLES)
+08.Manips					OK
+09.Highlights				OK (2 EXECUTABLES)
+10.Components				tumble OK
+							viewer failed with: X Error of failed request:  BadWindow (invalid Window parameter)
+11.Events					Sorry, no dial and button box on this display!
+

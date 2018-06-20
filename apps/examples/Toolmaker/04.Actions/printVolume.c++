@@ -63,13 +63,13 @@ main()
    // Open the file and read the scene
    SoInput      myInput;
    SoSeparator  *root;
-   if (! myInput.openFile("volume.iv")) {
-      fprintf(stderr, "Can't open \"volume.iv\" for reading\n");
+   if (! myInput.openFile("apps/examples/Toolmaker/04.Actions/volume.iv")) {
+      fprintf(stderr, "Can't open \"apps/examples/Toolmaker/04.Actions/volume.iv\" for reading\n");
       return 1;
    }
    root = SoDB::readAll(&myInput);
    if (root == NULL) {
-      printf("Couldn't read scene from \"volume.iv\"\n");
+      printf("Couldn't read scene from \"apps/examples/Toolmaker/04.Actions/volume.iv\"\n");
       return 2;
    }
    root->ref();
