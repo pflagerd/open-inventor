@@ -62,6 +62,8 @@ PPFILES = \
 	SoIndexedLineSet.pp SoIndexedTriangleStripSet.pp \
 	SoLineSet.pp SoPointSet.pp SoQuadMesh.pp \
 	SoSphere.pp SoTriangleStripSet.pp
+	
+.SECONDARY: $(SHAPEFILES) # This prevents the automatic deletion of $(SHAPEFILES) generated from PPFILES
 
 SUBDIRS = nurbs
 
