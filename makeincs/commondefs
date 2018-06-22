@@ -160,22 +160,23 @@ COMMONGOPTS=$(OPTIMIZER) $(MKDEPOPT) $(ENDIAN)
 # the generic OBJECT_STYLE={64, 32, N32}. This permits the default to be
 # set by releasedefs
 #
-CSTYLE_32_M2 = -mips2 -o32
-CSTYLE_32_ABI= -mips1 -o32 -D_MIPSABI_SOURCE=3
-CSTYLE_N32_M3= -mips3 -n32
-CSTYLE_N32_M4= -mips4 -n32
-CSTYLE_R32   = -mips3 -r32
-CSTYLE_64_M3 = -mips3 -64
-CSTYLE_64_M4 = -mips4 -64
-CSTYLE_64_ABI = -mips3 -64 -D_MIPSABI_SOURCE=3
-CSTYLE_IA32  = -std=c++03
-CSTYLE_DARWIN= #-arch x86_64 -arch i686
+CSTYLE_32_M2 	= -mips2 -o32
+CSTYLE_32_ABI	= -mips1 -o32 -D_MIPSABI_SOURCE=3
+CSTYLE_N32_M3	= -mips3 -n32
+CSTYLE_N32_M4	= -mips4 -n32
+CSTYLE_R32   	= -mips3 -r32
+CSTYLE_64_M3 	= -mips3 -64
+CSTYLE_64_M4 	= -mips4 -64
+CSTYLE_64_ABI 	= -mips3 -64 -D_MIPSABI_SOURCE=3
+CSTYLE_IA32  	= -std=gnu99
+CXXSTYLE_IA32 	= -std=gnu++03
+CSTYLE_DARWIN	= #-arch x86_64 -arch i686
 
 # 'generic' styles - per ABI. releasedefs sets what it is.
 # DEF_CSTYLE's are set in releasedefs
-CSTYLE_32    = $(DEF_CSTYLE_32)
-CSTYLE_N32   = $(DEF_CSTYLE_N32)
-CSTYLE_64    = $(DEF_CSTYLE_64)
+CSTYLE_32    	= $(DEF_CSTYLE_32)
+CSTYLE_N32   	= $(DEF_CSTYLE_N32)
+CSTYLE_64    	= $(DEF_CSTYLE_64)
 
 #
 # Set OBJECT_STYLE if it hasn't already been set - note that std 'make'files
@@ -193,6 +194,7 @@ endif
 # set in releasedefs
 # This is the one that 'make' sees
 CSTYLE=$(DEF_CSTYLE)
+CXXSTYLE=$(DEF_CSTYLE)
 
 ifeq "$(OBJECT_STYLE)" "64"
 CSTYLE=$(CSTYLE_64)
@@ -229,6 +231,7 @@ CSTYLE=$(CSTYLE_32_M2)
 endif
 ifeq "$(OBJECT_STYLE)" "IA32"
 CSTYLE=$(CSTYLE_IA32)
+CXXSTYLE=$(CXXSTYLE_IA32)
 endif
 ifeq "$(OBJECT_STYLE)" "DARWIN"
 CSTYLE=$(CSTYLE_DARWIN)
@@ -298,7 +301,7 @@ C++OPTS   = $(VC++OPTS) $(LC++OPTS) $(GC++OPTS)
 C++DEFS   = $(VC++DEFS) $(LC++DEFS) $(GC++DEFS)
 C++INCS   = $(VC++INCS) $(LC++INCS) $(GC++INCS)
 
-GC++OPTS  = $(CSTYLE) $(OPTIMIZER) $(ENDIAN) $(MKDEPOPT)
+GC++OPTS  = $(CXXSTYLE) $(OPTIMIZER) $(ENDIAN) $(MKDEPOPT)
 ifeq ($(usingIrix), 1)
 GC++INCS  = -nostdinc -I$(INCLDIR)/CC -I$(INCLDIR)
 endif
