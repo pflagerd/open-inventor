@@ -8,6 +8,7 @@
 
 #include	"open.h"
 #include	"rdwr.h"
+#include	"rle.h"
 #include	"row.h"
 
 int putrow(IMAGE *image, unsigned short *buffer,

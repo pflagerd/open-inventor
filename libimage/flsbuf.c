@@ -6,6 +6,7 @@
  */
 #include	"image.h"
 #include 	"row.h"
+#include	"flsbuf.h"
 
 unsigned int iflsbuf(IMAGE *image, unsigned int c)
 {

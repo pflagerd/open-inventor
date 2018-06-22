@@ -5,7 +5,9 @@
  *
  */
 #include	<stdio.h>
-#include 	"filbuf.h"
+
+#include	"filbuf.h"
+#include 	"flsbuf.h"
 
 #undef getpix
 #undef putpix
