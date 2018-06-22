@@ -151,9 +151,9 @@ endif
 # Determine optimization from LIBTYPE.
 #
 
-OPTIMIZER = -O -DNDEBUG
+OPTIMIZER = -O2 -DNDEBUG
 ifneq (, $(findstring debug, $(LIBTYPE)))
-OPTIMIZER = -g
+OPTIMIZER = -g3 -O0
 endif
 
 
