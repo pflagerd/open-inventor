@@ -6,7 +6,12 @@
  */
 #include	<stdio.h>
 #include	<stdlib.h>
+
+#include	"open.h"
 #include	"image.h"
+#include 	"rdwr.h"
+
+int iflush(IMAGE *image);
 
 int iclose(IMAGE *image)
 {

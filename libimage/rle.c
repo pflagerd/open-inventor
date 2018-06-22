@@ -5,7 +5,9 @@
  *
  */
 #include	<stdio.h>
-#include	"image.h"
+
+#include	"rle.h"
+#include	"rdwr.h"
 
 int img_getrowsize(IMAGE *image)
 {

@@ -4,7 +4,8 @@
  *				Paul Haeberli - 1984
  *
  */
-#include	"image.h"
+#include	"filbuf.h"
+#include	"row.h"
 
 int ifilbuf(IMAGE *image)
 {
