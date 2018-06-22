@@ -8,9 +8,11 @@ include $(IVDEPTH)/makeincs/ivcommondefs
 LSUBDIRS = libimage tools libFL libInventor libSoXt doc apps data
 SUBDIRS = $(LSUBDIRS)
 
-all install $(COMMONTARGS):
+all install $(COMMONTARGS): $(_FONTPATH)
 	+$(SUBDIRS_MAKERULE)
 
+$(_FONTPATH):
+	./link-fonts.sh
 
 SPECS = sgi-OpenInventor-clients.rpm.spec \
 	sgi-OpenInventor-data.rpm.spec \

@@ -13,6 +13,7 @@
 <listEntry value="4"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="FL_FONT_PATH" value="${workspace_loc:open-inventor}/share/inventor/fonts"/>
 <mapEntry key="LD_LIBRARY_PATH" value="${workspace_loc:open-inventor}/libInventor:${workspace_loc:open-inventor}/libSoXt"/>
 </mapAttribute>
 <stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
