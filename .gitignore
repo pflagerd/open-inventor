@@ -19,3 +19,7 @@ libtool
 m4/
 *.a
 *.so*
+/include/
+/bin/
+/lib/
+/share/

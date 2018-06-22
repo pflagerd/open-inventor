@@ -203,9 +203,9 @@ MAKEMANDIRS = $(IVMANDIR)/makeManDirs
 # Inventor install directories.
 #
 
-IVPREFIX = /usr
+IVPREFIX =
 _BINDIR = $(IVPREFIX)/bin
-_LIBDIR = $(IVPREFIX)/libInventor
+_LIBDIR = $(IVPREFIX)/lib
 _HDRTOP = $(IVPREFIX)/include/Inventor
 _MAN1DIR = $(IVPREFIX)/share/man/man1
 _MAN3DIR = $(IVPREFIX)/share/man/man3
@@ -214,7 +214,7 @@ _HELPDIR = $(IVPREFIX)/share/inventor/help
 _DATADIR = $(IVPREFIX)/share/inventor/data/models
 _MATERIALSDIR = $(IVPREFIX)/share/inventor/data/materials
 _TEXTURESDIR = $(IVPREFIX)/share/inventor/data/textures
-_DEMOBINDIR = $(IVPREFIX)/libInventor/inventor
+_DEMOBINDIR = $(IVPREFIX)/bin
 _DEMODATADIR = $(IVPREFIX)/share/inventor/data/demos
 ifeq ($(usingDarwin), 1)
 _PDFVIEWER = open
