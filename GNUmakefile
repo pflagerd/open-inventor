@@ -20,6 +20,8 @@ SPECS = sgi-OpenInventor-clients.rpm.spec \
 
 TARBALL = oiv.tar.gz
 
+DIRT += bin lib share
+
 rpms:
 	cd ..; rm -f $(TARBALL); tar zcvf $(TARBALL) inventor
 	su -c "cp -f ../$(TARBALL) /usr/src/redhat/SOURCES"
