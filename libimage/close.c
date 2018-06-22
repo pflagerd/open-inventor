@@ -6,7 +6,14 @@
  */
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<unistd.h>
+
+#include	"open.h"
 #include	"image.h"
+#include 	"rdwr.h"
+#include 	"row.h"
+
+int iflush(IMAGE *image);
 
 int iclose(IMAGE *image)
 {

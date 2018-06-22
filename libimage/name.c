@@ -6,7 +6,8 @@
  */
 #include	<stdio.h>
 #include	<string.h>
-#include	"image.h"
+
+#include	"name.h"
 
 void isetname(IMAGE *image, char *name)
 {

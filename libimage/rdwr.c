@@ -7,9 +7,7 @@
 
 #include 	<unistd.h>
 #include	<stdio.h>
-#include	"image.h"
-
-unsigned int img_optseek(IMAGE *image, unsigned int offset);
+#include	"rdwr.h"
 
 unsigned int img_seek(IMAGE *image, unsigned int y, unsigned int z)
 {

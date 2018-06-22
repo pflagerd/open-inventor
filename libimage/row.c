@@ -5,7 +5,11 @@
  *
  */
 #include	<stdio.h>
-#include	"image.h"
+
+#include	"open.h"
+#include	"rdwr.h"
+#include	"rle.h"
+#include	"row.h"
 
 int putrow(IMAGE *image, unsigned short *buffer,
 		unsigned int y, unsigned int z) 

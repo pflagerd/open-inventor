@@ -4,9 +4,14 @@
  *				Paul Haeberli - 1984
  *
  */
+#include	<fcntl.h>
 #include	<stdio.h>
 #include	<stdlib.h>
+#include 	<unistd.h>
+
 #include	"image.h"
+#include	"name.h"
+#include	"open.h"
 
 void cvtlongs(int buffer[],int n);
 void cvtimage(int buffer[]);
@@ -180,7 +185,7 @@ unsigned short *ibufalloc(IMAGE *image)
     return (unsigned short *)malloc(IBUFSIZE(image->xsize));
 }
 
-reverse(lwrd) 
+int reverse(lwrd)
 register unsigned int lwrd;
 {
     return ((lwrd>>24) 		| 
