@@ -812,7 +812,7 @@ SoOutput::write(const SbName &s)
     else if (! isToBuffer())						      \
 	fprintf(fp, formatString, num);					      \
     else {								      \
-	char	str[20];						      \
+	char	str[128];						      \
 	sprintf(str, formatString, num);				      \
 	write(str);							      \
     }
