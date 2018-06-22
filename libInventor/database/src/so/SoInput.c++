@@ -711,7 +711,7 @@ SoInput::getCurFileName() const
 // Use: public
 
 void
-SoInput::setBuffer(void *bufPointer, size_t bufSize)
+SoInput::setBuffer(const void *bufPointer, size_t bufSize)
 //
 ////////////////////////////////////////////////////////////////////////
 {
