@@ -76,7 +76,7 @@ _flGetFontInfoList(GLubyte *fontList /* "fn1,fn2,fn3, ..." */)
       for (p2 = p++; (c = *p) && c != ','; p++)
 	;
       *p = '\0';
-      list[i] = flGetFontInfo((FLfontNumber)atoi(p2));
+      list[i] = flGetFontInfo((FLfontNumber)strtol(p2, NULL, 10));
       *p = c;
     }
     list[i] = NULL;
