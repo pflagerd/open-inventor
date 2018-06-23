@@ -158,7 +158,7 @@ main(int argc, char **argv)
     root->ref();
 
     // Create a form widget to hold the viewers
-    form = XmCreateForm(mainWindow, "form", NULL, 0);
+    form = XmCreateForm(mainWindow, (char*)"form", NULL, 0);
 
     // Build each of the four viewers
     topViewer   = createPlaneViewer(form, "Top View",   root,
