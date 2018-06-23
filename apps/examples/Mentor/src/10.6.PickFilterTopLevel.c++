@@ -86,7 +86,7 @@ main(int argc, char *argv[])
     
    // Open the data file
    SoInput in;   
-   char *datafile = "apps/examples/data/parkbench.iv";
+   const char *datafile = "apps/examples/data/parkbench.iv";
    if (! in.openFile(datafile)) {
       fprintf(stderr, "Cannot open %s for reading.\n", datafile);
      
