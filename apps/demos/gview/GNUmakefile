@@ -23,6 +23,6 @@ $(HF): %.h: %
 	(echo "const char gviewIcons[] ="; \
 	sed -e '{ s/"/\\"/g; s/^/"/; s/$$/\\n"/; }' $^; echo \;) > $^.h
 
-LDIRT += $(HF)
+#LDIRT += $(HF)
 
 include $(IVCOMMONRULES)
