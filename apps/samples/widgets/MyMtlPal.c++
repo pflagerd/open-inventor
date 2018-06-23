@@ -137,25 +137,25 @@ enum MenuEntryID {
 };
 
 struct MaterialNameStruct {
-	char *name;
-	char *oldName;
+	const char *name;
+	const char *oldName;
 };
 
 struct PaletteStruct {
-	char *name;
+	const char *name;
 	SbBool user;
 	SbBool system;
 };
 
 struct MenuButtonItemStruct {
-	char *name;
+	const char *name;
 	int id;
-	char *accelerator; // e.g. "Alt <Key> p" or "Ctrl <Key> u"
-	char *accelText;   // text that appears in the menu item
+	const char *accelerator; // e.g. "Alt <Key> p" or "Ctrl <Key> u"
+	const char *accelText;   // text that appears in the menu item
 };
 
 struct MenuStruct {
-	char *name;
+	const char *name;
 	int id;
 	struct MenuButtonItemStruct *subMenu;
 	int subItemCount;
@@ -181,10 +181,10 @@ static MenuStruct pulldownData[] = {
 		{ "File", FILE_MENU, fileData, XtNumber(fileData) }, { "Edit",
 				EDIT_MENU, editData, XtNumber(editData) }, };
 
-static char *editorTitle = "Material Palette";
-static char *defaultDir = IVMATERIALSDIR;
+static const char *editorTitle = "Material Palette";
+static const char *defaultDir = IVMATERIALSDIR;
 
-static char *geometryBuffer =
+static const char *geometryBuffer =
 		"\
 #Inventor V2.0 ascii\n\
 \
@@ -227,7 +227,7 @@ Separator { \
     } \
 } ";
 
-static char *overlayGeometryBuffer =
+static const char *overlayGeometryBuffer =
 		"\
 #Inventor V2.0 ascii\n\
 \
@@ -367,7 +367,7 @@ MyMaterialPalette::~MyMaterialPalette()
 	PaletteStruct *pal;
 	for (i = 0; i < paletteList.getLength(); i++) {
 		pal = (PaletteStruct *) paletteList[i];
-		free(pal->name);
+		free((void*)pal->name);
 		delete pal;
 	}
 	paletteList.truncate(0);
@@ -375,9 +375,9 @@ MyMaterialPalette::~MyMaterialPalette()
 	// delete material names
 	for (i = 0; i < 36; i++) {
 		if (mtlNames[i].name != NULL)
-			free(mtlNames[i].name);
+			free((void*)mtlNames[i].name);
 		if (mtlNames[i].oldName != NULL)
-			free(mtlNames[i].oldName);
+			free((void*)mtlNames[i].oldName);
 	}
 	delete[] mtlNames;
 
@@ -454,7 +454,7 @@ Widget MyMaterialPalette::buildWidget(Widget parent)
 	Arg args[12];
 
 	// create a top level form to hold everything together
-	Widget form = XmCreateForm(parent, "matPalForm", NULL, 0);
+	Widget form = XmCreateForm(parent, (char*)"matPalForm", NULL, 0);
 
 	//
 	// create all the parts
@@ -489,7 +489,7 @@ Widget MyMaterialPalette::buildWidget(Widget parent)
 	getPaletteNamesAndLoad();
 	Widget menu = buildMenu(form);
 
-	widgetList[MAT_LABEL] = XmCreateLabelGadget(form, "matLabel", NULL, 0);
+	widgetList[MAT_LABEL] = XmCreateLabelGadget(form, (char*)"matLabel", NULL, 0);
 
 	//
 	// make sure things are updated
@@ -569,7 +569,7 @@ Widget MyMaterialPalette::buildMenu(Widget parent)
 	Arg args[8];
 
 	// create top bar menu
-	Widget menu = XmCreateMenuBar(parent, "menuBar", NULL, 0);
+	Widget menu = XmCreateMenuBar(parent, (char*)"menuBar", NULL, 0);
 	widgetList[MENU_BAR] = menu;
 
 	Arg popupargs[4];
@@ -585,7 +585,7 @@ Widget MyMaterialPalette::buildMenu(Widget parent)
 	int i;
 	for (i = 0; i < itemCount; i++) {
 		// Make Topbar menu button
-		Widget subMenu = XmCreatePulldownMenu(menu, "subMenu", popupargs,
+		Widget subMenu = XmCreatePulldownMenu(menu, (char*)"subMenu", popupargs,
 				popupn);
 		widgetList[pulldownData[i].id] = subMenu;
 
@@ -596,7 +596,7 @@ Widget MyMaterialPalette::buildMenu(Widget parent)
 #endif
 
 		XtSetArg(args[0], XmNsubMenuId, subMenu);
-		buttons[i] = XmCreateCascadeButtonGadget(menu, pulldownData[i].name,
+		buttons[i] = XmCreateCascadeButtonGadget(menu, (char*)pulldownData[i].name,
 				args, 1);
 
 		// make submenu buttons
@@ -611,14 +611,14 @@ Widget MyMaterialPalette::buildMenu(Widget parent)
 
 			// check for keyboard accelerator
 			XmString xmstr = NULL;
-			char *accel = pulldownData[i].subMenu[j].accelerator;
-			char *accelText = pulldownData[i].subMenu[j].accelText;
+			const char *accel = pulldownData[i].subMenu[j].accelerator;
+			const char *accelText = pulldownData[i].subMenu[j].accelText;
 			if (accel != NULL) {
 				XtSetArg(args[n], XmNaccelerator, accel);
 				n++;
 
 				if (accelText != NULL) {
-					xmstr = XmStringCreateSimple(accelText);
+					xmstr = XmStringCreateSimple((char*)accelText);
 					XtSetArg(args[n], XmNacceleratorText, xmstr);
 					n++;
 				}
@@ -626,7 +626,7 @@ Widget MyMaterialPalette::buildMenu(Widget parent)
 
 			id = pulldownData[i].subMenu[j].id;
 			widgetList[id] = subButtons[j] = XmCreatePushButtonGadget(subMenu,
-					pulldownData[i].subMenu[j].name, args, n);
+					(char*)pulldownData[i].subMenu[j].name, args, n);
 
 			if (xmstr != NULL)
 				XmStringFree(xmstr);
@@ -642,7 +642,7 @@ Widget MyMaterialPalette::buildMenu(Widget parent)
 	// create palette menu (the palette popup menu gets created and deleted
 	// on the fly so do it separately).
 	widgetList[PALETTE_BUTTON] = buttons[i] = XmCreateCascadeButtonGadget(menu,
-			"Palettes", NULL, 0);
+			(char*)"Palettes", NULL, 0);
 	widgetList[PALETTE_MENU] = NULL;
 	buildPaletteSubMenu();
 
@@ -682,7 +682,7 @@ Widget MyMaterialPalette::buildPaletteMenuEntry(int id)
 		n++;
 	}
 
-	Widget w = XmCreatePushButtonGadget(widgetList[PALETTE_MENU], pal->name,
+	Widget w = XmCreatePushButtonGadget(widgetList[PALETTE_MENU], (char*)pal->name,
 			args, n);
 	XtAddCallback(w, XmNactivateCallback,
 			(XtCallbackProc) MyMaterialPalette::paletteMenuCB,
@@ -713,7 +713,7 @@ void MyMaterialPalette::buildPaletteSubMenu()
 	SoXt::getPopupArgs(XtDisplay(widgetList[MENU_BAR]), SCREEN(widgetList[MENU_BAR]), args, &argnum);
 #endif
 	Widget subMenu = widgetList[PALETTE_MENU] = XmCreatePulldownMenu(
-			widgetList[MENU_BAR], "subMenu", args, argnum);
+			widgetList[MENU_BAR], (char*)"subMenu", args, argnum);
 
 #ifdef MENUS_IN_POPUP
 	// register callbacks to load/unload the pulldown colormap when the
@@ -1034,11 +1034,11 @@ void MyMaterialPalette::loadPaletteItems()
 	// delete the existing name strings of materials
 	for (i = 0; i < 36; i++) {
 		if (mtlNames[i].name != NULL) {
-			free(mtlNames[i].name);
+			free((void*)mtlNames[i].name);
 			mtlNames[i].name = NULL;
 		}
 		if (mtlNames[i].oldName != NULL) {
-			free(mtlNames[i].oldName);
+			free((void*)mtlNames[i].oldName);
 			mtlNames[i].oldName = NULL;
 		}
 	}
@@ -1287,12 +1287,12 @@ void MyMaterialPalette::updateMaterialName()
 //
 ////////////////////////////////////////////////////////////////////////
 {
-	char *str =
+	const char *str =
 			(currentItem < 0) ?
 					((selectedItem < 0) ?
 							(char *) " " : mtlNames[selectedItem].name) :
 					mtlNames[currentItem].name;
-	XmString xmstr = XmStringCreateSimple(str);
+	XmString xmstr = XmStringCreateSimple((char*)str);
 	XtVaSetValues(widgetList[MAT_LABEL], XmNlabelString, xmstr, NULL);
 	XmStringFree(xmstr);
 }
@@ -1435,9 +1435,9 @@ void MyMaterialPalette::createSaveDialog()
 {
 	Arg args[5];
 	XmString xmstr = XmStringCreateSimple(
-			"Warning: current palette was modified.");
+			(char*)"Warning: current palette was modified.");
 	xmstr = XmStringConcat(xmstr, XmStringSeparatorCreate());
-	xmstr = XmStringConcat(xmstr, XmStringCreateSimple("Save changes ?"));
+	xmstr = XmStringConcat(xmstr, XmStringCreateSimple((char*)"Save changes ?"));
 
 	int n = 0;
 	XtSetArg(args[n], XmNautoUnmanage, FALSE);
@@ -1446,7 +1446,7 @@ void MyMaterialPalette::createSaveDialog()
 	n++;
 	XtSetArg(args[n], XmNmessageString, xmstr);
 	n++;
-	Widget dialog = XmCreateWarningDialog(getWidget(), "SaveDialog", args, n);
+	Widget dialog = XmCreateWarningDialog(getWidget(), (char*)"SaveDialog", args, n);
 	XmStringFree(xmstr);
 
 	XtUnmanageChild(XmMessageBoxGetChild(dialog, XmDIALOG_HELP_BUTTON));
@@ -1467,12 +1467,12 @@ void MyMaterialPalette::createSaveDialog()
 //	creates a dialog which lets the user type a name.
 //
 // Use: private
-void MyMaterialPalette::createPromptDialog(char *title, char *str)
+void MyMaterialPalette::createPromptDialog(const char *title, const char *str)
 //
 ////////////////////////////////////////////////////////////////////////
 		{
 	Arg args[5];
-	XmString xmstr = XmStringCreateSimple(str);
+	XmString xmstr = XmStringCreateSimple((char*)str);
 
 	int n = 0;
 	XtSetArg(args[n], XmNautoUnmanage, FALSE);
@@ -1481,7 +1481,7 @@ void MyMaterialPalette::createPromptDialog(char *title, char *str)
 	n++;
 	XtSetArg(args[n], XmNselectionLabelString, xmstr);
 	n++;
-	Widget dialog = XmCreatePromptDialog(getWidget(), "promptDialog", args, n);
+	Widget dialog = XmCreatePromptDialog(getWidget(), (char*)"promptDialog", args, n);
 	XmStringFree(xmstr);
 
 	XtUnmanageChild(XmSelectionBoxGetChild(dialog, XmDIALOG_HELP_BUTTON));
@@ -1506,14 +1506,14 @@ void MyMaterialPalette::createPromptDialog(char *title, char *str)
 //  the current material palette.
 //
 // Use: private
-void MyMaterialPalette::createDeleteDialog(char *title, char *str1, char *str2)
+void MyMaterialPalette::createDeleteDialog(const char *title, const char *str1, const char *str2)
 //
 ////////////////////////////////////////////////////////////////////////
 		{
 	Arg args[5];
-	XmString xmstr = XmStringCreateSimple(str1);
+	XmString xmstr = XmStringCreateSimple((char*)str1);
 	xmstr = XmStringConcat(xmstr, XmStringSeparatorCreate());
-	xmstr = XmStringConcat(xmstr, XmStringCreateSimple(str2));
+	xmstr = XmStringConcat(xmstr, XmStringCreateSimple((char*)str2));
 
 	int n = 0;
 	XtSetArg(args[n], XmNautoUnmanage, FALSE);
@@ -1522,7 +1522,7 @@ void MyMaterialPalette::createDeleteDialog(char *title, char *str1, char *str2)
 	n++;
 	XtSetArg(args[n], XmNmessageString, xmstr);
 	n++;
-	Widget dialog = XmCreateWarningDialog(getWidget(), "DeleteDialog", args, n);
+	Widget dialog = XmCreateWarningDialog(getWidget(), (char*)"DeleteDialog", args, n);
 	XmStringFree(xmstr);
 
 	XtUnmanageChild(XmMessageBoxGetChild(dialog, XmDIALOG_HELP_BUTTON));
@@ -1586,7 +1586,7 @@ void MyMaterialPalette::savePalette()
 	getcwd(currentDir, MAXPATHLEN - 1);
 
 	// go to the materials directory
-	chdir(getenv("HOME"));
+	chdir(getenv((char*)"HOME"));
 	if (chdir(customPalDir) != 0) {
 		// create that directory and cd to it
 		mkdir(customPalDir, 0x1ff);
@@ -1594,7 +1594,7 @@ void MyMaterialPalette::savePalette()
 	}
 
 	// now go to the palette directory (or create it)
-	char *palName = ((PaletteStruct *) paletteList[curPalette])->name;
+	const char *palName = ((PaletteStruct *) paletteList[curPalette])->name;
 	if (chdir(palName) != 0) {
 		mkdir(palName, 0x1ff);
 		chdir(palName);
@@ -1605,7 +1605,7 @@ void MyMaterialPalette::savePalette()
 	for (i = 0; i < 36; i++) {
 		if (mtlNames[i].oldName != NULL) {
 			unlink(mtlNames[i].oldName);
-			free(mtlNames[i].oldName);
+			free((void*)mtlNames[i].oldName);
 			mtlNames[i].oldName = NULL;
 		}
 	}
@@ -1672,7 +1672,7 @@ void MyMaterialPalette::deleteCurrentMaterial()
 	if (mtlNames[selectedItem].oldName == NULL)
 		mtlNames[selectedItem].oldName = mtlNames[selectedItem].name;
 	else
-		free(mtlNames[selectedItem].name);
+		free((void*)mtlNames[selectedItem].name);
 	char str[50];
 	sprintf(str, "no_name_%d", selectedItem);
 	mtlNames[selectedItem].name = strdup(str);
@@ -1767,7 +1767,7 @@ void MyMaterialPalette::deleteDialogCB(Widget dialog, MyMaterialPalette *p,
 		else {
 			// remove the palette from the list, making sure we have
 			// at least one palette entry
-			free(pal->name);
+			free((void*)pal->name);
 			if (p->paletteList.getLength() == 1) {
 				// create an empty default palette
 				pal->name = strdup("default");
@@ -1855,7 +1855,7 @@ void MyMaterialPalette::matEditorCB(void *pt, MySimpleMaterialEditor *ed) {
 			p->mtlNames[p->selectedItem].oldName =
 					p->mtlNames[p->selectedItem].name;
 		else
-			free(p->mtlNames[p->selectedItem].name);
+			free((void*)p->mtlNames[p->selectedItem].name);
 
 		p->mtlNames[p->selectedItem].name = strdup(str);
 		p->updateMaterialName();

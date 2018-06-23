@@ -84,7 +84,7 @@
  * static vars
  */
 
-static char *geometryBuffer = "\
+static const char *geometryBuffer = "\
 #Inventor V1.0 ascii\n\
 \
 Separator { \
@@ -295,7 +295,7 @@ MySimpleMaterialEditor::buildWidget(Widget parent)
     // create a top level form to hold everything together
     n = 0;
     XtSetArg(args[n], XmNfractionBase, 100); n++;
-    Widget form = XmCreateForm(parent, "", args, n);
+    Widget form = XmCreateForm(parent, (char*)"", args, n);
     
     // create all the parts
     renderArea = new SoXtRenderArea(form);
@@ -348,12 +348,12 @@ MySimpleMaterialEditor::buildWidget(Widget parent)
     
     // create the slider labels
     Widget sldLabels[6];
-    sldLabels[0] = XmCreateLabelGadget(form, "opaque", NULL, 0);
-    sldLabels[1] = XmCreateLabelGadget(form, "transp", NULL, 0);
-    sldLabels[2] = XmCreateLabelGadget(form, "rough", NULL, 0);
-    sldLabels[3] = XmCreateLabelGadget(form, "smooth", NULL, 0);
-    sldLabels[4] = XmCreateLabelGadget(form, "plastic", NULL, 0);
-    sldLabels[5] = XmCreateLabelGadget(form, "metal", NULL, 0);
+    sldLabels[0] = XmCreateLabelGadget(form, (char*)"opaque", NULL, 0);
+    sldLabels[1] = XmCreateLabelGadget(form, (char*)"transp", NULL, 0);
+    sldLabels[2] = XmCreateLabelGadget(form, (char*)"rough", NULL, 0);
+    sldLabels[3] = XmCreateLabelGadget(form, (char*)"smooth", NULL, 0);
+    sldLabels[4] = XmCreateLabelGadget(form, (char*)"plastic", NULL, 0);
+    sldLabels[5] = XmCreateLabelGadget(form, (char*)"metal", NULL, 0);
     
     // create the sliders
     n = 0;
@@ -362,7 +362,7 @@ MySimpleMaterialEditor::buildWidget(Widget parent)
     XtSetArg(args[n], XmNhighlightThickness, 0); n++;
     XtSetArg(args[n], XmNorientation, XmHORIZONTAL); n++;
     for (i=0; i<3; i++) {
-	sldWidgets[i] = XmCreateScale(form, "sld", args, n);
+	sldWidgets[i] = XmCreateScale(form, (char*)"sld", args, n);
 	XtAddCallback(sldWidgets[i], XmNvalueChangedCallback, 
 	    (XtCallbackProc) MySimpleMaterialEditor::sldWidgetsCB, (XtPointer) this);
 	XtAddCallback(sldWidgets[i], XmNdragCallback, 
@@ -372,12 +372,12 @@ MySimpleMaterialEditor::buildWidget(Widget parent)
     // create the text field and label
     Widget fieldLabel;
     if (nameVisible) {
-	fieldLabel = XmCreateLabelGadget(form, "Name:", NULL, 0);
+	fieldLabel = XmCreateLabelGadget(form, (char*)"Name:", NULL, 0);
 	char *str = (materialName != NULL) ? materialName : (char *) "";
 	n = 0;
 	XtSetArg(args[n], XmNvalue, str); n++;
 	XtSetArg(args[n], XmNhighlightThickness, 1); n++;
-	nameField = XmCreateText(form, "text", args, n);
+	nameField = XmCreateText(form, (char*)"text", args, n);
 	
 	fieldChanged = FALSE;
 	XtAddCallback(nameField, XmNvalueChangedCallback, 
@@ -392,10 +392,10 @@ MySimpleMaterialEditor::buildWidget(Widget parent)
     Widget buttons[4];
     n = 0;
     XtSetArg(args[n], XmNhighlightThickness, 0); n++;
-    buttons[0] = XmCreatePushButtonGadget(form, "Apply", args, n);
-    buttons[1] = XmCreatePushButtonGadget(form, "Reset", args, n);
-    buttons[2] = XmCreatePushButtonGadget(form, "Copy", args, n);
-    buttons[3] = XmCreatePushButtonGadget(form, "Paste", args, n);
+    buttons[0] = XmCreatePushButtonGadget(form, (char*)"Apply", args, n);
+    buttons[1] = XmCreatePushButtonGadget(form, (char*)"Reset", args, n);
+    buttons[2] = XmCreatePushButtonGadget(form, (char*)"Copy", args, n);
+    buttons[3] = XmCreatePushButtonGadget(form, (char*)"Paste", args, n);
     XtAddCallback(buttons[0], XmNactivateCallback,
 	(XtCallbackProc) MySimpleMaterialEditor::applyCB, (XtPointer) this);
     XtAddCallback(buttons[1], XmNactivateCallback,

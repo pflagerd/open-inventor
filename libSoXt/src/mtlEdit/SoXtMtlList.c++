@@ -78,7 +78,7 @@
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/errors/SoDebugError.h>
 
-static char *bogusFile = "<none>";
+static const char *bogusFile = (char*)"<none>";
 
 #define TOGGLE_ON(BUTTON) \
     XmToggleButtonSetState((Widget) BUTTON, TRUE, FALSE);
@@ -183,8 +183,8 @@ static void createStringTable(char *dir, XmString **table, int *size) {
 	}
 #ifdef DEBUG
 	else {
-		SoDebugError::post("SoXtMaterialList::createStringTable",
-				"Cannot open directory %s.", dir);
+		SoDebugError::post((char*)"SoXtMaterialList::createStringTable",
+				(char*)"Cannot open directory %s.", dir);
 	}
 #endif
 }
@@ -239,7 +239,7 @@ void SoXtMaterialList::constructorCommon(const char *dir, SbBool buildNow)
 //
 //////////////////////////////////////////////////////////////////////
 		{
-	setClassName("SoXtMaterialList");
+	setClassName((char*)"SoXtMaterialList");
 	if (dir != NULL)
 		materialDir = strdup(dir);
 	else
@@ -285,7 +285,7 @@ SbBool SoXtMaterialList::setupPalettes()
 ////////////////////////////////////////////////////////////////////////
 {
 	// see if SO_MATERIAL_DIR has changed.
-	char *envDir = getenv("SO_MATERIAL_DIR");
+	char *envDir = getenv((char*)"SO_MATERIAL_DIR");
 	if (envDir != NULL) {
 		if ((strcmp(envDir, materialDir) == 0) && (curPalette != -1))
 			return TRUE; // env dir is same as current dir, palette is already OK
@@ -319,8 +319,8 @@ SbBool SoXtMaterialList::setupPalettes()
 		chdir(currentDir); // back to our working directory
 	} else {
 #ifdef DEBUG
-		SoDebugError::post("SoXtMaterialList::setupPalettes",
-				"Cannot open directory %s.  Try setting the environment variable SO_MATERIAL_DIR to a directory which has material files in it.", materialDir);
+		SoDebugError::post((char*)"SoXtMaterialList::setupPalettes",
+				(char*)"Cannot open directory %s.  Try setting the environment variable SO_MATERIAL_DIR to a directory which has material files in it.", materialDir);
 #endif
 		curPalette = -1;
 	}
@@ -348,14 +348,14 @@ Widget SoXtMaterialList::buildPulldownMenu(Widget parent)
 	XtSetArg(args[n], XmNuserData, this);
 	n++;
 
-	menubar = XmCreateMenuBar(parent, "menuBar", NULL, 0);
+	menubar = XmCreateMenuBar(parent, (char*)(char*)"menuBar", NULL, 0);
 
-	pulldown = XmCreatePulldownMenu(menubar, "controlPulldown", args, n);
+	pulldown = XmCreatePulldownMenu(menubar, (char*)(char*)"controlPulldown", args, n);
 
 	n = 0;
 	XtSetArg(args[n], XmNsubMenuId, pulldown);
 	n++;
-	submenu = XtCreateManagedWidget("Palettes", xmCascadeButtonGadgetClass,
+	submenu = XtCreateManagedWidget((char*)(char*)"Palettes", xmCascadeButtonGadgetClass,
 			menubar, args, n);
 
 #define MENU_ITEM(BUTTON,NAME,KONST) \
@@ -381,8 +381,8 @@ Widget SoXtMaterialList::buildPulldownMenu(Widget parent)
 
 	if (menuItems.getLength() == 0) {
 #ifdef DEBUG
-		SoDebugError::post("SoXtMaterialList::buildPulldownMenu",
-				"Directory %s has no material palettes.", materialDir);
+		SoDebugError::post((char*)"SoXtMaterialList::buildPulldownMenu",
+				(char*)"Directory %s has no material palettes.", materialDir);
 #endif
 		curPalette = -1;
 	}
@@ -416,7 +416,7 @@ void SoXtMaterialList::fillInMaterialList()
 	char curdir[256];
 
 	// create a string table for the current palette directory
-	sprintf(curdir, "%s/%s", materialDir, (char *) mtlPalettes[curPalette]);
+	sprintf(curdir, (char*)"%s/%s", materialDir, (char *) mtlPalettes[curPalette]);
 	createStringTable(curdir, &table, &count);
 
 	n = 0;
@@ -467,7 +467,7 @@ Widget SoXtMaterialList::buildWidget(Widget parent)
 	char curdir[256];
 
 	// create a string table for the current palette directory
-	sprintf(curdir, "%s/%s", materialDir, (char *) mtlPalettes[curPalette]);
+	sprintf(curdir, (char*)"%s/%s", materialDir, (char *) mtlPalettes[curPalette]);
 	createStringTable(curdir, &table, &count);
 
 	// Layout
@@ -504,7 +504,7 @@ Widget SoXtMaterialList::buildWidget(Widget parent)
 	n++;
 	//???XtSetValues(mtlList, wargs, n);
 
-	mtlList = XmCreateScrolledList(widget, "materialList", wargs, n);
+	mtlList = XmCreateScrolledList(widget, (char*)"materialList", wargs, n);
 	XtAddCallback(mtlList,
 	XmNsingleSelectionCallback, (XtCallbackProc) SoXtMaterialList::listPick,
 			(XtPointer) this);
@@ -537,8 +537,8 @@ void SoXtMaterialList::menuPick(Widget w, int id, XtPointer)
 
 #ifdef DEBUG
 	if (ml == NULL) {
-		SoDebugError::post("SoXtMaterialList::menuPick",
-				"ml is NULL");
+		SoDebugError::post((char*)"SoXtMaterialList::menuPick",
+				(char*)"ml is NULL");
 		return;
 	}
 #endif
@@ -575,7 +575,7 @@ void SoXtMaterialList::listPick(Widget, SoXtMaterialList *ml, XtPointer p)
 		return;
 
 	// construct the file name from all our information
-	sprintf(filename, "%s/%s/%s", ml->materialDir,
+	sprintf(filename, (char*)"%s/%s/%s", ml->materialDir,
 			(char *) ml->mtlPalettes[ml->curPalette], name);
 
 	// read the file, search for SoMaterial, and pass data to callbacks
@@ -603,8 +603,8 @@ void SoXtMaterialList::listPick(Widget, SoXtMaterialList *ml, XtPointer p)
 			}
 #ifdef DEBUG
 			else {
-				SoDebugError::post("SoXtMaterialList::listPick",
-						"%s has no Material node.", filename);
+				SoDebugError::post((char*)"SoXtMaterialList::listPick",
+						(char*)"%s has no Material node.", filename);
 			}
 #endif
 
@@ -612,15 +612,15 @@ void SoXtMaterialList::listPick(Widget, SoXtMaterialList *ml, XtPointer p)
 		}
 #ifdef DEBUG
 		else {
-			SoDebugError::post("SoXtMaterialList::listPick",
-					"Cannot read file %s.", filename);
+			SoDebugError::post((char*)"SoXtMaterialList::listPick",
+					(char*)"Cannot read file %s.", filename);
 		}
 #endif
 	}
 #ifdef DEBUG
 	else {
-		SoDebugError::post("SoXtMaterialList::listPick",
-				"Cannot open file %s.", filename);
+		SoDebugError::post((char*)"SoXtMaterialList::listPick",
+				(char*)"Cannot open file %s.", filename);
 	}
 #endif
 
@@ -632,16 +632,16 @@ void SoXtMaterialList::listPick(Widget, SoXtMaterialList *ml, XtPointer p)
 //
 const char *
 SoXtMaterialList::getDefaultWidgetName() const {
-	return "SoXtMaterialList";
+	return (char*)"SoXtMaterialList";
 }
 
 const char *
 SoXtMaterialList::getDefaultTitle() const {
-	return "Material List";
+	return (char*)"Material List";
 }
 
 const char *
 SoXtMaterialList::getDefaultIconTitle() const {
-	return "Mat List";
+	return (char*)"Mat List";
 }
 

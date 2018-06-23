@@ -75,10 +75,10 @@
 #include <GL/gl.h>
 
 
-static char *helpDialogTitle = "Help Card Error Dialog";
-static char *helpCardError = "Inventor Help Cards not installed.";
-static char *helpPrgError = PDFVIEWER " not installed on this system.";
-static char *thisClassName = "SoXtComponent";
+static const char *helpDialogTitle = "Help Card Error Dialog";
+static const char *helpCardError = "Inventor Help Cards not installed.";
+static const char *helpPrgError = PDFVIEWER " not installed on this system.";
+static const char *thisClassName = "SoXtComponent";
 
 // static members
 SbDict *SoXtComponent::widgetDictionary = NULL;
@@ -139,7 +139,7 @@ SoXtComponent::SoXtComponent(
     if (topLevelShell) {
 	XtVaSetValues(parentWidget, XmNdeleteResponse, XmDO_NOTHING, NULL);
         Atom wmDeleteAtom = XmInternAtom(XtDisplay(parentWidget),
-                "WM_DELETE_WINDOW", False);
+                (char*)"WM_DELETE_WINDOW", False);
         XmAddWMProtocolCallback(parentWidget, wmDeleteAtom, 
                 (XtCallbackProc) SoXtComponent::windowCloseActionCB,
 		(XtPointer) this);
@@ -179,7 +179,7 @@ SoXtComponent::~SoXtComponent()
 	
 	if (topLevelShell && (parentWidget != NULL)) {
 	    Atom wmDeleteAtom = XmInternAtom(XtDisplay(parentWidget),
-		    "WM_DELETE_WINDOW", False);
+		    (char*)"WM_DELETE_WINDOW", False);
 	    XmRemoveWMProtocolCallback(parentWidget, wmDeleteAtom, 
 		    (XtCallbackProc) SoXtComponent::windowCloseActionCB,
 		    (XtPointer) this);

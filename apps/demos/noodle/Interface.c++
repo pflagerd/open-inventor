@@ -437,7 +437,7 @@ Interface::showFileSelectionDialog( XtCallbackProc okCB )
         // Unmanage when ok/cancel are pressed
         XtSetArg(args[n], XmNautoUnmanage, TRUE); n++;
         fileDialog = XmCreateFileSelectionDialog(
-            XtParent(mgrWidget), "File Dialog", args, n);
+            XtParent(mgrWidget), (char*)"File Dialog", args, n);
 
         XtAddCallback(fileDialog, XmNokCallback,
                       (XtCallbackProc)okCB, (XtPointer) this);

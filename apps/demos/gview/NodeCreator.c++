@@ -137,7 +137,7 @@ NodeCreator::buildWidget(Widget parent)
     ADD_ARG(XmNlistItemCount,		numStrings);
     ADD_ARG(XmNlistLabelString,		STRING("Available node types"));
     ADD_ARG(XmNokLabelString,		STRING("Accept"));
-    selBox = XmCreateSelectionDialog(parent, "NodeCreator", ARGS);
+    selBox = XmCreateSelectionDialog(parent, (char*)"NodeCreator", ARGS);
 
     // Get rid of buttons we don't need
     XtUnmanageChild(XmSelectionBoxGetChild(selBox, XmDIALOG_APPLY_BUTTON));

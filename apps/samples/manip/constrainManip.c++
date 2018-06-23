@@ -253,7 +253,7 @@ int main(int argc, char **argv)
    float rotateMin = -2.0;
    float rotateMax = 2.0;
 
-   char *fileName = NULL;
+   const char *fileName = NULL;
 
    // Try to read the command line...
    curArg = 1;

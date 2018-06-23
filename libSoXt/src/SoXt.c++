@@ -438,8 +438,8 @@ SoXt::mainLoop()
 {
     if (mainWidget == NULL) {
 #ifdef DEBUG
-	SoDebugError::post("SoXt::mainLoop",
-			   "exiting -- SoXt::init never called");
+	SoDebugError::post((char*)"SoXt::mainLoop",
+			   (char*)"exiting -- SoXt::init never called");
 #endif
 	return;
     }
@@ -508,14 +508,14 @@ SoXt::getTopLevelWidget()
 // static public
 //
 XmString
-SoXt::encodeString(char *s)
+SoXt::encodeString(const char *s)
 //
 ////////////////////////////////////////////////////////////////////////
 {
     XmString xs = NULL;
     
     if (s != NULL)
-	xs = XmStringCreate(s, XmSTRING_DEFAULT_CHARSET);
+	xs = XmStringCreate((char*)s, XmSTRING_DEFAULT_CHARSET);
 
     return xs;
 }
@@ -548,11 +548,11 @@ SoXt::decodeString(XmString xs)
 
 #ifdef DEBUG
     if (!initOK)
-	SoDebugError::post("SoXt::decodeString",
-			   "XmStringInitContext failed.");
+	SoDebugError::post((char*)"SoXt::decodeString",
+			   (char*)"XmStringInitContext failed.");
     if (!getOK)
-	SoDebugError::post("SoXt::decodeString",
-			   "XmStringGetNextSegment failed.");
+	SoDebugError::post((char*)"SoXt::decodeString",
+			   (char*)"XmStringGetNextSegment failed.");
 #endif
 
     return text;
@@ -606,8 +606,8 @@ SoXtEventHandler::setUpCallbacks()
 				      (XtPointer) this);
 	    timerOn = TRUE;
 #ifdef DEBUG
-	    if (SoDebug::GetEnv("IV_DEBUG_SENSORS")) {
-		SoDebug::RTPrintf("XtAppAddTimeOut %d msec\n", msec);
+	    if (SoDebug::GetEnv((char*)"IV_DEBUG_SENSORS")) {
+		SoDebug::RTPrintf((char*)"XtAppAddTimeOut %d msec\n", msec);
 	    }
 #endif
 	}
@@ -616,8 +616,8 @@ SoXtEventHandler::setUpCallbacks()
 	XtRemoveTimeOut(xtTimer);
 	timerOn = FALSE;
 #ifdef DEBUG
-	if (SoDebug::GetEnv("IV_DEBUG_SENSORS")) {
-	    SoDebug::RTPrintf("XtRemoveTimeOut\n");
+	if (SoDebug::GetEnv((char*)"IV_DEBUG_SENSORS")) {
+	    SoDebug::RTPrintf((char*)"XtRemoveTimeOut\n");
 	}
 #endif
     }
@@ -633,8 +633,8 @@ SoXtEventHandler::setUpCallbacks()
 				 (XtPointer) this);
 	    workProcOn = TRUE;
 #ifdef DEBUG
-	    if (SoDebug::GetEnv("IV_DEBUG_SENSORS")) {
-		SoDebug::RTPrintf("XtAppAddWorkProc\n");
+	    if (SoDebug::GetEnv((char*)"IV_DEBUG_SENSORS")) {
+		SoDebug::RTPrintf((char*)"XtAppAddWorkProc\n");
 	    }
 #endif
 	}
@@ -643,8 +643,8 @@ SoXtEventHandler::setUpCallbacks()
 	XtRemoveWorkProc(xtWorkProc);
 	workProcOn = FALSE;
 #ifdef DEBUG
-	if (SoDebug::GetEnv("IV_DEBUG_SENSORS")) {
-	    SoDebug::RTPrintf("XtRemoveWorkProc\n");
+	if (SoDebug::GetEnv((char*)"IV_DEBUG_SENSORS")) {
+	    SoDebug::RTPrintf((char*)"XtRemoveWorkProc\n");
 	}
 #endif
     }
@@ -799,7 +799,7 @@ SoXt::createSimpleErrorDialog(Widget widget,
     XtSetArg(args[n], XtNtitle, dialogTitle); n++;
     XtSetArg(args[n], XmNmessageString, xmstr); n++;
     XtSetArg(args[n], XmNdialogStyle, XmDIALOG_FULL_APPLICATION_MODAL); n++;
-    Widget dialog = XmCreateErrorDialog(shell, "Error Dialog", args, n);
+    Widget dialog = XmCreateErrorDialog(shell, (char*)"Error Dialog", args, n);
     XmStringFree(xmstr);
     
     XtUnmanageChild(XmMessageBoxGetChild(dialog, XmDIALOG_CANCEL_BUTTON));
@@ -855,7 +855,7 @@ SoXt::registerColormapLoad(Widget w, Widget shell)
 static void
 overlayMenuMappedCB(Widget w, Widget shell, XtPointer)
 {
-//printf("MAP overlayMenuMappedCB called\n");
+//printf((char*)"MAP overlayMenuMappedCB called\n");
     SoXt::addColormapToShell(w, shell);
 }
 
@@ -867,7 +867,7 @@ overlayMenuMappedCB(Widget w, Widget shell, XtPointer)
 static void
 overlayMenuUnmappedCB(Widget w, Widget shell, XtPointer)
 {
-//printf("UNMAP overlayMenuUnmappedCB called\n");
+//printf((char*)"UNMAP overlayMenuUnmappedCB called\n");
     SoXt::removeColormapFromShell(w, shell);
 }
 

@@ -558,20 +558,20 @@ Initialize(Widget rw, Widget nw, ArgList args, Cardinal *num_args)
 
   GetForegroundGC(new_w);
 
-  new_w->thumbWheel.pix1 = (int)NULL;
-  new_w->thumbWheel.pix2 = (int)NULL;
-  new_w->thumbWheel.pix3 = (int)NULL;
-  new_w->thumbWheel.pix4 = (int)NULL;
-  new_w->thumbWheel.pix1_hilite = (int)NULL;
-  new_w->thumbWheel.pix2_hilite = (int)NULL;
-  new_w->thumbWheel.pix3_hilite = (int)NULL;
-  new_w->thumbWheel.pix4_hilite = (int)NULL;
-  new_w->thumbWheel.current_quiet_pixmap = (int)NULL;
-  new_w->thumbWheel.current_hilite_pixmap = (int)NULL;
+  new_w->thumbWheel.pix1 = (typeof(new_w->thumbWheel.pix1))NULL;
+  new_w->thumbWheel.pix2 = (typeof(new_w->thumbWheel.pix2))NULL;
+  new_w->thumbWheel.pix3 = (typeof(new_w->thumbWheel.pix3))NULL;
+  new_w->thumbWheel.pix4 = (typeof(new_w->thumbWheel.pix4))NULL;
+  new_w->thumbWheel.pix1_hilite = (typeof(new_w->thumbWheel.pix1_hilite))NULL;
+  new_w->thumbWheel.pix2_hilite = (typeof(new_w->thumbWheel.pix2_hilite))NULL;
+  new_w->thumbWheel.pix3_hilite = (typeof(new_w->thumbWheel.pix3_hilite))NULL;
+  new_w->thumbWheel.pix4_hilite = (typeof(new_w->thumbWheel.pix4_hilite))NULL;
+  new_w->thumbWheel.current_quiet_pixmap = (typeof(new_w->thumbWheel.current_quiet_pixmap))NULL;
+  new_w->thumbWheel.current_hilite_pixmap = (typeof(new_w->thumbWheel.current_hilite_pixmap))NULL;
   new_w->thumbWheel.wheel_hilite = FALSE;
 
-  new_w->thumbWheel.button_quiet_pixmap = (int)NULL;
-  new_w->thumbWheel.button_hilite_pixmap = (int)NULL;
+  new_w->thumbWheel.button_quiet_pixmap = (typeof(new_w->thumbWheel.button_quiet_pixmap))NULL;
+  new_w->thumbWheel.button_hilite_pixmap = (typeof(new_w->thumbWheel.button_hilite_pixmap))NULL;
   new_w->thumbWheel.button_hilite = FALSE;
 }
 

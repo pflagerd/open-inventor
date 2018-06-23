@@ -179,7 +179,7 @@ enum ZoomSliderVars {
     XmToggleButtonSetState((Widget) BUTTON, False, False)
 
 
-static char *thisClassName = "SoXtFullViewer";
+static const char *thisClassName = "SoXtFullViewer";
 
 
 // Resources for labels.
@@ -753,7 +753,7 @@ SoXtFullViewer::buildPopupMenu()
 #ifdef MENUS_IN_POPUP
     SoXt::getPopupArgs(XtDisplay(mgrWidget), SCREEN(mgrWidget), args, &n);
 #endif
-    popupWidget = XmCreatePopupMenu(mgrWidget, "menu", args, n);
+    popupWidget = XmCreatePopupMenu(mgrWidget, (char*)"menu", args, n);
     
 #ifdef MENUS_IN_POPUP
     // register callbacks to load/unload the pulldown colormap when the
@@ -768,7 +768,7 @@ SoXtFullViewer::buildPopupMenu()
     if (popupTitle == NULL)
     	popupTitle = strdup( rl.viewerMenu );
     buttons[butnum++] = XtCreateWidget(popupTitle, xmLabelGadgetClass, popupWidget, NULL, 0);
-    buttons[butnum++] = XtCreateWidget("sep", xmSeparatorGadgetClass, popupWidget, NULL, 0);
+    buttons[butnum++] = XtCreateWidget((char*)"sep", xmSeparatorGadgetClass, popupWidget, NULL, 0);
     
     //
     // create the submenus
@@ -828,7 +828,7 @@ SoXtFullViewer::buildFunctionsSubmenu(Widget popup)
     Widget  buttons[15];
     
     // create a cascade menu entry which will bring the submenu
-    Widget cascade = XtCreateWidget("Functions", xmCascadeButtonGadgetClass, 
+    Widget cascade = XtCreateWidget((char*)"Functions", xmCascadeButtonGadgetClass,
     	popup, NULL, 0);
     
     // create the submenu widget
@@ -836,7 +836,7 @@ SoXtFullViewer::buildFunctionsSubmenu(Widget popup)
 #ifdef MENUS_IN_POPUP
     SoXt::getPopupArgs(XtDisplay(popup),SCREEN(popup), args, &n);
 #endif
-    Widget submenu = XmCreatePulldownMenu(popup, "functions", args, n);
+    Widget submenu = XmCreatePulldownMenu(popup, (char*)"functions", args, n);
     
     XtSetArg(args[0], XmNsubMenuId, submenu);
     XtSetValues(cascade, args, 1);
@@ -859,7 +859,7 @@ SoXtFullViewer::buildFunctionsSubmenu(Widget popup)
     ADD_ENTRY("View All", VIEW_ALL)
     ADD_ENTRY("Seek", SEEK)
     
-    buttons[butnum++] = XtCreateWidget("sep", xmSeparatorGadgetClass, submenu, NULL, 0);
+    buttons[butnum++] = XtCreateWidget((char*)"sep", xmSeparatorGadgetClass, submenu, NULL, 0);
     
     ADD_ENTRY("Copy View", COPY_VIEW)
     ADD_ENTRY("Paste View", PASTE_VIEW)
@@ -888,7 +888,7 @@ SoXtFullViewer::buildDrawStyleSubmenu(Widget popup)
     Widget  buttons[30];
     
     // create a cascade menu entry which will bring the submenu
-    Widget cascade = XtCreateWidget("Draw Style", xmCascadeButtonGadgetClass, 
+    Widget cascade = XtCreateWidget((char*)"Draw Style", xmCascadeButtonGadgetClass,
     	popup, NULL, 0);
     
     // create the submenu widget
@@ -896,7 +896,7 @@ SoXtFullViewer::buildDrawStyleSubmenu(Widget popup)
 #ifdef MENUS_IN_POPUP
     SoXt::getPopupArgs(XtDisplay(popup), SCREEN(popup), args, &n);
 #endif
-    Widget submenu = XmCreatePulldownMenu(popup, "draw style", args, n);
+    Widget submenu = XmCreatePulldownMenu(popup, (char*)"draw style", args, n);
     
     XtSetArg(args[0], XmNsubMenuId, submenu);
     XtSetValues(cascade, args, 1);
@@ -924,7 +924,7 @@ SoXtFullViewer::buildDrawStyleSubmenu(Widget popup)
     ADD_ENTRY("points", POINT, drawType == SoXtViewer::VIEW_POINT)
     ADD_ENTRY("bounding box (no depth)", BBOX, drawType == SoXtViewer::VIEW_BBOX)
     
-    buttons[butnum++] = XtCreateWidget("sep", xmSeparatorGadgetClass, submenu, NULL, 0);
+    buttons[butnum++] = XtCreateWidget((char*)"sep", xmSeparatorGadgetClass, submenu, NULL, 0);
     
     drawType = getDrawStyle(SoXtViewer::INTERACTIVE);
     ADD_ENTRY("move same as still", MOVE_SAME_AS, drawType == SoXtViewer::VIEW_SAME_AS_STILL)
@@ -937,7 +937,7 @@ SoXtFullViewer::buildDrawStyleSubmenu(Widget popup)
     ADD_ENTRY("move bounding box (no depth)", MOVE_BBOX, drawType == SoXtViewer::VIEW_BBOX)
 #undef ADD_ENTRY
     
-    buttons[butnum++] = XtCreateWidget("sep", xmSeparatorGadgetClass, submenu, NULL, 0);
+    buttons[butnum++] = XtCreateWidget((char*)"sep", xmSeparatorGadgetClass, submenu, NULL, 0);
     
     //
     // create the second part of this sub menu

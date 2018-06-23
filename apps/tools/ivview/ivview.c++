@@ -753,7 +753,7 @@ getNewScene()
         // Unmanage when ok/cancel are pressed
         XtSetArg(args[n], XmNautoUnmanage, TRUE); n++;
         fileDialog = XmCreateFileSelectionDialog(
-            shell, "File Dialog", args, n);
+            shell, (char*)"File Dialog", args, n);
 
         XtAddCallback(fileDialog, XmNokCallback,
                       (XtCallbackProc)newSceneCB, NULL);
@@ -899,7 +899,7 @@ buildAndLayoutMenus(Widget parent)
     // 
     // Create the topbar menu
     //
-    Widget menuWidget = XmCreateMenuBar(parent, "menuBar", NULL, 0);
+    Widget menuWidget = XmCreateMenuBar(parent, (char*)"menuBar", NULL, 0);
 
     Arg popupargs[4];
     int popupn = 0;
@@ -920,7 +920,7 @@ buildAndLayoutMenus(Widget parent)
         // Make Topbar menu button
 	//
         Widget subMenu = 
-		XmCreatePulldownMenu(menuWidget, "subMenu", popupargs, popupn);
+		XmCreatePulldownMenu(menuWidget, (char*)"subMenu", popupargs, popupn);
 
 #ifdef MENUS_IN_POPUP
 	// register callbacks to load/unload the pulldown colormap when the
@@ -932,7 +932,7 @@ buildAndLayoutMenus(Widget parent)
         menuItems[id].widget = subMenu;
 
         XtSetArg(args[0], XmNsubMenuId, subMenu);
-        buttons[i] = XtCreateWidget(pulldownData[i].name,
+        buttons[i] = XtCreateWidget((char*)pulldownData[i].name,
             		xmCascadeButtonGadgetClass, menuWidget, args, 1);
 
 	//
@@ -977,21 +977,21 @@ buildAndLayoutMenus(Widget parent)
 		//
                 // Check for keyboard accelerator
 		//
-                char *accel = pulldownData[i].subMenu[j].accelerator;
-                char *accelText = pulldownData[i].subMenu[j].accelText;
+                const char *accel = pulldownData[i].subMenu[j].accelerator;
+                const char *accelText = pulldownData[i].subMenu[j].accelText;
                 XmString xmstr = NULL;
                 if (accel != NULL) {
                     XtSetArg(args[n], XmNaccelerator, accel); n++;
 
                     if (accelText != NULL) {
-                        xmstr = XmStringCreate(accelText,
+                        xmstr = XmStringCreate((char*)accelText,
                                          XmSTRING_DEFAULT_CHARSET);
                         XtSetArg(args[n], XmNacceleratorText, xmstr); n++;
                     }
                 }
 
                 subButtons[j] = XtCreateWidget(
-					pulldownData[i].subMenu[j].name,
+					(char*)pulldownData[i].subMenu[j].name,
                     			widgetClass, subMenu, args, n);
                 if (xmstr != NULL)
                     XmStringFree(xmstr);

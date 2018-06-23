@@ -88,11 +88,11 @@ NoodleSurfaceGizmo::buildWidget(
     _rowCol = XtCreateManagedWidget(getWidgetName(),xmRowColumnWidgetClass,
 					parent,NULL, 0);
 
-#define STRING(a) XmStringCreate(a,XmSTRING_DEFAULT_CHARSET)
+#define STRING(a) XmStringCreate((char*)a,XmSTRING_DEFAULT_CHARSET)
 
     // Flip Normals button
     XtSetArg(resources[n], XmNlabelString, STRING("Flip Normals")); ++n;
-    flipNormButton = XmCreatePushButtonGadget(_rowCol, "flip",
+    flipNormButton = XmCreatePushButtonGadget(_rowCol, (char*)"flip",
 						 resources, n); n = 0;
     XtAddCallback(flipNormButton, XmNactivateCallback,
 		  NoodleSurfaceGizmo::flipNormCallback, (XtPointer)this);
@@ -101,7 +101,7 @@ NoodleSurfaceGizmo::buildWidget(
     // Crease Angle.
     // Label...
     XtSetArg(resources[n], XmNlabelString, STRING("Crease Angle:")); ++n;
-    Widget creaseLabel = XmCreateLabelGadget(_rowCol, "Crease Angle",
+    Widget creaseLabel = XmCreateLabelGadget(_rowCol, (char*)"Crease Angle",
 						 resources, n); n = 0;
     XtManageChild(creaseLabel);
     // Slider...
@@ -116,13 +116,13 @@ NoodleSurfaceGizmo::buildWidget(
     
     // Min Num rows label
     XtSetArg(resources[n], XmNlabelString, STRING("Min num rows:")); ++n;
-    Widget numRowsLabel = XmCreateLabelGadget(_rowCol, "Min num rows",
+    Widget numRowsLabel = XmCreateLabelGadget(_rowCol, (char*)"Min num rows",
 						 resources, n); n = 0;
     XtManageChild(numRowsLabel);
     // Min Num rows input
     XtSetArg(resources[n], XmNcolumns, 3); ++n;
     XtSetArg(resources[n], XmNeditMode, XmSINGLE_LINE_EDIT); ++n;
-    minNumRowsEdit = XmCreateText(_rowCol, "minNumRowsEdit",
+    minNumRowsEdit = XmCreateText(_rowCol, (char*)"minNumRowsEdit",
 				     resources, n); n = 0;
     XtAddCallback(minNumRowsEdit, XmNactivateCallback,
 		  NoodleSurfaceGizmo::minNumRowsCallback, (XtPointer)this);
@@ -130,13 +130,13 @@ NoodleSurfaceGizmo::buildWidget(
 
     // Min Num cols label
     XtSetArg(resources[n], XmNlabelString, STRING("Min num cols:")); ++n;
-    Widget numColsLabel = XmCreateLabelGadget(_rowCol, "Min num cols",
+    Widget numColsLabel = XmCreateLabelGadget(_rowCol, (char*)"Min num cols",
 						 resources, n); n = 0;
     XtManageChild(numColsLabel);
     // Min Num cols input
     XtSetArg(resources[n], XmNcolumns, 3); ++n;
     XtSetArg(resources[n], XmNeditMode, XmSINGLE_LINE_EDIT); ++n;
-    minNumColsEdit = XmCreateText(_rowCol, "minNumColsEdit",
+    minNumColsEdit = XmCreateText(_rowCol, (char*)"minNumColsEdit",
 				     resources, n); n = 0;
     XtAddCallback(minNumColsEdit, XmNactivateCallback,
 		  NoodleSurfaceGizmo::minNumColsCallback, (XtPointer)this);

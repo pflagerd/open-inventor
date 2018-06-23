@@ -54,7 +54,7 @@ void *MyDropSite::dropCBData = NULL;
 Atom MyDropSite::importList[10];
 int MyDropSite::numImportTargets;
 
-#define _ATOM_(NAME) (XmInternAtom(XtDisplay(siteWidget), NAME, False))
+#define _ATOM_(NAME) (XmInternAtom(XtDisplay(siteWidget), (char*)NAME, False))
 
 /////////////////////////////////////////////////////////////////////////////
 //

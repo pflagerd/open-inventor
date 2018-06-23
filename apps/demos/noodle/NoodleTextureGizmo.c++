@@ -85,11 +85,11 @@ NoodleTextureGizmo::buildWidget(
     _rowCol = XtCreateManagedWidget(getWidgetName(),xmRowColumnWidgetClass,
 					parent,NULL, 0);
 
-#define STRING(a) XmStringCreate(a,XmSTRING_DEFAULT_CHARSET)
+#define STRING(a) XmStringCreate((char*)a,XmSTRING_DEFAULT_CHARSET)
 
     // Texture on/off Toggle Button
     XtSetArg(resources[n], XmNlabelString, STRING("TextureOnOff")); ++n;
-    textureToggle = XmCreateToggleButtonGadget(_rowCol, "textureOnOff",
+    textureToggle = XmCreateToggleButtonGadget(_rowCol, (char*)"textureOnOff",
 						 resources, n); n = 0;
     XtAddCallback(textureToggle, XmNvalueChangedCallback,
 		  NoodleTextureGizmo::textureToggleCallback, (XtPointer)this);
@@ -98,7 +98,7 @@ NoodleTextureGizmo::buildWidget(
     // Texture repeat in X-direction.
     // Label...
     XtSetArg(resources[n], XmNlabelString, STRING("X repeat:")); ++n;
-    Widget xRepeatLabel = XmCreateLabelGadget(_rowCol, "X repeat",
+    Widget xRepeatLabel = XmCreateLabelGadget(_rowCol, (char*)"X repeat",
 						 resources, n); n = 0;
     XtManageChild(xRepeatLabel);
     // Slider...
@@ -115,7 +115,7 @@ NoodleTextureGizmo::buildWidget(
     // Texture repeat in Y-direction.
     // Label...
     XtSetArg(resources[n], XmNlabelString, STRING("Y repeat:")); ++n;
-    Widget yRepeatLabel = XmCreateLabelGadget(_rowCol, "Y repeat",
+    Widget yRepeatLabel = XmCreateLabelGadget(_rowCol, (char*)"Y repeat",
 						 resources, n); n = 0;
     XtManageChild(yRepeatLabel);
     // Slider...
@@ -133,7 +133,7 @@ NoodleTextureGizmo::buildWidget(
     // Texture translate in X-direction.
     // Label...
     XtSetArg(resources[n], XmNlabelString, STRING("X transl:")); ++n;
-    Widget xTranslLabel = XmCreateLabelGadget(_rowCol, "X transl",
+    Widget xTranslLabel = XmCreateLabelGadget(_rowCol, (char*)"X transl",
 						 resources, n); n = 0;
     XtManageChild(xTranslLabel);
     // Slider...
@@ -150,7 +150,7 @@ NoodleTextureGizmo::buildWidget(
     // Texture translate in Y-direction.
     // Label...
     XtSetArg(resources[n], XmNlabelString, STRING("Y transl:")); ++n;
-    Widget yTranslLabel = XmCreateLabelGadget(_rowCol, "Y transl",
+    Widget yTranslLabel = XmCreateLabelGadget(_rowCol, (char*)"Y transl",
 						 resources, n); n = 0;
     XtManageChild(yTranslLabel);
     // Slider...
@@ -168,7 +168,7 @@ NoodleTextureGizmo::buildWidget(
     // Texture rotation angle.
     // Label...
     XtSetArg(resources[n], XmNlabelString, STRING("Rotation:")); ++n;
-    Widget texRotationLabel = XmCreateLabelGadget(_rowCol, "Rotation",
+    Widget texRotationLabel = XmCreateLabelGadget(_rowCol, (char*)"Rotation",
 						 resources, n); n = 0;
     XtManageChild(texRotationLabel);
     // Slider...

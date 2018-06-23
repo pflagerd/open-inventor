@@ -250,7 +250,7 @@ TsField::buildWidget(
     viewer      = new TsViewer(parent, name);
 
     // Create all of the widgets for the game and put them in a form widget
-    Widget widget          = XmCreateForm( parent, "form", NULL, 0 );
+    Widget widget          = XmCreateForm( parent, (char*)"form", NULL, 0 );
     Widget viewerWidget    = viewer->getWidget();
 
     viewer->setSize( SbVec2s( 660, 990 ) );

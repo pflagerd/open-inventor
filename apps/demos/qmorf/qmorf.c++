@@ -558,7 +558,7 @@ buildUI( Widget appWindow,
     Arg resources[20]; int n = 0;
     XtSetArg(resources[n], "width", 600); n++;
     XtSetArg(resources[n], "height", 600); n++;
-    Widget form = XmCreateForm(appWindow, "form", resources, n); n = 0;
+    Widget form = XmCreateForm(appWindow, (char*)"form", resources, n); n = 0;
 
     //
     // 8 widgets at bottom of window:
@@ -566,12 +566,12 @@ buildUI( Widget appWindow,
     //
     Widget w[8];
 
-#define STRING(a) XmStringCreateSimple(a)
+#define STRING(a) XmStringCreateSimple((char*)a)
     XtSetArg(resources[n], XmNlabelString, STRING("Animate")); ++n;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); ++n;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); ++n;
     XtSetArg(resources[n], XmNset, 1); ++n;
-    w[2] = XmCreateToggleButtonGadget(form, "colorAnimate", resources,
+    w[2] = XmCreateToggleButtonGadget(form, (char*)"colorAnimate", resources,
 				      n);
     XtAddCallback(w[2], XmNvalueChangedCallback,
 		  toggleAnimation, (XtPointer)(unsigned long)COLOR);
@@ -581,7 +581,7 @@ buildUI( Widget appWindow,
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); ++n;
     XtSetArg(resources[n], XmNbottomWidget, w[2]); n++;
     XtSetArg(resources[n], XmNset, 1); ++n;
-    w[5] = XmCreateToggleButtonGadget(form, "shapeAnimate", resources,
+    w[5] = XmCreateToggleButtonGadget(form, (char*)"shapeAnimate", resources,
 				      n);
     XtAddCallback(w[5], XmNvalueChangedCallback,
 		  toggleAnimation, (XtPointer)(unsigned long)SHAPE);
@@ -590,7 +590,7 @@ buildUI( Widget appWindow,
     XtSetArg(resources[n], XmNlabelString, STRING("Quit")); ++n;
     XtSetArg(resources[n], XmNleftAttachment, XmATTACH_FORM); ++n;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); ++n;
-    w[7] = XmCreatePushButtonGadget(form, "quit", resources, n);
+    w[7] = XmCreatePushButtonGadget(form, (char*)"quit", resources, n);
     XtAddCallback(w[7], XmNactivateCallback,
 		  quitCallback, NULL);
     n = 0;
@@ -598,7 +598,7 @@ buildUI( Widget appWindow,
     XtSetArg(resources[n], XmNleftAttachment, XmATTACH_FORM); ++n;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); ++n;
     XtSetArg(resources[n], XmNbottomWidget, w[7]); ++n;
-    w[6] = XmCreatePushButtonGadget(form, "about", resources, n);
+    w[6] = XmCreatePushButtonGadget(form, (char*)"about", resources, n);
     XtAddCallback(w[6], XmNactivateCallback,
 		  showAboutDialog, NULL);
     n = 0;
@@ -607,7 +607,7 @@ buildUI( Widget appWindow,
     XtSetArg(resources[n], XmNleftAttachment, XmATTACH_WIDGET); ++n;
     XtSetArg(resources[n], XmNleftWidget, w[6]); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); ++n;
-    w[0] = XmCreateLabelGadget(form, "colorLabel", resources, n);
+    w[0] = XmCreateLabelGadget(form, (char*)"colorLabel", resources, n);
     n = 0;
     XtSetArg(resources[n], XmNlabelString, STRING("Shape")); ++n;
     XtSetArg(resources[n], XmNleftAttachment, XmATTACH_WIDGET); ++n;
@@ -615,7 +615,7 @@ buildUI( Widget appWindow,
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); ++n;
     XtSetArg(resources[n], XmNbottomWidget, w[2]); n++;
     XtSetArg(resources[n], XmNbottomOffset, 4); ++n;
-    w[3] = XmCreateLabelGadget(form, "shapeLabel", resources, n);
+    w[3] = XmCreateLabelGadget(form, (char*)"shapeLabel", resources, n);
     n = 0;
 
     XtSetArg(resources[n], XmNmaximum, SLIDER_MAX + SLIDER_MAX/20); ++n;
@@ -631,7 +631,7 @@ buildUI( Widget appWindow,
     XtSetArg(resources[n], XmNrightWidget, w[2]); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); ++n;
     XtSetArg(resources[n], XmNbottomOffset, 4); ++n;
-    w[1] = XmCreateScrollBar(form, "colorScrollbar", resources, n);
+    w[1] = XmCreateScrollBar(form, (char*)"colorScrollbar", resources, n);
     sliders[COLOR] = w[1];
     XtAddCallback(w[1], XmNdragCallback,
 		  dragColorSlider, (XtPointer)w[2]);
@@ -645,7 +645,7 @@ buildUI( Widget appWindow,
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); ++n;
     XtSetArg(resources[n], XmNbottomWidget, w[1]); n++;
     XtSetArg(resources[n], XmNbottomOffset, 10); ++n;
-    w[4] = XmCreateScrollBar(form, "shapeScrollbar", resources, n);
+    w[4] = XmCreateScrollBar(form, (char*)"shapeScrollbar", resources, n);
     sliders[SHAPE] = w[4];
     XtAddCallback(w[4], XmNdragCallback,
 		  dragShapeSlider, (XtPointer)w[5]);

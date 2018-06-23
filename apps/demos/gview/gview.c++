@@ -306,12 +306,12 @@ buildMenu(Widget parent)
     ADD_TOP_FORM(0);
     ADD_LEFT_FORM(0);
     ADD_RIGHT_FORM(0);
-    menu = XmCreateMenuBar(parent, "menuBar", ARGS);
+    menu = XmCreateMenuBar(parent, (char*)"menuBar", ARGS);
 
     // Create a pulldown menu in the pop-up planes
     RESET_ARGS();
     SoXt::getPopupArgs(XtDisplay(menu), SCREEN(menu), args, &argN);
-    pulldown = XmCreatePulldownMenu(menu, "pulldown", ARGS);
+    pulldown = XmCreatePulldownMenu(menu, (char*)"pulldown", ARGS);
 
     // register callbacks to load/unload the pulldown colormap when the
     // pulldown menu is posted.
@@ -321,26 +321,26 @@ buildMenu(Widget parent)
     RESET_ARGS();
     ADD_ARG(XmNsubMenuId,	pulldown);
     ADD_ARG(XmNlabelString,	STRING("gview"));
-    cascade = XmCreateCascadeButtonGadget(menu, "cascade", ARGS);
+    cascade = XmCreateCascadeButtonGadget(menu, (char*)"cascade", ARGS);
     XtManageChild(cascade);
 
     // Add buttons
     RESET_ARGS();
     ADD_ARG(XmNlabelString, STRING("Save in gview.iv"));
-    but = XmCreatePushButtonGadget(pulldown, "Save in gview.iv", ARGS);
+    but = XmCreatePushButtonGadget(pulldown, (char*)"Save in gview.iv", ARGS);
     XtAddCallback(but, XmNactivateCallback, saveCB, (XtPointer) NULL);
     XtManageChild(but);
 
     RESET_ARGS();
     ADD_ARG(XmNlabelString, STRING("Save display graph in disp.iv"));
     but = XmCreatePushButtonGadget(pulldown,
-				   "Save display graph in disp.iv", ARGS);
+				   (char*)"Save display graph in disp.iv", ARGS);
     XtAddCallback(but, XmNactivateCallback, saveDispCB, (XtPointer) NULL);
     XtManageChild(but);
 
     RESET_ARGS();
     ADD_ARG(XmNlabelString, STRING("Quit"));
-    but = XmCreatePushButtonGadget(pulldown, "Quit", ARGS);
+    but = XmCreatePushButtonGadget(pulldown, (char*)"Quit", ARGS);
     XtAddCallback(but, XmNactivateCallback, quitCB, (XtPointer) NULL);
     XtManageChild(but);
 
@@ -430,7 +430,7 @@ main(int argc, char **argv)
     // Create an examiner viewer and a graph viewer. Lay them out side
     // by side in a form widget, with a separator between them and the
     // menu at the top
-    formWidget = XmCreateForm(appWindow, "form", NULL, 0);
+    formWidget = XmCreateForm(appWindow, (char*)"form", NULL, 0);
 
     // Create the top-bar menu
     menu = buildMenu(formWidget);
@@ -448,7 +448,7 @@ main(int argc, char **argv)
     graphViewer->addDeselectionCallback(graphDeselectionCB, NULL);
     graphWidget = graphViewer->getWidget();
 
-    sepWidget = XmCreateSeparatorGadget(formWidget, "separator", NULL, 0);
+    sepWidget = XmCreateSeparatorGadget(formWidget, (char*)"separator", NULL, 0);
 
     RESET_ARGS();
     ADD_TOP_FORM(0);

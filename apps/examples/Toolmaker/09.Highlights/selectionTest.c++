@@ -63,7 +63,7 @@ main(int , char *argv[])
     
    // Open the data file
    SoInput in;   
-   char *datafile = "apps/examples/data/monitor.iv";
+   const char *datafile = "apps/examples/data/monitor.iv";
    if (! in.openFile(datafile)) {
       fprintf(stderr, "Cannot open %s for reading.\n", datafile);
       exit(1);

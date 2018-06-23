@@ -307,7 +307,7 @@ main(int argc, char **argv)
 	// First, tell it to do nothing automatically
         XtVaSetValues(mainWindow,XmNdeleteResponse, XmDO_NOTHING, NULL);
 	Atom vmDeleteAtom = XmInternAtom(XtDisplay(mainWindow),
-		"WM_DELETE_WINDOW", False);
+		(char*)"WM_DELETE_WINDOW", False);
 	XmAddWMProtocolCallback(mainWindow, vmDeleteAtom,
 		(XtCallbackProc) quitCallback, (XtPointer) interface);
 
@@ -335,12 +335,12 @@ main(int argc, char **argv)
 	int n = 0;
 	XtSetArg(resources[n], "width", 1200); n++;
 	XtSetArg(resources[n], "height", 800); n++;
-	Widget form = XmCreateForm(mainWindow, "form", resources, n); n = 0;
+	Widget form = XmCreateForm(mainWindow, (char*)"form", resources, n); n = 0;
 
     // Build the interface (pulldowns). Get back the topmost widget it creates.
 	Widget menuWidget = interface->build( form );
 
-#define STRING(a) XmStringCreate(a,XmSTRING_DEFAULT_CHARSET)
+#define STRING(a) XmStringCreate((char*)a, XmSTRING_DEFAULT_CHARSET)
     
     // And the five viewers (one to edit the cross section, one to
     // edit the spine, one to edit the profile (scale of the cross section as
@@ -358,7 +358,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_POSITION); n++;
     XtSetArg(resources[n], XmNbottomPosition, 45); n++;
-    Widget frame2 = XmCreateFrame(form, "renderAreaFrame", resources,
+    Widget frame2 = XmCreateFrame(form, (char*)"renderAreaFrame", resources,
 				  n); n = 0;
 
     // Create the examiner viewer...
@@ -395,7 +395,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightPosition, 33); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_POSITION); n++;
     XtSetArg(resources[n], XmNbottomPosition, 45); n++;
-    Widget form1 = XmCreateForm(form, "profileViewForm", resources,
+    Widget form1 = XmCreateForm(form, (char*)"profileViewForm", resources,
 				  n); n = 0;
 
     // Row Column - goes along bottom edge of form, contains a button.
@@ -404,11 +404,11 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNadjustLast, FALSE); ++n;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget rc1 = XmCreateRowColumn(form1, "profileStuff",
+    Widget rc1 = XmCreateRowColumn(form1, (char*)"profileStuff",
 				  resources, n); n = 0;
     // Close profile button
     XtSetArg(resources[n], XmNlabelString, STRING("Close Profile")); ++n;
-    closeProfileButton = XmCreateToggleButtonGadget(rc1, "closeProfile",
+    closeProfileButton = XmCreateToggleButtonGadget(rc1, (char*)"closeProfile",
 						 resources, n); n = 0;
     XmToggleButtonSetState( closeProfileButton, 
 				curNoodle->profileClosed.getValue(), FALSE );
@@ -419,7 +419,7 @@ main(int argc, char **argv)
 
     // Clear profile button
     XtSetArg(resources[n], XmNlabelString, STRING("Clear Profile")); ++n;
-    Widget clearProfileButton = XmCreatePushButtonGadget(rc1, "clearProfile",
+    Widget clearProfileButton = XmCreatePushButtonGadget(rc1, (char*)"clearProfile",
 						 resources, n); n = 0;
     XtAddCallback(clearProfileButton, XmNactivateCallback,
 		  clearProfileCallback, (XtPointer)closeProfileButton);
@@ -432,7 +432,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); n++;
     XtSetArg(resources[n], XmNbottomWidget, rc1); n++;
-    Widget frame1 = XmCreateFrame(form1, "profileViewFrame", resources,
+    Widget frame1 = XmCreateFrame(form1, (char*)"profileViewFrame", resources,
 				  n); n = 0;
     // Put viewer in frame
     profilePlaneViewer = new SoXtPlaneViewer(frame1);
@@ -456,7 +456,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_POSITION); n++;
     XtSetArg(resources[n], XmNrightPosition, 33); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget form3 = XmCreateForm(form, "crossSectionViewForm", resources,
+    Widget form3 = XmCreateForm(form, (char*)"crossSectionViewForm", resources,
 				  n); n = 0;
 
     // Row Column - goes along bottom edge of form, contains a button.
@@ -465,11 +465,11 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNadjustLast, FALSE); ++n;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget rc3 = XmCreateRowColumn(form3, "crossSectionStuff",
+    Widget rc3 = XmCreateRowColumn(form3, (char*)"crossSectionStuff",
 				  resources, n); n = 0;
     // Close crossSection button
     XtSetArg(resources[n], XmNlabelString, STRING("Close Section")); ++n;
-    closeSectionButton = XmCreateToggleButtonGadget(rc3, "closeSection",
+    closeSectionButton = XmCreateToggleButtonGadget(rc3, (char*)"closeSection",
 						 resources, n); n = 0;
     XmToggleButtonSetState( closeSectionButton, 
 			    curNoodle->crossSectionClosed.getValue(), FALSE );
@@ -480,7 +480,7 @@ main(int argc, char **argv)
 
     // Clear crossSection button
     XtSetArg(resources[n], XmNlabelString, STRING("Clear Section")); ++n;
-    Widget clearSectionButton = XmCreatePushButtonGadget(rc3, "clearSection",
+    Widget clearSectionButton = XmCreatePushButtonGadget(rc3, (char*)"clearSection",
 						 resources, n); n = 0;
     XtAddCallback(clearSectionButton, XmNactivateCallback,
 		  clearSectionCallback, (XtPointer)closeSectionButton);
@@ -489,7 +489,7 @@ main(int argc, char **argv)
 
     // circular section button
     XtSetArg(resources[n], XmNlabelString, STRING("Circle")); ++n;
-    Widget circularSectionButton = XmCreatePushButtonGadget(rc3,"circle",
+    Widget circularSectionButton = XmCreatePushButtonGadget(rc3,(char*)"circle",
 						 resources, n); n = 0;
     XtAddCallback(circularSectionButton, XmNactivateCallback,
 		  circularSectionCallback, (XtPointer)circularSectionButton);
@@ -498,7 +498,7 @@ main(int argc, char **argv)
 
     // reverse section button
     XtSetArg(resources[n], XmNlabelString, STRING("Reverse Order")); ++n;
-    Widget reverseSectionButton = XmCreatePushButtonGadget(rc3,"circle",
+    Widget reverseSectionButton = XmCreatePushButtonGadget(rc3,(char*)"circle",
 						 resources, n); n = 0;
     XtAddCallback(reverseSectionButton, XmNactivateCallback,
 		  reverseSectionCallback, (XtPointer)reverseSectionButton);
@@ -511,7 +511,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); n++;
     XtSetArg(resources[n], XmNbottomWidget, rc3); n++;
-    Widget frame3 = XmCreateFrame(form3, "crossSectionViewFrame", resources,
+    Widget frame3 = XmCreateFrame(form3, (char*)"crossSectionViewFrame", resources,
 				  n); n = 0;
     // Put viewer in frame
     crossSectionPlaneViewer = new SoXtPlaneViewer(frame3);
@@ -537,7 +537,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_POSITION); n++;
     XtSetArg(resources[n], XmNrightPosition, 66); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget form4 = XmCreateForm(form, "spineViewForm", resources,
+    Widget form4 = XmCreateForm(form, (char*)"spineViewForm", resources,
 				  n); n = 0;
 
     // Row Column - goes along bottom edge of form, contains a button.
@@ -546,11 +546,11 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNadjustLast, FALSE); ++n;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget rc4 = XmCreateRowColumn(form4, "spineStuff",
+    Widget rc4 = XmCreateRowColumn(form4, (char*)"spineStuff",
 				  resources, n); n = 0;
     // Close spine button
     XtSetArg(resources[n], XmNlabelString, STRING("Close Spine")); ++n;
-    closeSpineButton = XmCreateToggleButtonGadget(rc4, "closeSpine",
+    closeSpineButton = XmCreateToggleButtonGadget(rc4, (char*)"closeSpine",
 						 resources, n); n = 0;
     XmToggleButtonSetState( closeSpineButton, 
 				curNoodle->spineClosed.getValue(), FALSE );
@@ -561,7 +561,7 @@ main(int argc, char **argv)
 
     // Clear spine button
     XtSetArg(resources[n], XmNlabelString, STRING("Clear Spine")); ++n;
-    Widget clearSpineButton = XmCreatePushButtonGadget(rc4, "clearSpine",
+    Widget clearSpineButton = XmCreatePushButtonGadget(rc4, (char*)"clearSpine",
 						 resources, n); n = 0;
     XtAddCallback(clearSpineButton, XmNactivateCallback,
 		  clearSpineCallback, (XtPointer)closeSpineButton);
@@ -570,7 +570,7 @@ main(int argc, char **argv)
 
     // circular spine button
     XtSetArg(resources[n], XmNlabelString, STRING("Circle")); ++n;
-    Widget circularSpineButton = XmCreatePushButtonGadget(rc4,"circle",
+    Widget circularSpineButton = XmCreatePushButtonGadget(rc4,(char*)"circle",
 						 resources, n); n = 0;
     XtAddCallback(circularSpineButton, XmNactivateCallback,
 		  circularSpineCallback, (XtPointer)circularSpineButton);
@@ -579,7 +579,7 @@ main(int argc, char **argv)
 
     // Semi-circular spine button
     XtSetArg(resources[n], XmNlabelString, STRING("Semi-circle")); ++n;
-    Widget semiCircularSpineButton = XmCreatePushButtonGadget(rc4, "semiCircle",
+    Widget semiCircularSpineButton = XmCreatePushButtonGadget(rc4, (char*)"semiCircle",
 						 resources, n); n = 0;
     XtAddCallback(semiCircularSpineButton, XmNactivateCallback,
 		 semiCircularSpineCallback, (XtPointer)semiCircularSpineButton);
@@ -592,7 +592,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); n++;
     XtSetArg(resources[n], XmNbottomWidget, rc4); n++;
-    Widget frame4 = XmCreateFrame(form4, "spineViewFrame", resources,
+    Widget frame4 = XmCreateFrame(form4, (char*)"spineViewFrame", resources,
 				  n); n = 0;
     // Put viewer in frame
     spinePlaneViewer = new SoXtExaminerViewer(frame4);
@@ -616,7 +616,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNleftPosition, 66); n++;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget form5 = XmCreateForm(form, "twistViewForm", resources,
+    Widget form5 = XmCreateForm(form, (char*)"twistViewForm", resources,
 				  n); n = 0;
 
     // Row Column - goes along bottom edge of form, contains a button.
@@ -625,11 +625,11 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNadjustLast, FALSE); ++n;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget rc5 = XmCreateRowColumn(form5, "twistStuff",
+    Widget rc5 = XmCreateRowColumn(form5, (char*)"twistStuff",
 				  resources, n); n = 0;
     // Close twist button
     XtSetArg(resources[n], XmNlabelString, STRING("Close Twist")); ++n;
-    closeTwistButton = XmCreateToggleButtonGadget(rc5, "closeTwist",
+    closeTwistButton = XmCreateToggleButtonGadget(rc5, (char*)"closeTwist",
 						 resources, n); n = 0;
     XmToggleButtonSetState( closeTwistButton, 
 				curNoodle->twistClosed.getValue(), FALSE );
@@ -640,7 +640,7 @@ main(int argc, char **argv)
 
     // Clear Twist button
     XtSetArg(resources[n], XmNlabelString, STRING("Clear Twist")); ++n;
-    Widget clearTwistButton = XmCreatePushButtonGadget(rc5, "clearTwist",
+    Widget clearTwistButton = XmCreatePushButtonGadget(rc5, (char*)"clearTwist",
 						 resources, n); n = 0;
     XtAddCallback(clearTwistButton, XmNactivateCallback,
 		  clearTwistCallback, (XtPointer)closeTwistButton);
@@ -653,7 +653,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); n++;
     XtSetArg(resources[n], XmNbottomWidget, rc5); n++;
-    Widget frame5 = XmCreateFrame(form5, "twistViewFrame", resources,
+    Widget frame5 = XmCreateFrame(form5, (char*)"twistViewFrame", resources,
 				  n); n = 0;
     // Put viewer in frame
     twistPlaneViewer = new SoXtPlaneViewer(frame5);

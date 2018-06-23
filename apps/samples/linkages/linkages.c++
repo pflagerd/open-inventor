@@ -47,7 +47,6 @@
 //
 //    $Revision: 1.2 $
 //
-
 #include <cstdlib>
 #include <Inventor/SoDB.h>	// for file reading
 #include <Inventor/SoInput.h>	// for file reading
@@ -57,7 +56,6 @@
 
 #include <Xm/PushBG.h>
 
-
 // list of viewers
 #include <Inventor/Xt/viewers/SoXtExaminerViewer.h>
 
@@ -65,11 +63,10 @@
 #include "LinkEngines.h"
 #include "LinkClasses.h"
 
-void usage(char *name)
-{
-    printf("Usage:  %s [-m] [file.iv]\n", name);
-    printf("  -m  : include menus for adding new linkage nodes\n");
-    exit(0);
+void usage(char *name) {
+	printf("Usage:  %s [-m] [file.iv]\n", name);
+	printf("  -m  : include menus for adding new linkage nodes\n");
+	exit(0);
 }
 
 //
@@ -77,232 +74,217 @@ void usage(char *name)
 // Anything with a DEF label will get installed in the global dictionary
 // and saved as a resource, however
 //
-void
-readResources()
-{
-    SoInput	in;
+void readResources() {
+	SoInput in;
 
-    if ( in.openFile( "linkagesResourceFile.iv", TRUE )) {
+	if (in.openFile("linkagesResourceFile.iv", TRUE)) {
 
-	SoSeparator *root = SoDB::readAll( &in );
-	if (root == NULL) {
-	    SoDebugError::postWarning("main::readResources",
-	    "Result of reading resources is NULL");
+		SoSeparator *root = SoDB::readAll(&in);
+		if (root == NULL) {
+			SoDebugError::postWarning("main::readResources",
+					"Result of reading resources is NULL");
+		} else
+			root->ref();
+
+	} else {
+		SoDebugError::postWarning("main::readResources",
+				"Can't read resources since the file linkageResourceFile.iv was not found");
 	}
-	else
-	    root->ref();
-
-    }
-    else {
-	SoDebugError::postWarning("main::readResources",
-	    "Can't read resources since the file linkageResourceFile.iv was not found");
-    }
 }
 
-static void newLinkCB( void *data, SoDragger * )
-{
-    SoSeparator *scene = (SoSeparator *) data;
-    scene->addChild( new Link );
+static void newLinkCB(void *data, SoDragger *) {
+	SoSeparator *scene = (SoSeparator *) data;
+	scene->addChild(new Link);
 }
 
-static void newCrankCB( void *data, SoDragger * )
-{
-    SoSeparator *scene = (SoSeparator *) data;
-    scene->addChild( new Crank );
+static void newCrankCB(void *data, SoDragger *) {
+	SoSeparator *scene = (SoSeparator *) data;
+	scene->addChild(new Crank);
 }
 
-static void newHingeCB( void *data, SoDragger * )
-{
-    SoSeparator *scene = (SoSeparator *) data;
-    scene->addChild( new RivetHinge );
+static void newHingeCB(void *data, SoDragger *) {
+	SoSeparator *scene = (SoSeparator *) data;
+	scene->addChild(new RivetHinge);
 }
 
-
-static void newDoubleLinkCB( void *data, SoDragger * )
-{
-    SoSeparator *scene = (SoSeparator *) data;
-    scene->addChild( new DoubleLink );
+static void newDoubleLinkCB(void *data, SoDragger *) {
+	SoSeparator *scene = (SoSeparator *) data;
+	scene->addChild(new DoubleLink);
 }
 
-static void newPistonCB( void *data, SoDragger * )
-{
-    SoSeparator *scene = (SoSeparator *) data;
-    scene->addChild( new Piston );
+static void newPistonCB(void *data, SoDragger *) {
+	SoSeparator *scene = (SoSeparator *) data;
+	scene->addChild(new Piston);
 }
 
-void
-addMenuButtonCallbacks( SoSeparator *scene )
-{
-    Button *myButton;
+void addMenuButtonCallbacks(SoSeparator *scene) {
+	Button *myButton;
 
-    //  new link button
-    myButton = (Button *) SoNode::getByName("NEW_LINK_BUTTON");
-    if (myButton)
-	myButton->addFinishCallback( &newLinkCB, scene );
+	//  new link button
+	myButton = (Button *) SoNode::getByName("NEW_LINK_BUTTON");
+	if (myButton)
+		myButton->addFinishCallback(&newLinkCB, scene);
 
-    //  new crank button
-    myButton = (Button *) SoNode::getByName("NEW_CRANK_BUTTON");
-    if (myButton)
-	myButton->addFinishCallback( &newCrankCB, scene );
+	//  new crank button
+	myButton = (Button *) SoNode::getByName("NEW_CRANK_BUTTON");
+	if (myButton)
+		myButton->addFinishCallback(&newCrankCB, scene);
 
-    //  new hinge button
-    myButton = (Button *) SoNode::getByName("NEW_HINGE_BUTTON");
-    if (myButton)
-	myButton->addFinishCallback( &newHingeCB, scene );
+	//  new hinge button
+	myButton = (Button *) SoNode::getByName("NEW_HINGE_BUTTON");
+	if (myButton)
+		myButton->addFinishCallback(&newHingeCB, scene);
 
-    //  new double link button
-    myButton = (Button *) SoNode::getByName("NEW_DOUBLE_LINK_BUTTON");
-    if (myButton)
-	myButton->addFinishCallback( &newDoubleLinkCB, scene );
+	//  new double link button
+	myButton = (Button *) SoNode::getByName("NEW_DOUBLE_LINK_BUTTON");
+	if (myButton)
+		myButton->addFinishCallback(&newDoubleLinkCB, scene);
 
-    //  new piston button
-    myButton = (Button *) SoNode::getByName("NEW_PISTON_BUTTON");
-    if (myButton)
-	myButton->addFinishCallback( &newPistonCB, scene );
+	//  new piston button
+	myButton = (Button *) SoNode::getByName("NEW_PISTON_BUTTON");
+	if (myButton)
+		myButton->addFinishCallback(&newPistonCB, scene);
 }
 
-static void
-writeButtonCB(Widget, XtPointer data, XtPointer )
-{
-    SoSeparator *scene = (SoSeparator *) data;
+static void writeButtonCB(Widget, XtPointer data, XtPointer) {
+	SoSeparator *scene = (SoSeparator *) data;
 
-    SoWriteAction wa;
-    wa.apply( scene );
+	SoWriteAction wa;
+	wa.apply(scene);
 }
 
 // Make a push button for writing out what's on screen...
-Widget
-makeWriteButton( Widget parentWidget, SoSeparator *scene )
-{
-    int n = 0;
-    Arg resources[4];
+Widget makeWriteButton(Widget parentWidget, SoSeparator *scene) {
+	int n = 0;
+	Arg resources[4];
 
-    XtSetArg( resources[n], XmNmarginHeight, 0);n++;
-    XtSetArg( resources[n], XmNmarginWidth, 0);n++;
-    XtSetArg( resources[n], XmNshadowThickness, 2);n++;
-    XtSetArg( resources[n], XmNhighlightThickness, 0);n++;
+	XtSetArg(resources[n], XmNmarginHeight, 0);
+	n++;
+	XtSetArg(resources[n], XmNmarginWidth, 0);
+	n++;
+	XtSetArg(resources[n], XmNshadowThickness, 2);
+	n++;
+	XtSetArg(resources[n], XmNhighlightThickness, 0);
+	n++;
 
-    Widget writeButton = XmCreatePushButtonGadget(parentWidget,"writeButton",
-						  resources,n);
-    XtAddCallback( writeButton, XmNactivateCallback, 
-		   (XtCallbackProc) writeButtonCB, (XtPointer) scene );
-    return writeButton;
+	Widget writeButton = XmCreatePushButtonGadget(parentWidget,
+			(char*) "writeButton", resources, n);
+	XtAddCallback(writeButton, XmNactivateCallback,
+			(XtCallbackProc) writeButtonCB, (XtPointer) scene);
+	return writeButton;
 }
 
-int main(int argc, char *argv[])
-{
-    SoXtExaminerViewer *myViewer;
-    SoXtExaminerViewer *myMenuViewer;
-    SbBool shouldMakeMenus = FALSE;
-    
-    // Initialize Inventor and Xt
-    Widget mainWindow = SoXt::init(argv[0]);
-    
-    Button::initClass();
+int main(int argc, char *argv[]) {
+	SoXtExaminerViewer *myViewer;
+	SoXtExaminerViewer *myMenuViewer;
+	SbBool shouldMakeMenus = FALSE;
 
-    EndPointFromParamsEngine::initClass();
-    LinkEngine::initClass();
-    RivetHingeEngine::initClass();
-    DoubleLinkMoveOriginEngine::initClass();
-    DoubleLinkMoveSharedPtEngine::initClass();
-    PistonErrorEngine::initClass();
-    ZAngleFromRotationEngine::initClass();
+	// Initialize Inventor and Xt
+	Widget mainWindow = SoXt::init(argv[0]);
 
-    LinkBase::initClass();
-    SimpleLink::initClass();
-    GroundedSimpleLink::initClass();
-    Link::initClass();
-    SizedLink::initClass();
-    RivetHinge::initClass();
-    Crank::initClass();
-    DoubleLink::initClass();
-    Piston::initClass();
+	Button::initClass();
 
-    // See if you should write out
-    int curArg = 1;
-    if (argc > curArg && !strcmp(argv[curArg],"-m")) {
-	shouldMakeMenus = TRUE;
-	curArg++;
-    }
+	EndPointFromParamsEngine::initClass();
+	LinkEngine::initClass();
+	RivetHingeEngine::initClass();
+	DoubleLinkMoveOriginEngine::initClass();
+	DoubleLinkMoveSharedPtEngine::initClass();
+	PistonErrorEngine::initClass();
+	ZAngleFromRotationEngine::initClass();
 
-    char *filename = NULL;
-    int  defaultFile = TRUE;
-    if (argc > curArg) {
-	filename = argv[curArg];
-	curArg++;
-	defaultFile = FALSE;
-    }
-    else 
-	filename = "motorizedMechanism.iv";
+	LinkBase::initClass();
+	SimpleLink::initClass();
+	GroundedSimpleLink::initClass();
+	Link::initClass();
+	SizedLink::initClass();
+	RivetHinge::initClass();
+	Crank::initClass();
+	DoubleLink::initClass();
+	Piston::initClass();
 
-    if (argc > curArg)
-	usage(argv[0]);
-    
-    // Create the viewer
-    myViewer = new SoXtExaminerViewer(mainWindow);
-    
-    //
-    // Read file in
-    //
-    SoInput in;
-    if (! in.openFile(filename)) {
-	if ( defaultFile ) {
-	    SoDebugError::post("main::main", 
-	    "could not open the default file %s.", filename );
+	// See if you should write out
+	int curArg = 1;
+	if (argc > curArg && !strcmp(argv[curArg], "-m")) {
+		shouldMakeMenus = TRUE;
+		curArg++;
 	}
-	else {
-	    SoDebugError::post("main::main", 
-	    "could not open file %s.", filename );
+
+	const char *filename = NULL;
+	int defaultFile = TRUE;
+	if (argc > curArg) {
+		filename = argv[curArg];
+		curArg++;
+		defaultFile = FALSE;
+	} else
+		filename = "motorizedMechanism.iv";
+
+	if (argc > curArg)
+		usage(argv[0]);
+
+	// Create the viewer
+	myViewer = new SoXtExaminerViewer(mainWindow);
+
+	//
+	// Read file in
+	//
+	SoInput in;
+	if (!in.openFile(filename)) {
+		if (defaultFile) {
+			SoDebugError::post("main::main",
+					"could not open the default file %s.", filename);
+		} else {
+			SoDebugError::post("main::main", "could not open file %s.",
+					filename);
+		}
+		exit(1);
 	}
-	exit(1);
-    }
 
-    // Read the resource file that should contain 
-    // resources for this program.
-    readResources();
+	// Read the resource file that should contain
+	// resources for this program.
+	readResources();
 
-    SoSeparator *scene;
-    scene = SoDB::readAll(&in);
-    if( scene == NULL)
-	exit(1);
+	SoSeparator *scene;
+	scene = SoDB::readAll(&in);
+	if (scene == NULL)
+		exit(1);
 
-    // Write out the scene you just read...
-    scene->ref();
+	// Write out the scene you just read...
+	scene->ref();
 
-    // Add a write button to the viewer.
-    Widget buttonParentW = myViewer->getAppPushButtonParent();
-    Widget writeButton = makeWriteButton(buttonParentW, scene);
-    myViewer->addAppPushButton( writeButton );
+	// Add a write button to the viewer.
+	Widget buttonParentW = myViewer->getAppPushButtonParent();
+	Widget writeButton = makeWriteButton(buttonParentW, scene);
+	myViewer->addAppPushButton(writeButton);
 
-    // attach and show viewer
-    myViewer->setSceneGraph(scene);
-    myViewer->setTitle("Interactive Linkage Program");
-    myViewer->show();
-    XtRealizeWidget(mainWindow);
-    
-    if ( shouldMakeMenus ) {
-	SoInput in2;
-	if (! in2.openFile("menu.iv"))
-	    exit(1);
-	SoSeparator *menuScene;
-	menuScene = SoDB::readAll(&in2);
-	if(menuScene == NULL)
-	    exit(1);
-	menuScene->ref();
-	myMenuViewer = new SoXtExaminerViewer();
-	myMenuViewer->setSceneGraph(menuScene);
-	myMenuViewer->viewAll();
-	myMenuViewer->setDecoration(FALSE);
-	myMenuViewer->setViewing(FALSE);
-	myMenuViewer->show();
+	// attach and show viewer
+	myViewer->setSceneGraph(scene);
+	myViewer->setTitle("Interactive Linkage Program");
+	myViewer->show();
+	XtRealizeWidget(mainWindow);
 
-	// Add callbacks to buttons in menu...
-	addMenuButtonCallbacks( scene );
-    }
+	if (shouldMakeMenus) {
+		SoInput in2;
+		if (!in2.openFile("menu.iv"))
+			exit(1);
+		SoSeparator *menuScene;
+		menuScene = SoDB::readAll(&in2);
+		if (menuScene == NULL)
+			exit(1);
+		menuScene->ref();
+		myMenuViewer = new SoXtExaminerViewer();
+		myMenuViewer->setSceneGraph(menuScene);
+		myMenuViewer->viewAll();
+		myMenuViewer->setDecoration(FALSE);
+		myMenuViewer->setViewing(FALSE);
+		myMenuViewer->show();
 
-    // Loop forever
-    SoXt::mainLoop();
+		// Add callbacks to buttons in menu...
+		addMenuButtonCallbacks(scene);
+	}
 
-    return 1;
+	// Loop forever
+	SoXt::mainLoop();
+
+	return 1;
 }
 

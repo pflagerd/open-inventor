@@ -73,7 +73,7 @@
 
 #include <Xm/Xm.h>
 
-static char *thisClassName = "SoXtRenderArea";
+static const char *thisClassName = "SoXtRenderArea";
 
 
 ////////////////////////////////////////////////////////////////////////

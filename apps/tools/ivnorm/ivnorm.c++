@@ -74,8 +74,8 @@ Face::Orientation orientation = Face::UNKNOWN;
 float 	    creaseAngle = M_PI/6.0;		// 30 degrees
 int 	    findVNorms  = 0;
 int	    verbose = 0;
-char	*inFileName = "stdin";
-char	*outFileName = "stdout";
+const char	*inFileName = "stdin";
+const char	*outFileName = "stdout";
 
 //-----------------------------------------------------------------------------
 //

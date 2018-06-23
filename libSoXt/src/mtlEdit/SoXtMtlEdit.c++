@@ -175,7 +175,7 @@ static const float tileCoords[][3] = {
     {-3, -3, 0}, {0, -3, 0}, {3, -3, 0}
 };
 
-static char *thisClassName = "SoXtMaterialEditor";
+static const char *thisClassName = "SoXtMaterialEditor";
 
 #define TOGGLE_ON(BUTTON) \
     XmToggleButtonSetState((Widget) BUTTON, TRUE, FALSE)
@@ -446,7 +446,7 @@ SoXtMaterialEditor::buildPulldownMenu(Widget parent)
     Widget menu1W[20];
     int	   num1 = 0;
     
-    menubar = XmCreateMenuBar(parent, "menuBar", NULL, 0);
+    menubar = XmCreateMenuBar(parent, (char*)"menuBar", NULL, 0);
     
     Arg popupargs[4];
     int popupn = 0;
@@ -454,7 +454,7 @@ SoXtMaterialEditor::buildPulldownMenu(Widget parent)
     SoXt::getPopupArgs(XtDisplay(menubar), SCREEN(menubar), popupargs, &popupn);
 #endif
     
-    pulldown = XmCreatePulldownMenu(menubar, "editPulldown", popupargs, popupn);
+    pulldown = XmCreatePulldownMenu(menubar, (char*)"editPulldown", popupargs, popupn);
 #ifdef MENUS_IN_POPUP
     // register callbacks to load/unload the pulldown colormap
     SoXt::registerColormapLoad(pulldown, SoXt::getShellWidget(parent));
@@ -488,7 +488,7 @@ SoXtMaterialEditor::buildPulldownMenu(Widget parent)
     // the items...
     PUSH_ITEM("Material List", k_MATERIAL_LIST);
     
-    menu1W[num1++] = XtCreateWidget("separator",
+    menu1W[num1++] = XtCreateWidget((char*)"separator",
     	xmSeparatorGadgetClass, pulldown, NULL, 0);
     
     XtSetArg(args[n], XmNindicatorType, XmONE_OF_MANY); n++;
@@ -496,13 +496,13 @@ SoXtMaterialEditor::buildPulldownMenu(Widget parent)
     TOGGLE_ITEM("Manual", k_AFTER_ACCEPT);
     n--;
     
-    menu1W[num1++] = XtCreateWidget("separator",
+    menu1W[num1++] = XtCreateWidget((char*)"separator",
     	xmSeparatorGadgetClass, pulldown, NULL, 0);
 	
     PUSH_ITEM("Copy",  k_EDIT_COPY);
     PUSH_ITEM("Paste", k_EDIT_PASTE);
     
-    menu1W[num1++] = XtCreateWidget("separator",
+    menu1W[num1++] = XtCreateWidget((char*)"separator",
     	xmSeparatorGadgetClass, pulldown, NULL, 0);
     
     PUSH_ITEM("Help",  k_EDIT_HELP);
@@ -536,8 +536,8 @@ SoXtMaterialEditor::buildSlidersForm(Widget parent)
     // create a form to hold everything together
     n = 0;
     XtSetArg(args[n], XmNfractionBase, 1000); n++;
-    form = XtCreateWidget("sliderForm", xmFormWidgetClass, parent, args, n);
-    textForm = XtCreateWidget("textForm", xmFormWidgetClass, form, args, n);
+    form = XtCreateWidget((char*)"sliderForm", xmFormWidgetClass, parent, args, n);
+    textForm = XtCreateWidget((char*)"textForm", xmFormWidgetClass, form, args, n);
     
     // build sliders
     for (i=0; i<6; i++) {
@@ -575,7 +575,7 @@ SoXtMaterialEditor::buildSlidersForm(Widget parent)
     XtSetArg(args[n], XmNhighlightThickness, 0); n++;
     XtSetArg(args[n], XmNindicatorType, XmONE_OF_MANY); n++;
     for (i=0; i<4; i++) {
-	diamondButtons[i] = XtCreateWidget("", xmToggleButtonGadgetClass, 
+	diamondButtons[i] = XtCreateWidget((char*)"", xmToggleButtonGadgetClass,
 	    textForm, args, n);
     	XtAddCallback(diamondButtons[i], XmNvalueChangedCallback, 
 	    (XtCallbackProc) SoXtMaterialEditor::diamondButtonPick, (XtPointer) (unsigned long) i);
@@ -586,7 +586,7 @@ SoXtMaterialEditor::buildSlidersForm(Widget parent)
     XtSetArg(args[n], XmNuserData, this); n++;
     XtSetArg(args[n], XmNhighlightThickness, 0); n++;
     for (i=0; i<4; i++) {
-	radioButtons[i] = XtCreateWidget("", xmToggleButtonGadgetClass, 
+	radioButtons[i] = XtCreateWidget((char*)"", xmToggleButtonGadgetClass,
 	    textForm, args, n);
    	XtAddCallback(radioButtons[i], XmNvalueChangedCallback, 
 	    (XtCallbackProc) SoXtMaterialEditor::radioButtonPick, (XtPointer) (unsigned long) i);
@@ -684,10 +684,10 @@ SoXtMaterialEditor::buildControls(Widget parent)
     Arg		args[12];
     
     // create a form to hold everything together
-    form = XtCreateWidget("Controls", xmFormWidgetClass, parent, NULL, 0);
+    form = XtCreateWidget((char*)"Controls", xmFormWidgetClass, parent, NULL, 0);
     
-    labelW = XtCreateWidget("Edit Color", xmLabelGadgetClass, form, NULL, 0);
-    separatorW = XtCreateWidget("", xmSeparatorGadgetClass, form, NULL, 0);
+    labelW = XtCreateWidget((char*)"Edit Color", xmLabelGadgetClass, form, NULL, 0);
+    separatorW = XtCreateWidget((char*)"", xmSeparatorGadgetClass, form, NULL, 0);
     sliderForm = buildSlidersForm(form);
     
     // layout

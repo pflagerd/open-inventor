@@ -185,7 +185,7 @@ Separator { \
 } ";
 
 
-static char *thisClassName = "SoXtExaminerViewer";
+static const char *thisClassName = "SoXtExaminerViewer";
 
 ////////////////////////////////////////////////////////////////////////
 //

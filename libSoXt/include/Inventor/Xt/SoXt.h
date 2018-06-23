@@ -121,7 +121,7 @@ class SoXt {
     // The app is responsible for freeing memory afterwards.
     // (Call XmStringFree() to free an XmString, and free() to free the char*.)
     // C-api: name=encodeStr
-    static XmString	    encodeString(char *s);
+    static XmString	    encodeString(const char *s);
     // C-api: name=decodeStr
     static char *	    decodeString(XmString xs);
     

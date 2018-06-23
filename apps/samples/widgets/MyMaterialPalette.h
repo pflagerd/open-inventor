@@ -176,8 +176,8 @@ class MyMaterialPalette : public SoXtComponent {
     SbBool	    paletteChanged;
     int		    whatToDoNext, nextPalette;
     void	    createSaveDialog();
-    void	    createDeleteDialog(char *title, char *str1, char *str2);
-    void	    createPromptDialog(char *title, char *str);
+    void	    createDeleteDialog(const char *title, const char *str1, const char *str2);
+    void	    createPromptDialog(const char *title, const char *str);
     static void	    saveDialogCB(Widget, MyMaterialPalette *, XmAnyCallbackStruct *);
     static void	    promptDialogCB(Widget, MyMaterialPalette *, XmAnyCallbackStruct *);
     static void	    deleteDialogCB(Widget, MyMaterialPalette *, XmAnyCallbackStruct *);

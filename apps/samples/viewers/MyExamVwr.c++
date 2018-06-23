@@ -185,7 +185,7 @@ Separator { \
 } ";
 
 
-static char *thisClassName = "MyExaminerViewer";
+static const char *thisClassName = "MyExaminerViewer";
 
 ////////////////////////////////////////////////////////////////////////
 //

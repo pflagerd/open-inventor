@@ -206,7 +206,7 @@ main(int, char **argv)
     int n = 0;
     XtSetArg(resources[n], "width", 800); n++;
     XtSetArg(resources[n], "height", 400); n++;
-    Widget form = XmCreateForm(w, "form", resources, n); n = 0;
+    Widget form = XmCreateForm(w, (char*)"form", resources, n); n = 0;
     
     //
     // This RowColumn widget holds all the stuff at the bottom
@@ -217,7 +217,7 @@ main(int, char **argv)
     XtSetArg(resources[n], XmNadjustLast, FALSE); ++n;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    Widget rc = XmCreateRowColumn(form, "bottomStuff", resources, n); 
+    Widget rc = XmCreateRowColumn(form, (char*)"bottomStuff", resources, n);
     n = 0;
     
     //
@@ -229,7 +229,7 @@ main(int, char **argv)
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); n++;
     XtSetArg(resources[n], XmNbottomWidget, rc); n++;
-    Widget frame2 = XmCreateFrame(form, "renderAreaFrame", resources, n); 
+    Widget frame2 = XmCreateFrame(form, (char*)"renderAreaFrame", resources, n);
     n = 0;
 
     SoXtExaminerViewer *examViewer = new SoXtExaminerViewer(frame2);
@@ -249,7 +249,7 @@ main(int, char **argv)
     XtSetArg(resources[n], XmNrightPosition, 50); n++;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_WIDGET); n++;
     XtSetArg(resources[n], XmNbottomWidget, rc); n++;
-    Widget frame1 = XmCreateFrame(form, "renderAreaFrame", resources, n); 
+    Widget frame1 = XmCreateFrame(form, (char*)"renderAreaFrame", resources, n);
     n = 0;
 
     SoXtRenderArea *ra = new SoXtRenderArea(frame1);
@@ -258,11 +258,11 @@ main(int, char **argv)
     ra->show();
     XtManageChild(frame1);
 
-#define STRING(a) XmStringCreate(a,XmSTRING_DEFAULT_CHARSET)
+#define STRING(a) XmStringCreate((char*)a,XmSTRING_DEFAULT_CHARSET)
     
     XtSetArg(resources[n], XmNlabelString, STRING("# sides:")); ++n;
     Widget nsidesLabel = XmCreateLabelGadget(
-		rc, "nsidesLabel", resources, n); 
+		rc, (char*)"nsidesLabel", resources, n);
     n = 0;
     XtManageChild(nsidesLabel);
     
@@ -270,7 +270,7 @@ main(int, char **argv)
     XtSetArg(resources[n], XmNcolumns, 3); ++n;
     XtSetArg(resources[n], XmNeditMode, XmSINGLE_LINE_EDIT); ++n;
     Widget nsidesEdit = XmCreateText(
-		rc, "nsidesEdit", resources, n); 
+		rc, (char*)"nsidesEdit", resources, n);
     n = 0;
     XtAddCallback(nsidesEdit, XmNactivateCallback, 
 		changeNumSides, (XtPointer)revSurf);
@@ -278,7 +278,7 @@ main(int, char **argv)
     
     XtSetArg(resources[n], XmNlabelString, STRING("Copy")); ++n;
     Widget copyButton = XmCreatePushButtonGadget(
-		rc, "copy", resources, n); 
+		rc, (char*)"copy", resources, n);
     n = 0;
     XtAddCallback(copyButton, XmNactivateCallback,
 		  copyCallback, (XtPointer)examViewer);
@@ -286,7 +286,7 @@ main(int, char **argv)
     
     XtSetArg(resources[n], XmNlabelString, STRING("Clear")); ++n;
     Widget clearButton = XmCreatePushButtonGadget(
-		rc, "clear", resources, n); 
+		rc, (char*)"clear", resources, n);
     n = 0;
     XtAddCallback(clearButton, XmNactivateCallback,
 		  clearCallback, (XtPointer)examViewer);
@@ -294,7 +294,7 @@ main(int, char **argv)
 
     XtSetArg(resources[n], XmNlabelString, STRING("About...")); ++n;
     Widget aboutButton = XmCreatePushButtonGadget(
-		rc, "about", resources, n); 
+		rc, (char*)"about", resources, n);
     n = 0;
     XtAddCallback(aboutButton, XmNactivateCallback,
 		  showAboutDialog, NULL);
@@ -302,7 +302,7 @@ main(int, char **argv)
 
     XtSetArg(resources[n], XmNlabelString, STRING("Quit")); ++n;
     Widget quitButton = XmCreatePushButtonGadget(
-		rc, "quit", resources, n); 
+		rc, (char*)"quit", resources, n);
     n = 0;
     XtAddCallback(quitButton, XmNactivateCallback,
 		  quitCallback, NULL);
