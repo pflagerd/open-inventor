@@ -229,7 +229,7 @@ class GeneralizedCylinder : public SoSeparatorKit {
     SbRotation *spineKeyPointRotations;
     int        numAllocedSpineKeyRots;
 
-    void changeCurveClosure( char *curveName, SbBool newClosed );
+    void changeCurveClosure( const char *curveName, SbBool newClosed );
     SbBool profileAlreadyClosed;
     SbBool crossSectionAlreadyClosed;
     SbBool spineAlreadyClosed;

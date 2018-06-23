@@ -1538,8 +1538,7 @@ GeneralizedCylinder::makeVanillaVersion() {
 	return answer;
 }
 
-void GeneralizedCylinder::changeCurveClosure(char *curveName,
-		SbBool newClosed) {
+void GeneralizedCylinder::changeCurveClosure(const char *curveName, SbBool newClosed) {
 	SoCoordinate3 *coords = SO_GET_PART(this, curveName, SoCoordinate3);
 
 	SoMFVec3f *cField = &coords->point;
