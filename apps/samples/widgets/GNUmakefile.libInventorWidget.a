@@ -60,7 +60,7 @@ $(HF): My%: $(IVDEPTH)/libSoXt/include/_SoXt%
 	sed -f ./nameScript \
 		$(IVDEPTH)/libSoXt/include/$(subst My,_SoXt,$@) > $@
 
-LDIRT += $(HF) $(CF) $(C2F)
+#LDIRT += $(HF) $(CF) $(C2F)
 
 
 include $(IVCOMMONRULES)
