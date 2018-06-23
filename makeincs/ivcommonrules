@@ -13,7 +13,7 @@ include $(COMMONRULES)
 
 SHAPEFILES = $(PPFILES:.pp=.c++)
 
-LDIRT += $(SHAPEFILES)
+#LDIRT += $(SHAPEFILES)
 
 
 
