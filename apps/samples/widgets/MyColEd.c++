@@ -421,7 +421,7 @@ MyColorEditor::buildWidget(Widget parent)
     // get default values from X resource!
     //
     SoXtResource xr(mgrWidget);
-    char *val;
+    const char *val;
     SbBool b;
     
     if (xr.getResource("wysiwyg", "Wysiwyg", b))
@@ -476,7 +476,7 @@ MyColorEditor::buildPulldownMenu(Widget parent)
     //
     // create the pulldown menu
     //
-    Widget menubar = XmCreateMenuBar(parent, "menuBar", NULL, 0);
+    Widget menubar = XmCreateMenuBar(parent, (char*)"menuBar", NULL, 0);
     
     // NOTE: menu items must be created in this order!
     menuItems.truncate(0);
@@ -492,14 +492,14 @@ MyColorEditor::buildPulldownMenu(Widget parent)
     //
     // SUBMENU 1
     //
-    Widget sub_menu1 = XmCreatePulldownMenu(menubar, "sub_menu1", popupargs, popupn);
+    Widget sub_menu1 = XmCreatePulldownMenu(menubar, (char*)"sub_menu1", popupargs, popupn);
 #ifdef MENUS_IN_POPUP
     // register callbacks to load/unload the pulldown colormap
     SoXt::registerColormapLoad(sub_menu1, SoXt::getShellWidget(parent));
 #endif
     n = 0;
     XtSetArg(args[n], XmNsubMenuId, sub_menu1); n++;
-    menuw[0] = XtCreateWidget("Edit", xmCascadeButtonGadgetClass, 
+    menuw[0] = XtCreateWidget((char*)"Edit", xmCascadeButtonGadgetClass,
 	menubar, args, n);
     
     // CONTINUOUS_ID,
@@ -564,14 +564,14 @@ MyColorEditor::buildPulldownMenu(Widget parent)
     //
     // SUBMENU 2
     //
-    Widget sub_menu2 = XmCreatePulldownMenu(menubar, "sub_menu2", popupargs, popupn);
+    Widget sub_menu2 = XmCreatePulldownMenu(menubar, (char*)"sub_menu2", popupargs, popupn);
 #ifdef MENUS_IN_POPUP
     // register callbacks to load/unload the pulldown colormap
     SoXt::registerColormapLoad(sub_menu2, SoXt::getShellWidget(parent));
 #endif
     n = 0;
     XtSetArg(args[n], XmNsubMenuId, sub_menu2); n++;
-    menuw[1] = XtCreateWidget("Sliders", xmCascadeButtonGadgetClass, 
+    menuw[1] = XtCreateWidget((char*)"Sliders", xmCascadeButtonGadgetClass,
 		menubar, args, n);
     
     // NONE
@@ -627,7 +627,7 @@ MyColorEditor::buildControls(Widget parent)
     //
     // build the buttons form
     //
-    buttonsForm = XtCreateWidget("buttonsForm", xmFormWidgetClass, parent, NULL, 0);
+    buttonsForm = XtCreateWidget((char*)"buttonsForm", xmFormWidgetClass, parent, NULL, 0);
     
     // build swatches
     current = new MyColorPatch(buttonsForm, "Current");
@@ -640,7 +640,7 @@ MyColorEditor::buildControls(Widget parent)
     //
     // create the arrow buttons (use a form to lay them inside)
     //
-    patchButForm = XtCreateWidget("patchButForm", xmFormWidgetClass, 
+    patchButForm = XtCreateWidget((char*)"patchButForm", xmFormWidgetClass,
 	buttonsForm, NULL, 0);
     n = 0;
     XtSetArg(args[n], XmNhighlightThickness, 0); n++;
@@ -707,7 +707,7 @@ MyColorEditor::buildControls(Widget parent)
     //
     n = 0;
     XtSetArg(args[n], XmNhighlightThickness, 0); n++;
-    acceptButton = XtCreateWidget("Accept", xmPushButtonGadgetClass, 
+    acceptButton = XtCreateWidget((char*)"Accept", xmPushButtonGadgetClass,
 		buttonsForm, args, n);
     XtAddCallback(acceptButton, XmNactivateCallback, 
 	(XtCallbackProc) &MyColorEditor::buttonsCallback, 
@@ -798,7 +798,7 @@ MyColorEditor::buildSlidersForm(Widget parent)
     //
     n = 0;
     XtSetArg(args[n], XmNfractionBase, 1000); n++;
-    slidersForm = XtCreateWidget("slidersForm", xmFormWidgetClass, 
+    slidersForm = XtCreateWidget((char*)"slidersForm", xmFormWidgetClass,
 	parent, args, n);
     
     // build sliders

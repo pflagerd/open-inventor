@@ -119,17 +119,17 @@ enum {
 
 // Resources for labels.
 typedef struct {
-	char *examinViewer;
-	char *roty;
-	char *rotx;
-	char *preferenceSheet;
-	char *zoom;
-	char *dolly;
-	char *axesSizeLabel;
+	const char* examinViewer;
+	const char* roty;
+	const char* rotx;
+	const char* preferenceSheet;
+	const char* zoom;
+	const char* dolly;
+	const char* axesSizeLabel;
 } RES_LABELS;
 static RES_LABELS rl;
 
-static char *defaultLabel[]={ 
+static const char *defaultLabel[]={
 	"Examiner Viewer",  
 	"Roty", 
 	"Rotx",
@@ -143,7 +143,7 @@ static char *defaultLabel[]={
 //
 // The point of interest geometry description
 //
-char *SoXtExaminerViewer::geometryBuffer = "\
+const char *SoXtExaminerViewer::geometryBuffer = "\
 #Inventor V2.0 ascii\n\
 \
 Separator { \

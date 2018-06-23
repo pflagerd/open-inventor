@@ -176,9 +176,9 @@ class SoXtPrintDialog : public SoXtComponent {
     void            buildToPostScriptFileWidget( Widget parent );
     void            buildToRGBFileWidget( Widget parent );
     void            placeBottomOfDialog( SoXtPrintDialog * );
-    void            buildRadioButton( char *,  char *, char *, int, int,
+    void            buildRadioButton( const char *,  const char *, const char *, int, int,
                             Widget, XtCallbackProc );
-    void            buildSizeFields( char *, int, Widget, Widget &, Widget &,
+    void            buildSizeFields( const char *, int, Widget, Widget &, Widget &,
                             XtCallbackProc, XtCallbackProc );
     void            buildDPIField( int, Widget, Widget &, XtCallbackProc );
     void            updateTextports();

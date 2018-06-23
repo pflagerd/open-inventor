@@ -221,7 +221,7 @@ class MyTextureEditor : public SoXtComponent {
     
     // menu vars and callbacks
     void	    createNewDialog();
-    void	    createDeleteDialog(char *title, char *str1, char *str2);
+    void	    createDeleteDialog(const char *title, const char *str1, const char *str2);
     void	    updateFileMenu();
     static void	    fileMenuCB(Widget, int id, void *);
     static void	    paletteMenuCB(Widget w, int num, void *);

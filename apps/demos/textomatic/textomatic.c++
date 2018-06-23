@@ -91,34 +91,34 @@ iconv_t global_iconvCode28;
 
 // Default resources...
 XtResource resintl[] = {
-  { "copyLabel",       "CopyLabel",       XtRString,  sizeof(String),
+  { (char*)"copyLabel",       (char*)"CopyLabel",       XtRString,  sizeof(String),
     XtOffsetOf(Labels,copy),              XtRString, (XtPointer) "Copy"
   },
-  { "edit parts",      "Edit Parts",      XtRString,  sizeof(String),
+  { (char*)"edit parts",      (char*)"Edit Parts",      XtRString,  sizeof(String),
     XtOffsetOf(Labels,editParts),         XtRString, (XtPointer) "Edit Parts"
   },
-  { "aboutLabel",      "AboutLabel",      XtRString,  sizeof(String),
+  { (char*)"aboutLabel",      (char*)"AboutLabel",      XtRString,  sizeof(String),
     XtOffsetOf(Labels,about),             XtRString, (XtPointer) "About..."
   },
-  { "quitLabel",       "QuitLabel",       XtRString,  sizeof(String),
+  { (char*)"quitLabel",       (char*)"QuitLabel",       XtRString,  sizeof(String),
     XtOffsetOf(Labels,quit),              XtRString, (XtPointer) "Quit"
   },
-  { "soFontList",      "SoFontList",      XtRString,  sizeof(String),
+  { (char*)"soFontList",      (char*)"SoFontList",      XtRString,  sizeof(String),
     XtOffsetOf(Labels,sofontlist),        XtRString, (XtPointer) "Times-Roman"
   },
-  { "front",           "Front",           XtRString,  sizeof(String),
+  { (char*)"front",           (char*)"Front",           XtRString,  sizeof(String),
     XtOffsetOf(Labels,front),             XtRString, (XtPointer) "Front:"
   },
-  { "sides",           "Sides",           XtRString,  sizeof(String),
+  { (char*)"sides",           (char*)"Sides",           XtRString,  sizeof(String),
     XtOffsetOf(Labels,sides),             XtRString, (XtPointer) "Sides:"
   },
-  { "back",            "Back",            XtRString,  sizeof(String),
+  { (char*)"back",            (char*)"Back",            XtRString,  sizeof(String),
     XtOffsetOf(Labels,back),              XtRString, (XtPointer) "Back:"
   },
-  { "on",              "On",              XtRString,  sizeof(String),
+  { (char*)"on",              (char*)"On",              XtRString,  sizeof(String),
     XtOffsetOf(Labels,on),                XtRString, (XtPointer) "On"
   },
-  { "edit",            "Edit",            XtRString,  sizeof(String),
+  { (char*)"edit",            (char*)"Edit",            XtRString,  sizeof(String),
     XtOffsetOf(Labels,edit),              XtRString, (XtPointer) "Edit"
   }
 };
@@ -226,7 +226,7 @@ defaultCoords[2][3] =
 //
 // Grid for window:
 //
-static char *GridString =
+static const char *GridString =
 "#Inventor V2.0 ascii\n"
 "Separator {"
 "	PickStyle { style UNPICKABLE }"
@@ -436,7 +436,7 @@ main(int argc, char **argv)
     int n = 0;
     XtSetArg(resources[n], "width", 620); n++;
     XtSetArg(resources[n], "height", 620); n++;
-    Widget form = XmCreateForm(w, "form", resources, n); n = 0;
+    Widget form = XmCreateForm(w, (char*)"form", resources, n); n = 0;
 
     //
     // There are two 'tab groups' because keyboard focus must go to
@@ -488,7 +488,7 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNleftPosition, Vert2); ++n;
     XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); ++n;
     XtSetArg(resources[n], XmNbottomAttachment, XmATTACH_FORM); ++n;
-    Widget textEdit = XmCreateScrolledText(form, "textEdit",
+    Widget textEdit = XmCreateScrolledText(form, (char*)"textEdit",
 			    resources, n); n = 0;
     XtAddCallback(textEdit, XmNactivateCallback,
 		  updateText, (XtPointer)textEdit);
@@ -509,34 +509,34 @@ main(int argc, char **argv)
     XtSetArg(resources[n], XmNspacing, 0); ++n;
     XtSetArg(resources[n], XmNmarginHeight, 0); ++n;
     XtSetArg(resources[n], XmNmarginWidth, 17); ++n;
-    Widget rc = XmCreateRowColumn(form, "buttons", resources, n);
+    Widget rc = XmCreateRowColumn(form, (char*)"buttons", resources, n);
     n = 0;
 
 #define STRING(a) XmStringCreateLocalized(a)
 
     XtSetArg(resources[n], XmNlabelString, STRING(labels.copy)); ++n;
-    Widget copyButton = XmCreatePushButtonGadget(rc, "copyButton",
+    Widget copyButton = XmCreatePushButtonGadget(rc, (char*)"copyButton",
 					   resources, n); n = 0;
     XtAddCallback(copyButton, XmNactivateCallback,
 		  copyText, (XtPointer)rc);
     XtManageChild(copyButton);
 
     XtSetArg(resources[n], XmNlabelString, STRING(labels.editParts)); ++n;
-    Widget editButton = XmCreatePushButtonGadget(rc, "editButton",
+    Widget editButton = XmCreatePushButtonGadget(rc, (char*)"editButton",
 					   resources, n); n = 0;
     XtAddCallback(editButton, XmNactivateCallback,
 		  createPartEditor, (XtPointer)rc);
     XtManageChild(editButton);
 
     XtSetArg(resources[n], XmNlabelString, STRING(labels.about)); ++n;
-    Widget aboutButton = XmCreatePushButtonGadget(rc, "about",
+    Widget aboutButton = XmCreatePushButtonGadget(rc, (char*)"about",
 						  resources, n); n = 0;
     XtAddCallback(aboutButton, XmNactivateCallback,
 		  showAboutDialog, NULL);
     XtManageChild(aboutButton);
 
     XtSetArg(resources[n], XmNlabelString, STRING(labels.quit)); ++n;
-    Widget quitButton = XmCreatePushButtonGadget(rc, "quitButton",
+    Widget quitButton = XmCreatePushButtonGadget(rc, (char*)"quitButton",
 					   resources, n); n = 0;
     XtAddCallback(quitButton, XmNactivateCallback,
 		  quitCallback, NULL);

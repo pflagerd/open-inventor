@@ -184,25 +184,25 @@ static char *thisClassName = "SoXtFullViewer";
 
 // Resources for labels.
 typedef struct {
-	char *seekAniTime;
-	char *seekToLabel;
-	char *seekDistance;
-	char *cameraZoom;
-	char *zoomSlider;
-	char *to;
-	char *nearPlane;
-	char *farPlane;
-	char *cameraRotation;
-	char *stereoErrorTitle;
-	char *stereoError;
-	char *preferences;
-	char *viewerMenu;
-	char *viewerSpeed;
-	char *increase;
-	char *decrease;
+	const char* seekAniTime;
+	const char* seekToLabel;
+	const char* seekDistance;
+	const char* cameraZoom;
+	const char* zoomSlider;
+	const char* to;
+	const char* nearPlane;
+	const char* farPlane;
+	const char* cameraRotation;
+	const char* stereoErrorTitle;
+	const char* stereoError;
+	const char* preferences;
+	const char* viewerMenu;
+	const char* viewerSpeed;
+	const char* increase;
+	const char* decrease;
 } RES_LABELS;
 static RES_LABELS rl;
-static char *defaults[]={ 
+static const char *defaults[]={
 	"Seek animation time:",
 	"Seek to:",
 	"Seek distance:",
@@ -1007,7 +1007,7 @@ SoXtFullViewer::getResources(SoXtResource *xr)
     // Get resources for preference sheet items.
     float  val;
     SbBool flag;
-    char   *str;
+    const char   *str;
     
     // seek...
     if (xr->getResource("seekAnimationTime", "SeekAnimationTime", val))

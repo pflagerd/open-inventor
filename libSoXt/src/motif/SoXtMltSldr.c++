@@ -340,7 +340,7 @@ static XtResource _titleResource[] = {
 };
 
 void
-SoXtMultiSlider::initTitles( char **titleList )
+SoXtMultiSlider::initTitles( const char **titleList )
 {
     Arg            wargs[10];
     XmString       newString;

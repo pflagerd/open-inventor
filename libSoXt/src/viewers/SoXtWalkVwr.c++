@@ -100,11 +100,11 @@ enum ViewerModes {
 
 // Resources for labels.
 typedef struct {
-	char *walkViewer;
-	char *wvPrefSheet;
+	const char *walkViewer;
+	const char *wvPrefSheet;
 } RES_LABELS;
 static RES_LABELS rl;
-static char *defaultLabel[]={ 
+static const char *defaultLabel[]={
 	"Walk Viewer",  
 	"Walk Viewer Preference Sheet", 
 };

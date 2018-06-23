@@ -203,7 +203,7 @@ MAKEMANDIRS = $(IVMANDIR)/makeManDirs
 # Inventor install directories.
 #
 
-IVPREFIX = ./
+IVPREFIX = .
 _BINDIR = $(IVPREFIX)/bin
 _LIBDIR = $(IVPREFIX)/lib
 _HDRTOP = $(IVPREFIX)/include/Inventor

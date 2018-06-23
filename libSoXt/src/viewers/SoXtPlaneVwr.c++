@@ -92,15 +92,15 @@ enum {
 
 // Resources for labels.
 typedef struct {
-	char *planeViewer;
-	char *transX;
-	char *transY;
-	char *planeViewerPreferenceSheet;
-	char *dolly;
-	char *zoom;
+	const char* planeViewer;
+	const char* transX;
+	const char* transY;
+	const char* planeViewerPreferenceSheet;
+	const char* dolly;
+	const char* zoom;
 } RES_LABELS;
 static RES_LABELS rl;
-static char *defaultLabel[]={ 
+static const char *defaultLabel[]={
 	"Plane Viewer",  
 	"transX", 
 	"transY",

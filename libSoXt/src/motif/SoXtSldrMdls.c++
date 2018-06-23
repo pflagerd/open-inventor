@@ -35,22 +35,22 @@
  */
 
 /*
-* Copyright (C) 1990-93   Silicon Graphics, Inc.
-*
-_______________________________________________________________________
-______________  S I L I C O N   G R A P H I C S   I N C .  ____________
-|
-|   $Revision: 1.3 $
-|
-|   Classes:
-|      Subclasses of modules used for specific fields of specific types
-|     of nodes.
-|
-|   Author(s)          : Paul Isaacs
-|
-______________  S I L I C O N   G R A P H I C S   I N C .  ____________
-_______________________________________________________________________
-*/
+ * Copyright (C) 1990-93   Silicon Graphics, Inc.
+ *
+ _______________________________________________________________________
+ ______________  S I L I C O N   G R A P H I C S   I N C .  ____________
+ |
+ |   $Revision: 1.3 $
+ |
+ |   Classes:
+ |      Subclasses of modules used for specific fields of specific types
+ |     of nodes.
+ |
+ |   Author(s)          : Paul Isaacs
+ |
+ ______________  S I L I C O N   G R A P H I C S   I N C .  ____________
+ _______________________________________________________________________
+ */
 
 #include <inttypes.h>
 #include "SoXtSliderModules.h"
@@ -59,637 +59,551 @@ _______________________________________________________________________
 #include <Xm/Xm.h>
 #include <Inventor/Xt/SoXtResource.h>
 
-static XtResource _labelResource[] = {
-    { XmNlabelString, XmCLabelString, XmRXmString, sizeof( char * ),
-      0,
-      XtRString, (XtPointer) NULL }
-};
+static XtResource _labelResource[] = { { XmNlabelString, XmCLabelString,
+		XmRXmString, sizeof(char *), 0,
+		XtRString, (XtPointer) NULL } };
 
-static char *transSliderTitles[] = {
-   SO_TRANSLATE_MODULE_LABEL,         SO_TRANSLATE_MODULE_SLIDER1_LABEL,
-   SO_TRANSLATE_MODULE_SLIDER2_LABEL, SO_TRANSLATE_MODULE_SLIDER3_LABEL,
-};
+static const char *transSliderTitles[] = {
+SO_TRANSLATE_MODULE_LABEL, SO_TRANSLATE_MODULE_SLIDER1_LABEL,
+SO_TRANSLATE_MODULE_SLIDER2_LABEL, SO_TRANSLATE_MODULE_SLIDER3_LABEL, };
 
-SoXtTransSliderModule::SoXtTransSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
+SoXtTransSliderModule::SoXtTransSliderModule(Widget parent, const char *name,
+		SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    
 
-
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtTransMultiSlider(form, "Trans");
-    SoXtSliderModule::buildWidget(form);
-    //
-    SoXtResource xr(form);
-    char *tmp;
-    if (xr.getResource( "transSliderLabel",  "TransSliderLabel", tmp ))
-	transSliderTitles[0] = tmp;	
-    if (xr.getResource( "transSlider1",  "TransSlider1", tmp ))
-	transSliderTitles[1] = tmp;	
-    if (xr.getResource( "transSlider2",  "TransSlider2", tmp ))
-	transSliderTitles[2] = tmp;	
-    if (xr.getResource( "transSlider3",  "TransSlider3", tmp ))
-	transSliderTitles[3] = tmp;	
-    //
-    initLabels();
-    setBaseWidget(form);
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtTransMultiSlider(form, "Trans");
+	SoXtSliderModule::buildWidget(form);
+	//
+	SoXtResource xr(form);
+	const char *tmp;
+	if (xr.getResource("transSliderLabel", "TransSliderLabel", tmp))
+		transSliderTitles[0] = tmp;
+	if (xr.getResource("transSlider1", "TransSlider1", tmp))
+		transSliderTitles[1] = tmp;
+	if (xr.getResource("transSlider2", "TransSlider2", tmp))
+		transSliderTitles[2] = tmp;
+	if (xr.getResource("transSlider3", "TransSlider3", tmp))
+		transSliderTitles[3] = tmp;
+	//
+	initLabels();
+	setBaseWidget(form);
 }
 
-SoXtTransSliderModule::~SoXtTransSliderModule() {}
-
-void
-SoXtTransSliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
-
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) transSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(transSliderTitles[1]) );
+SoXtTransSliderModule::~SoXtTransSliderModule() {
 }
 
-static char *scaleSliderTitles[] = {
-   SO_SCALE_MODULE_LABEL,         SO_SCALE_MODULE_SLIDER1_LABEL,
-   SO_SCALE_MODULE_SLIDER2_LABEL, SO_SCALE_MODULE_SLIDER3_LABEL,
-};
+void SoXtTransSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-SoXtScaleSliderModule::SoXtScaleSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
-{
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtScaleMultiSlider(form, "Scale");
-    SoXtSliderModule::buildWidget(form);
-    //
-    SoXtResource xr(form);
-    char *tmp;
-    if (xr.getResource( "scaleSliderLabel",  "ScaleSliderLabel", tmp ))
-	scaleSliderTitles[0] = tmp;	
-    if (xr.getResource( "scaleSlider1",  "ScaleSlider1", tmp ))
-	scaleSliderTitles[1] = tmp;	
-    if (xr.getResource( "scaleSlider2",  "ScaleSlider2", tmp ))
-	scaleSliderTitles[2] = tmp;	
-    if (xr.getResource( "scaleSlider3",  "ScaleSlider3", tmp ))
-	scaleSliderTitles[3] = tmp;	
-    //
-    initLabels();
-    setBaseWidget(form);
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) transSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(transSliderTitles[1]));
 }
 
-SoXtScaleSliderModule::~SoXtScaleSliderModule() {}
+static const char *scaleSliderTitles[] = {
+SO_SCALE_MODULE_LABEL, SO_SCALE_MODULE_SLIDER1_LABEL,
+SO_SCALE_MODULE_SLIDER2_LABEL, SO_SCALE_MODULE_SLIDER3_LABEL, };
 
-void
-SoXtScaleSliderModule::initLabels()
+SoXtScaleSliderModule::SoXtScaleSliderModule(Widget parent, const char *name,
+		SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtScaleMultiSlider(form, "Scale");
+	SoXtSliderModule::buildWidget(form);
+	//
+	SoXtResource xr(form);
+	const char *tmp;
+	if (xr.getResource("scaleSliderLabel", "ScaleSliderLabel", tmp))
+		scaleSliderTitles[0] = tmp;
+	if (xr.getResource("scaleSlider1", "ScaleSlider1", tmp))
+		scaleSliderTitles[1] = tmp;
+	if (xr.getResource("scaleSlider2", "ScaleSlider2", tmp))
+		scaleSliderTitles[2] = tmp;
+	if (xr.getResource("scaleSlider3", "ScaleSlider3", tmp))
+		scaleSliderTitles[3] = tmp;
+	//
+	initLabels();
+	setBaseWidget(form);
+}
 
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) scaleSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
+SoXtScaleSliderModule::~SoXtScaleSliderModule() {
+}
 
-    _sliderModuleSliders->initTitles( &(scaleSliderTitles[1]) );
+void SoXtScaleSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
+
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) scaleSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(scaleSliderTitles[1]));
 }
 
 ///////////////////
 
-static char *rotateSliderTitles[] = {
-   SO_ROTATE_MODULE_LABEL,         SO_ROTATE_MODULE_SLIDER1_LABEL,
-   SO_ROTATE_MODULE_SLIDER2_LABEL, SO_ROTATE_MODULE_SLIDER3_LABEL,
-};
+static const char *rotateSliderTitles[] = {
+SO_ROTATE_MODULE_LABEL, SO_ROTATE_MODULE_SLIDER1_LABEL,
+SO_ROTATE_MODULE_SLIDER2_LABEL, SO_ROTATE_MODULE_SLIDER3_LABEL, };
 
-SoXtRotateSliderModule::SoXtRotateSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
+SoXtRotateSliderModule::SoXtRotateSliderModule(Widget parent, const char *name,
+		SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtRotateMultiSlider(form, "Rotate");
-    SoXtSliderModule::buildWidget(form);
-    //
-    SoXtResource xr(form);
-    char *tmp;
-    if (xr.getResource( "rotateSliderLabel",  "RotateSliderLabel", tmp ))
-	rotateSliderTitles[0] = tmp;	
-    if (xr.getResource( "rotateSlider1",  "RotateSlider1", tmp ))
-	rotateSliderTitles[1] = tmp;	
-    if (xr.getResource( "rotateSlider2",  "RotateSlider2", tmp ))
-	rotateSliderTitles[2] = tmp;	
-    if (xr.getResource( "rotateSlider3",  "RotateSlider3", tmp ))
-	rotateSliderTitles[3] = tmp;	
-    //
-    initLabels();
-    setBaseWidget(form);
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtRotateMultiSlider(form, "Rotate");
+	SoXtSliderModule::buildWidget(form);
+	//
+	SoXtResource xr(form);
+	const char *tmp;
+	if (xr.getResource("rotateSliderLabel", "RotateSliderLabel", tmp))
+		rotateSliderTitles[0] = tmp;
+	if (xr.getResource("rotateSlider1", "RotateSlider1", tmp))
+		rotateSliderTitles[1] = tmp;
+	if (xr.getResource("rotateSlider2", "RotateSlider2", tmp))
+		rotateSliderTitles[2] = tmp;
+	if (xr.getResource("rotateSlider3", "RotateSlider3", tmp))
+		rotateSliderTitles[3] = tmp;
+	//
+	initLabels();
+	setBaseWidget(form);
 }
 
-SoXtRotateSliderModule::~SoXtRotateSliderModule() {}
+SoXtRotateSliderModule::~SoXtRotateSliderModule() {
+}
 
-void
-SoXtRotateSliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
+void SoXtRotateSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) rotateSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) rotateSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
 
-    _sliderModuleSliders->initTitles( &(rotateSliderTitles[1]) );
+	_sliderModuleSliders->initTitles(&(rotateSliderTitles[1]));
 }
 
 ///////////////////
 ///////////////////
 
-static char *scaleOrientationSliderTitles[] = {
-   SO_SCALE_ORIENTATION_MODULE_LABEL, 
-   SO_SCALE_ORIENTATION_MODULE_SLIDER1_LABEL,
-   SO_SCALE_ORIENTATION_MODULE_SLIDER2_LABEL, 
-   SO_SCALE_ORIENTATION_MODULE_SLIDER3_LABEL,
-};
-
+static const char *scaleOrientationSliderTitles[] = {
+SO_SCALE_ORIENTATION_MODULE_LABEL,
+SO_SCALE_ORIENTATION_MODULE_SLIDER1_LABEL,
+SO_SCALE_ORIENTATION_MODULE_SLIDER2_LABEL,
+SO_SCALE_ORIENTATION_MODULE_SLIDER3_LABEL, };
 
 SoXtScaleOrientationSliderModule::SoXtScaleOrientationSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
+		Widget parent, const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtScaleOrientationMultiSlider(form, "ScaleOrientation");
-    SoXtSliderModule::buildWidget(form);
-    //
-    SoXtResource xr(form);
-    char *tmp;
-    if (xr.getResource( "scaleOrientationSliderLabel",  "ScaleOrientationSliderLabel", tmp ))
-	scaleOrientationSliderTitles[0] = tmp;	
-    if (xr.getResource( "scaleOrientationSlider1",  "ScaleOrientationSlider1", tmp ))
-	scaleOrientationSliderTitles[1] = tmp;	
-    if (xr.getResource( "scaleOrientationSlider2",  "ScaleOrientationSlider2", tmp ))
-	scaleOrientationSliderTitles[2] = tmp;	
-    if (xr.getResource( "scaleOrientationSlider3",  "ScaleOrientationSlider3", tmp ))
-	scaleOrientationSliderTitles[3] = tmp;	
-    //
-    initLabels();
-    setBaseWidget(form);
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtScaleOrientationMultiSlider(form,
+			"ScaleOrientation");
+	SoXtSliderModule::buildWidget(form);
+	//
+	SoXtResource xr(form);
+	const char *tmp;
+	if (xr.getResource("scaleOrientationSliderLabel",
+			"ScaleOrientationSliderLabel", tmp))
+		scaleOrientationSliderTitles[0] = tmp;
+	if (xr.getResource("scaleOrientationSlider1", "ScaleOrientationSlider1",
+			tmp))
+		scaleOrientationSliderTitles[1] = tmp;
+	if (xr.getResource("scaleOrientationSlider2", "ScaleOrientationSlider2",
+			tmp))
+		scaleOrientationSliderTitles[2] = tmp;
+	if (xr.getResource("scaleOrientationSlider3", "ScaleOrientationSlider3",
+			tmp))
+		scaleOrientationSliderTitles[3] = tmp;
+	//
+	initLabels();
+	setBaseWidget(form);
 }
 
-SoXtScaleOrientationSliderModule::~SoXtScaleOrientationSliderModule() {}
+SoXtScaleOrientationSliderModule::~SoXtScaleOrientationSliderModule() {
+}
 
-void
-SoXtScaleOrientationSliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
+void SoXtScaleOrientationSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) scaleOrientationSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr =
+			(XtPointer) scaleOrientationSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
 
-    _sliderModuleSliders->initTitles( &(scaleOrientationSliderTitles[1]) );
+	_sliderModuleSliders->initTitles(&(scaleOrientationSliderTitles[1]));
 }
 
 ///////////////////
 
-static char *centerSliderTitles[] = {
-   SO_CENTER_MODULE_LABEL,         SO_CENTER_MODULE_SLIDER1_LABEL,
-   SO_CENTER_MODULE_SLIDER2_LABEL, SO_CENTER_MODULE_SLIDER3_LABEL,
-};
+static const char *centerSliderTitles[] = {
+SO_CENTER_MODULE_LABEL, SO_CENTER_MODULE_SLIDER1_LABEL,
+SO_CENTER_MODULE_SLIDER2_LABEL, SO_CENTER_MODULE_SLIDER3_LABEL, };
 
-SoXtCenterSliderModule::SoXtCenterSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
+SoXtCenterSliderModule::SoXtCenterSliderModule(Widget parent, const char *name,
+		SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtCenterMultiSlider(form, "Center");
-    SoXtSliderModule::buildWidget(form);
-    //
-    SoXtResource xr(form);
-    char *tmp;
-    if (xr.getResource( "centerSliderLabel",  "CenterSliderLabel", tmp ))
-	centerSliderTitles[0] = tmp;	
-    if (xr.getResource( "centerSlider1",  "CenterSlider1", tmp ))
-	centerSliderTitles[1] = tmp;	
-    if (xr.getResource( "centerSlider2",  "CenterSlider2", tmp ))
-	centerSliderTitles[2] = tmp;	
-    if (xr.getResource( "centerSlider3",  "CenterSlider3", tmp ))
-	centerSliderTitles[3] = tmp;	
-    //
-    initLabels();
-    setBaseWidget(form);
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtCenterMultiSlider(form, "Center");
+	SoXtSliderModule::buildWidget(form);
+	//
+	SoXtResource xr(form);
+	const char *tmp;
+	if (xr.getResource("centerSliderLabel", "CenterSliderLabel", tmp))
+		centerSliderTitles[0] = tmp;
+	if (xr.getResource("centerSlider1", "CenterSlider1", tmp))
+		centerSliderTitles[1] = tmp;
+	if (xr.getResource("centerSlider2", "CenterSlider2", tmp))
+		centerSliderTitles[2] = tmp;
+	if (xr.getResource("centerSlider3", "CenterSlider3", tmp))
+		centerSliderTitles[3] = tmp;
+	//
+	initLabels();
+	setBaseWidget(form);
 }
 
-SoXtCenterSliderModule::~SoXtCenterSliderModule() {}
-
-void
-SoXtCenterSliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
-
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) centerSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(centerSliderTitles[1]) );
+SoXtCenterSliderModule::~SoXtCenterSliderModule() {
 }
 
-static char *ambientColorSliderTitles[] = {
-   SO_AMBIENT_COLOR_MODULE_LABEL,         SO_AMBIENT_COLOR_MODULE_SLIDER1_LABEL,
-   SO_AMBIENT_COLOR_MODULE_SLIDER2_LABEL, SO_AMBIENT_COLOR_MODULE_SLIDER3_LABEL,
-};
+void SoXtCenterSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-SoXtAmbientColorSliderModule::SoXtAmbientColorSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
-{
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtAmbientColorMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) centerSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(centerSliderTitles[1]));
 }
 
-SoXtAmbientColorSliderModule::~SoXtAmbientColorSliderModule() {}
+static const char *ambientColorSliderTitles[] = {
+SO_AMBIENT_COLOR_MODULE_LABEL, SO_AMBIENT_COLOR_MODULE_SLIDER1_LABEL,
+SO_AMBIENT_COLOR_MODULE_SLIDER2_LABEL, SO_AMBIENT_COLOR_MODULE_SLIDER3_LABEL, };
 
-void
-SoXtAmbientColorSliderModule::initLabels()
+SoXtAmbientColorSliderModule::SoXtAmbientColorSliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
-
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) ambientColorSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(ambientColorSliderTitles[1]) );
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtAmbientColorMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
 }
 
-static char *diffuseColorSliderTitles[] = {
-   SO_DIFFUSE_COLOR_MODULE_LABEL,         SO_DIFFUSE_COLOR_MODULE_SLIDER1_LABEL,
-   SO_DIFFUSE_COLOR_MODULE_SLIDER2_LABEL, SO_DIFFUSE_COLOR_MODULE_SLIDER3_LABEL,
-};
-
-SoXtDiffuseColorSliderModule::SoXtDiffuseColorSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
-{
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtDiffuseColorMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+SoXtAmbientColorSliderModule::~SoXtAmbientColorSliderModule() {
 }
 
-SoXtDiffuseColorSliderModule::~SoXtDiffuseColorSliderModule() {}
+void SoXtAmbientColorSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-void
-SoXtDiffuseColorSliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) ambientColorSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
 
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) diffuseColorSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(diffuseColorSliderTitles[1]) );
+	_sliderModuleSliders->initTitles(&(ambientColorSliderTitles[1]));
 }
 
-static char *specularColorSliderTitles[] = {
-   SO_SPECULAR_COLOR_MODULE_LABEL,       SO_SPECULAR_COLOR_MODULE_SLIDER1_LABEL,
-  SO_SPECULAR_COLOR_MODULE_SLIDER2_LABEL,SO_SPECULAR_COLOR_MODULE_SLIDER3_LABEL,
-};
+static const char *diffuseColorSliderTitles[] = {
+SO_DIFFUSE_COLOR_MODULE_LABEL, SO_DIFFUSE_COLOR_MODULE_SLIDER1_LABEL,
+SO_DIFFUSE_COLOR_MODULE_SLIDER2_LABEL, SO_DIFFUSE_COLOR_MODULE_SLIDER3_LABEL, };
 
-SoXtSpecularColorSliderModule::SoXtSpecularColorSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
+SoXtDiffuseColorSliderModule::SoXtDiffuseColorSliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtSpecularColorMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtDiffuseColorMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
 }
 
-SoXtSpecularColorSliderModule::~SoXtSpecularColorSliderModule() {}
-
-void
-SoXtSpecularColorSliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
-
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) specularColorSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(specularColorSliderTitles[1]) );
+SoXtDiffuseColorSliderModule::~SoXtDiffuseColorSliderModule() {
 }
 
-static char *emissiveColorSliderTitles[] = {
-   SO_EMISSIVE_COLOR_MODULE_LABEL,       SO_EMISSIVE_COLOR_MODULE_SLIDER1_LABEL,
-  SO_EMISSIVE_COLOR_MODULE_SLIDER2_LABEL,SO_EMISSIVE_COLOR_MODULE_SLIDER3_LABEL,
-};
+void SoXtDiffuseColorSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-SoXtEmissiveColorSliderModule::SoXtEmissiveColorSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
-{
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtEmissiveColorMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) diffuseColorSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(diffuseColorSliderTitles[1]));
 }
 
-SoXtEmissiveColorSliderModule::~SoXtEmissiveColorSliderModule() {}
+static const char *specularColorSliderTitles[] =
+		{
+		SO_SPECULAR_COLOR_MODULE_LABEL, SO_SPECULAR_COLOR_MODULE_SLIDER1_LABEL,
+		SO_SPECULAR_COLOR_MODULE_SLIDER2_LABEL,
+				SO_SPECULAR_COLOR_MODULE_SLIDER3_LABEL, };
 
-void
-SoXtEmissiveColorSliderModule::initLabels()
+SoXtSpecularColorSliderModule::SoXtSpecularColorSliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
-
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) emissiveColorSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(emissiveColorSliderTitles[1]) );
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtSpecularColorMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
 }
 
-static char *shininessSliderTitles[] = {
-   SO_SHININESS_MODULE_LABEL,         SO_SHININESS_MODULE_SLIDER1_LABEL
-};
-
-SoXtShininessSliderModule::SoXtShininessSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
-{
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtShininessMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+SoXtSpecularColorSliderModule::~SoXtSpecularColorSliderModule() {
 }
 
-SoXtShininessSliderModule::~SoXtShininessSliderModule() {}
+void SoXtSpecularColorSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-void
-SoXtShininessSliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) specularColorSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
 
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) shininessSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(shininessSliderTitles[1]) );
+	_sliderModuleSliders->initTitles(&(specularColorSliderTitles[1]));
 }
 
-static char *transparencySliderTitles[] = {
-   SO_TRANSPARENCY_MODULE_LABEL,         SO_TRANSPARENCY_MODULE_SLIDER1_LABEL
-};
+static const char *emissiveColorSliderTitles[] =
+		{
+		SO_EMISSIVE_COLOR_MODULE_LABEL, SO_EMISSIVE_COLOR_MODULE_SLIDER1_LABEL,
+		SO_EMISSIVE_COLOR_MODULE_SLIDER2_LABEL,
+				SO_EMISSIVE_COLOR_MODULE_SLIDER3_LABEL, };
 
-SoXtTransparencySliderModule::SoXtTransparencySliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
+SoXtEmissiveColorSliderModule::SoXtEmissiveColorSliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtTransparencyMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtEmissiveColorMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
 }
 
-SoXtTransparencySliderModule::~SoXtTransparencySliderModule() {}
-
-void
-SoXtTransparencySliderModule::initLabels()
-{
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
-
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) transparencySliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(transparencySliderTitles[1]) );
+SoXtEmissiveColorSliderModule::~SoXtEmissiveColorSliderModule() {
 }
 
-static char *lightIntensitySliderTitles[] = {
-   SO_LIGHT_INTENSITY_MODULE_LABEL,     SO_LIGHT_INTENSITY_MODULE_SLIDER1_LABEL
-};
+void SoXtEmissiveColorSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-SoXtLightIntensitySliderModule::SoXtLightIntensitySliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
-{
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtLightIntensityMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) emissiveColorSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(emissiveColorSliderTitles[1]));
 }
 
-SoXtLightIntensitySliderModule::~SoXtLightIntensitySliderModule() {}
+static const char *shininessSliderTitles[] = {
+SO_SHININESS_MODULE_LABEL, SO_SHININESS_MODULE_SLIDER1_LABEL };
 
-void
-SoXtLightIntensitySliderModule::initLabels()
+SoXtShininessSliderModule::SoXtShininessSliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
-
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) lightIntensitySliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
-
-    _sliderModuleSliders->initTitles( &(lightIntensitySliderTitles[1]) );
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtShininessMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
 }
 
-static char *lightColorSliderTitles[] = {
-   SO_LIGHT_COLOR_MODULE_LABEL,         SO_LIGHT_COLOR_MODULE_SLIDER1_LABEL,
-   SO_LIGHT_COLOR_MODULE_SLIDER2_LABEL, SO_LIGHT_COLOR_MODULE_SLIDER3_LABEL,
-};
-
-SoXtLightColorSliderModule::SoXtLightColorSliderModule(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent)
-	: SoXtSliderModule(
-	    parent,
-	    name, 
-	    buildInsideParent, 
-	    FALSE)		// tell parent class not to build just yet
-{
-    // OK, we will build right now.
-    Widget form = buildForm(getParentWidget());				
-    _sliderModuleSliders = new SoXtLightColorMultiSlider(form);
-    SoXtSliderModule::buildWidget(form);
-    initLabels();
-    setBaseWidget(form);
+SoXtShininessSliderModule::~SoXtShininessSliderModule() {
 }
 
-SoXtLightColorSliderModule::~SoXtLightColorSliderModule() {}
+void SoXtShininessSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
 
-void
-SoXtLightColorSliderModule::initLabels()
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) shininessSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(shininessSliderTitles[1]));
+}
+
+static const char *transparencySliderTitles[] = {
+SO_TRANSPARENCY_MODULE_LABEL, SO_TRANSPARENCY_MODULE_SLIDER1_LABEL };
+
+SoXtTransparencySliderModule::SoXtTransparencySliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
 {
-    Arg    wargs[10];
-    XmString newString;
-    Widget theWidget;
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtTransparencyMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
+}
 
-    /* label for the title in the control bar */
-    _labelResource[0].default_addr = (XtPointer) lightColorSliderTitles[0];
-    theWidget = _sliderModuleControl->getOpenCloseButton();
-    XtGetApplicationResources( theWidget, (XtPointer) &newString,
-		  _labelResource, XtNumber( _labelResource ), NULL, 0); 
-    XtSetArg( wargs[0], XmNlabelString, newString ); 
-    XtSetValues( theWidget,  wargs, 1 );
+SoXtTransparencySliderModule::~SoXtTransparencySliderModule() {
+}
 
-    _sliderModuleSliders->initTitles( &(lightColorSliderTitles[1]) );
+void SoXtTransparencySliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
+
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) transparencySliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(transparencySliderTitles[1]));
+}
+
+static const char *lightIntensitySliderTitles[] = {
+SO_LIGHT_INTENSITY_MODULE_LABEL, SO_LIGHT_INTENSITY_MODULE_SLIDER1_LABEL };
+
+SoXtLightIntensitySliderModule::SoXtLightIntensitySliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
+{
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtLightIntensityMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
+}
+
+SoXtLightIntensitySliderModule::~SoXtLightIntensitySliderModule() {
+}
+
+void SoXtLightIntensitySliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
+
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) lightIntensitySliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(lightIntensitySliderTitles[1]));
+}
+
+static const char *lightColorSliderTitles[] = {
+SO_LIGHT_COLOR_MODULE_LABEL, SO_LIGHT_COLOR_MODULE_SLIDER1_LABEL,
+SO_LIGHT_COLOR_MODULE_SLIDER2_LABEL, SO_LIGHT_COLOR_MODULE_SLIDER3_LABEL, };
+
+SoXtLightColorSliderModule::SoXtLightColorSliderModule(Widget parent,
+		const char *name, SbBool buildInsideParent) :
+		SoXtSliderModule(parent, name, buildInsideParent,
+		FALSE)		// tell parent class not to build just yet
+{
+	// OK, we will build right now.
+	Widget form = buildForm(getParentWidget());
+	_sliderModuleSliders = new SoXtLightColorMultiSlider(form);
+	SoXtSliderModule::buildWidget(form);
+	initLabels();
+	setBaseWidget(form);
+}
+
+SoXtLightColorSliderModule::~SoXtLightColorSliderModule() {
+}
+
+void SoXtLightColorSliderModule::initLabels() {
+	Arg wargs[10];
+	XmString newString;
+	Widget theWidget;
+
+	/* label for the title in the control bar */
+	_labelResource[0].default_addr = (XtPointer) lightColorSliderTitles[0];
+	theWidget = _sliderModuleControl->getOpenCloseButton();
+	XtGetApplicationResources(theWidget, (XtPointer) &newString, _labelResource,
+			XtNumber(_labelResource), NULL, 0);
+	XtSetArg(wargs[0], XmNlabelString, newString);
+	XtSetValues(theWidget, wargs, 1);
+
+	_sliderModuleSliders->initTitles(&(lightColorSliderTitles[1]));
 }

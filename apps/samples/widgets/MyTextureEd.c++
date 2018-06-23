@@ -225,10 +225,10 @@ struct PaletteStruct {
  * static vars
  */
 
-static char *customTextureDir = ".textures";
-static char *defaultDir = IVTEXTURESDIR;
-static char *editorTitle = "Texture Editor";
-static char *noFileNameStr = "<empty>";
+static const char *customTextureDir = ".textures";
+static const char *defaultDir = IVTEXTURESDIR;
+static const char *editorTitle = "Texture Editor";
+static const char *noFileNameStr = "<empty>";
 
 #define hourglass_width 32
 #define hourglass_height 32
@@ -504,7 +504,7 @@ Widget MyTextureEditor::buildWidget(Widget parent)
 	Arg args[12];
 
 	// create a top level form to hold everything together
-	Widget form = XmCreateForm(parent, "textureForm", NULL, 0);
+	Widget form = XmCreateForm(parent, (char*)"textureForm", NULL, 0);
 
 	//
 	// create all the parts
@@ -543,7 +543,7 @@ Widget MyTextureEditor::buildWidget(Widget parent)
 	n = 0;
 	XtSetArg(args[n], XmNalignment, XmALIGNMENT_CENTER);
 	n++;
-	Widget textName = XmCreateLabelGadget(form, "name", args, n);
+	Widget textName = XmCreateLabelGadget(form, (char*)"name", args, n);
 	widgetList[TEXTURE_NAME] = textName;
 
 	//
@@ -708,17 +708,17 @@ Widget MyTextureEditor::buildMenu(Widget parent)
 	XmString xmstr;
 	int n, butNum = 0, subButNum;
 
-	Widget menu = XmCreateMenuBar(parent, "menuBar", NULL, 0);
+	Widget menu = XmCreateMenuBar(parent, (char*)"menuBar", NULL, 0);
 	widgetList[MENU_BAR] = menu;
 
 	//
 	// create the "File" menu
 	//
 
-	subMenu = XmCreatePulldownMenu(menu, "subMenu", NULL, 0);
+	subMenu = XmCreatePulldownMenu(menu, (char*)"subMenu", NULL, 0);
 
 	XtSetArg(args[0], XmNsubMenuId, subMenu);
-	buttons[butNum] = XmCreateCascadeButtonGadget(menu, "File", args, 1);
+	buttons[butNum] = XmCreateCascadeButtonGadget(menu, (char*)"File", args, 1);
 
 	// create the menu entries
 	n = 0;
@@ -726,10 +726,10 @@ Widget MyTextureEditor::buildMenu(Widget parent)
 	n++;
 
 #define ADD_ENTRY(NAME, ID, ACC, ACCTEXT) \
-    xmstr = XmStringCreateSimple(ACCTEXT); \
+    xmstr = XmStringCreateSimple((char*)ACCTEXT); \
     XtSetArg(args[n], XmNaccelerator, ACC); \
     XtSetArg(args[n+1], XmNacceleratorText, xmstr); \
-    subButtons[subButNum] = XmCreatePushButtonGadget(subMenu, NAME, args, n+2); \
+    subButtons[subButNum] = XmCreatePushButtonGadget(subMenu, (char*)NAME, args, n+2); \
     XtAddCallback(subButtons[subButNum], XmNactivateCallback, \
 	(XtCallbackProc) MyTextureEditor::fileMenuCB, (XtPointer) ID); \
     XmStringFree(xmstr); \
@@ -749,7 +749,7 @@ Widget MyTextureEditor::buildMenu(Widget parent)
 	//
 
 	widgetList[PALETTE_BUTTON] = buttons[butNum] = XmCreateCascadeButtonGadget(
-			menu, "Palettes", NULL, 0);
+			menu, (char*)"Palettes", NULL, 0);
 	buildPaletteSubMenu();
 	butNum++;
 
@@ -814,7 +814,7 @@ void MyTextureEditor::buildPaletteSubMenu()
 	// ??? we cannot delete the old popup menu or things will brake.
 	// ??? Is it automatically deleted for us ?
 	widgetList[PALETTE_MENU] = XmCreatePulldownMenu(widgetList[MENU_BAR],
-			"widgetList", NULL, 0);
+			(char*)"widgetList", NULL, 0);
 
 	Arg args[1];
 	XtSetArg(args[0], XmNsubMenuId, widgetList[PALETTE_MENU]);
@@ -857,7 +857,7 @@ Widget MyTextureEditor::buildTexturePaletteWidget(Widget parent)
 	XtSetArg(args[n], GLwNblueSize, 1);
 	n++;
 
-	Widget glx = XtCreateWidget("paletteGLX", glwMDrawingAreaWidgetClass,
+	Widget glx = XtCreateWidget((char*)"paletteGLX", glwMDrawingAreaWidgetClass,
 			parent, args, n);
 	widgetList[TEXTURE_GLX] = glx;
 
@@ -891,7 +891,7 @@ Widget MyTextureEditor::buildSliders(Widget parent)
 	Widget labels[5], fields[5], sliders[5];
 
 	// create a form to hold everything together
-	Widget form = XmCreateForm(parent, "slidersForm", NULL, 0);
+	Widget form = XmCreateForm(parent, (char*)"slidersForm", NULL, 0);
 
 	//
 	// create all the parts
@@ -903,13 +903,13 @@ Widget MyTextureEditor::buildSliders(Widget parent)
 	n = 0;
 	XtSetArg(args[n], XmNalignment, XmALIGNMENT_END);
 	n++;
-	labels[0] = XmCreateLabelGadget(form, "Translate X:", args, n);
-	labels[1] = XmCreateLabelGadget(form, "Translate Y:", args, n);
-	labels[2] = XmCreateLabelGadget(form, "Rotate:", args, n);
+	labels[0] = XmCreateLabelGadget(form, (char*)"Translate X:", args, n);
+	labels[1] = XmCreateLabelGadget(form, (char*)"Translate Y:", args, n);
+	labels[2] = XmCreateLabelGadget(form, (char*)"Rotate:", args, n);
 	widgetList[SCALE_X_LABEL] = labels[3] = XmCreateLabelGadget(form,
-			"Repeat X:", args, n);
+			(char*)"Repeat X:", args, n);
 	widgetList[SCALE_Y_LABEL] = labels[4] = XmCreateLabelGadget(form,
-			"Repeat Y:", args, n);
+			(char*)"Repeat Y:", args, n);
 
 	// create all of the text fields
 	n = 0;
@@ -921,7 +921,7 @@ Widget MyTextureEditor::buildSliders(Widget parent)
 	n++;
 
 #define CREATE_FIELD(ID) \
-    widgetList[ID] = fields[num] = XmCreateText(form, "", args, n); \
+    widgetList[ID] = fields[num] = XmCreateText(form, (char*)"", args, n); \
     XtAddCallback(fields[num], XmNvalueChangedCallback, \
 	(XtCallbackProc) MyTextureEditor::fieldChangedCB, (XtPointer) this); \
     XtAddCallback(fields[num], XmNactivateCallback, \
@@ -952,7 +952,7 @@ Widget MyTextureEditor::buildSliders(Widget parent)
 	n++;
 
 #define CREATE_SCALE(ID) \
-    widgetList[ID] = sliders[num] = XmCreateScale(form, "", args, n); \
+    widgetList[ID] = sliders[num] = XmCreateScale(form, (char*)"", args, n); \
     XtAddCallback(sliders[num], XmNvalueChangedCallback, \
 	(XtCallbackProc) MyTextureEditor::slidersCB, (XtPointer) ID); \
     XtAddCallback(sliders[num++], XmNdragCallback, \
@@ -1057,7 +1057,7 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 	int i, n;
 
 	// create a form to hold everything together
-	Widget form = XmCreateForm(parent, "buttonForm", NULL, 0);
+	Widget form = XmCreateForm(parent, (char*)"buttonForm", NULL, 0);
 
 	//
 	// create all the parts
@@ -1067,7 +1067,7 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 	n = 0;
 	XtSetArg(args[n], XmNhighlightThickness, 0);
 	n++;
-	acceptBut = XmCreatePushButtonGadget(form, "Accept", args, n);
+	acceptBut = XmCreatePushButtonGadget(form, (char*)"Accept", args, n);
 	XtAddCallback(acceptBut, XmNactivateCallback,
 			(XtCallbackProc) MyTextureEditor::acceptCB, (XtPointer) this);
 
@@ -1075,8 +1075,8 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 	n = 0;
 	XtSetArg(args[n], XmNalignment, XmALIGNMENT_END);
 	n++;
-	labels[0] = XmCreateLabelGadget(form, "Mapping:", args, n);
-	labels[1] = XmCreateLabelGadget(form, "Options:", args, n);
+	labels[0] = XmCreateLabelGadget(form, (char*)"Mapping:", args, n);
+	labels[1] = XmCreateLabelGadget(form, (char*)"Options:", args, n);
 	// make all the labels the same width (for layout)
 	short w;
 	int width = 0;
@@ -1092,7 +1092,7 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 	Widget list[15];
 	int num;
 
-	widgetList[MAPP_PULLDOWN] = XmCreatePulldownMenu(form, "widgetList", NULL,
+	widgetList[MAPP_PULLDOWN] = XmCreatePulldownMenu(form, (char*)"widgetList", NULL,
 			0);
 	n = 0;
 	XtSetArg(args[n], XmNuserData, this);
@@ -1100,7 +1100,7 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 
 #define ADD_ENTRY(NAME, ID) \
     widgetList[ID] = list[num] = XmCreatePushButtonGadget(widgetList[MAPP_PULLDOWN], \
-	NAME, args, n); \
+	(char*)NAME, args, n); \
     XtAddCallback(list[num++], XmNactivateCallback, \
 	(XtCallbackProc) MyTextureEditor::mappingMenuCB, (XtPointer) ID);
 
@@ -1125,10 +1125,10 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 	n++;
 	XtSetArg(args[n], XmNsubMenuId, widgetList[MAPP_PULLDOWN]);
 	n++;
-	buttons[0] = XmCreateOptionMenu(form, "optionMenu", args, n);
+	buttons[0] = XmCreateOptionMenu(form, (char*)"optionMenu", args, n);
 
 	// create the options button
-	widgetList[OPT_PULLDOWN] = XmCreatePulldownMenu(form, "widgetList", NULL,
+	widgetList[OPT_PULLDOWN] = XmCreatePulldownMenu(form, (char*)"widgetList", NULL,
 			0);
 	n = 0;
 	XtSetArg(args[n], XmNuserData, this);
@@ -1136,7 +1136,7 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 
 #define ADD_ENTRY(NAME, ID) \
     widgetList[ID] = list[num] = XmCreatePushButtonGadget(widgetList[OPT_PULLDOWN], \
-	NAME, args, n); \
+	(char*)NAME, args, n); \
     XtAddCallback(list[num++], XmNactivateCallback, \
 	(XtCallbackProc) MyTextureEditor::optionMenuCB, (XtPointer) ID);
 
@@ -1158,7 +1158,7 @@ Widget MyTextureEditor::buildButtons(Widget parent)
 	n++;
 	XtSetArg(args[n], XmNsubMenuId, widgetList[OPT_PULLDOWN]);
 	n++;
-	buttons[1] = XmCreateOptionMenu(form, "optionMenu", args, n);
+	buttons[1] = XmCreateOptionMenu(form, (char*)"optionMenu", args, n);
 
 	//
 	// layout !
@@ -1318,14 +1318,14 @@ void MyTextureEditor::updateTextureName()
 //
 ////////////////////////////////////////////////////////////////////////
 {
-	char *str =
+	const char *str =
 			(currentItem < 0) ?
 					((selectedItem < 0) ?
 							(char *) " " : textureNames[selectedItem].name) :
 					textureNames[currentItem].name;
 	if (str == NULL)
 		str = noFileNameStr;
-	XmString xmstr = XmStringCreateSimple(str);
+	XmString xmstr = XmStringCreateSimple((char*)str);
 	XtVaSetValues(widgetList[TEXTURE_NAME], XmNlabelString, xmstr, NULL);
 	XmStringFree(xmstr);
 }
@@ -1461,11 +1461,11 @@ SbBool MyTextureEditor::setRepeatState(SbBool flag)
 	// update the scale labels
 	XmString xmstr1, xmstr2;
 	if (repeatState) {
-		xmstr1 = XmStringCreateSimple("Repeat X:");
-		xmstr2 = XmStringCreateSimple("Repeat Y:");
+		xmstr1 = XmStringCreateSimple((char*)"Repeat X:");
+		xmstr2 = XmStringCreateSimple((char*)"Repeat Y:");
 	} else {
-		xmstr1 = XmStringCreateSimple("Scale X:");
-		xmstr2 = XmStringCreateSimple("Scale Y:");
+		xmstr1 = XmStringCreateSimple((char*)"Scale X:");
+		xmstr2 = XmStringCreateSimple((char*)"Scale Y:");
 	}
 	XtVaSetValues(widgetList[SCALE_X_LABEL], XmNlabelString, xmstr1, NULL);
 	XtVaSetValues(widgetList[SCALE_Y_LABEL], XmNlabelString, xmstr2, NULL);
@@ -1564,7 +1564,7 @@ void MyTextureEditor::getPaletteNames()
 	//
 
 	// see if SO_TEXTURE_DIR is set, if so use it...
-	char *envDir = getenv("SO_TEXTURE_DIR");
+	char *envDir = getenv((char*)"SO_TEXTURE_DIR");
 	if (envDir != NULL) {
 		free(paletteDir);
 		paletteDir = strdup(envDir);
@@ -2182,17 +2182,17 @@ void MyTextureEditor::createNewDialog()
 ////////////////////////////////////////////////////////////////////////
 {
 	Arg args[5];
-	XmString xmstr = XmStringCreateSimple("New Palette Name:");
+	XmString xmstr = XmStringCreateSimple((char*)"New Palette Name:");
 
 	int n = 0;
 	XtSetArg(args[n], XmNautoUnmanage, FALSE);
 	n++;
-	XtSetArg(args[n], XtNtitle, "New Palette Dialog");
+	XtSetArg(args[n], XtNtitle, (char*)"New Palette Dialog");
 	n++;
 	XtSetArg(args[n], XmNselectionLabelString, xmstr);
 	n++;
 	Widget dialog = XmCreatePromptDialog(SoXt::getShellWidget(getWidget()),
-			"saveDialog", args, n);
+			(char*)"saveDialog", args, n);
 	XmStringFree(xmstr);
 
 	XtUnmanageChild(XmSelectionBoxGetChild(dialog, XmDIALOG_HELP_BUTTON));
@@ -2215,14 +2215,14 @@ void MyTextureEditor::createNewDialog()
 //  the current palette.
 //
 // Use: private
-void MyTextureEditor::createDeleteDialog(char *title, char *str1, char *str2)
+void MyTextureEditor::createDeleteDialog(const char *title, const char *str1, const char *str2)
 //
 ////////////////////////////////////////////////////////////////////////
 		{
 	Arg args[5];
-	XmString xmstr = XmStringCreateSimple(str1);
+	XmString xmstr = XmStringCreateSimple((char*)str1);
 	xmstr = XmStringConcat(xmstr, XmStringSeparatorCreate());
-	xmstr = XmStringConcat(xmstr, XmStringCreateSimple(str2));
+	xmstr = XmStringConcat(xmstr, XmStringCreateSimple((char*)str2));
 
 	int n = 0;
 	XtSetArg(args[n], XmNautoUnmanage, FALSE);
@@ -2232,7 +2232,7 @@ void MyTextureEditor::createDeleteDialog(char *title, char *str1, char *str2)
 	XtSetArg(args[n], XmNmessageString, xmstr);
 	n++;
 	Widget dialog = XmCreateWarningDialog(SoXt::getShellWidget(getWidget()),
-			"DeleteDialog", args, n);
+			(char*)"DeleteDialog", args, n);
 	XmStringFree(xmstr);
 
 	XtUnmanageChild(XmMessageBoxGetChild(dialog, XmDIALOG_HELP_BUTTON));
@@ -2285,7 +2285,7 @@ void MyTextureEditor::createNewPalette(char *palName)
 	char fileName[MAXPATHLEN];
 	struct stat buf;
 	FILE *file;
-	sprintf(dirName, "%s/%s/", getenv("HOME"), customTextureDir);
+	sprintf(dirName, "%s/%s/", getenv((char*)"HOME"), customTextureDir);
 	if (stat(dirName, &buf) != 0)
 		mkdir(dirName, 0x1ff);
 	strcpy(fileName, dirName);
@@ -2421,13 +2421,13 @@ void MyTextureEditor::setNewDialogImage(char *fileName)
 	XmString xmstr =
 			(dialogImageName != NULL) ?
 					XmStringCreateSimple(dialogImageName) :
-					XmStringCreateSimple(noFileNameStr);
+					XmStringCreateSimple((char*)noFileNameStr);
 	XtVaSetValues(widgetList[DIALOG_NAME], XmNlabelString, xmstr, NULL);
 	XmStringFree(xmstr);
 
 	// update the info label
 	xmstr = (dialogImageInfo != NULL) ?
-			XmStringCreateSimple(dialogImageInfo) : XmStringCreateSimple("");
+			XmStringCreateSimple(dialogImageInfo) : XmStringCreateSimple((char*)"");
 	XtVaSetValues(widgetList[DIALOG_INFO], XmNlabelString, xmstr, NULL);
 	XmStringFree(xmstr);
 
@@ -2507,8 +2507,8 @@ void MyTextureEditor::openImageDialog()
 	n++;
 	XtSetArg(args[n], XmNmarginWidth, 10);
 	n++;
-	Widget dummyForm = XmCreateForm(shell, "dummyForm", args, n);
-	Widget form = XmCreateForm(dummyForm, "imageDialogForm", NULL, 0);
+	Widget dummyForm = XmCreateForm(shell, (char*)"dummyForm", args, n);
+	Widget form = XmCreateForm(dummyForm, (char*)"imageDialogForm", NULL, 0);
 
 	//
 	// create all the parts
@@ -2518,10 +2518,10 @@ void MyTextureEditor::openImageDialog()
 	n = 0;
 	XtSetArg(args[n], XmNhighlightThickness, 0);
 	n++;
-	buttons[0] = XmCreatePushButtonGadget(form, "Open...", args, n);
-	buttons[1] = XmCreatePushButtonGadget(form, "Clear", args, n);
-	buttons[2] = XmCreatePushButtonGadget(form, "Apply", args, n);
-	buttons[3] = XmCreatePushButtonGadget(form, "CloseWin", args, n);
+	buttons[0] = XmCreatePushButtonGadget(form, (char*)"Open...", args, n);
+	buttons[1] = XmCreatePushButtonGadget(form, (char*)"Clear", args, n);
+	buttons[2] = XmCreatePushButtonGadget(form, (char*)"Apply", args, n);
+	buttons[3] = XmCreatePushButtonGadget(form, (char*)"CloseWin", args, n);
 	widgetList[DIALOG_BUTTON_0] = buttons[0];
 
 	// make them all the same size
@@ -2550,9 +2550,9 @@ void MyTextureEditor::openImageDialog()
 			(XtPointer) this);
 
 	// create the image name label
-	widgetList[DIALOG_INFO] = labels[0] = XmCreateLabelGadget(form, "imageInfo",
+	widgetList[DIALOG_INFO] = labels[0] = XmCreateLabelGadget(form, (char*)"imageInfo",
 			NULL, 0);
-	widgetList[DIALOG_NAME] = labels[1] = XmCreateLabelGadget(form, "imageName",
+	widgetList[DIALOG_NAME] = labels[1] = XmCreateLabelGadget(form, (char*)"imageName",
 			NULL, 0);
 
 	// create the image glx window
@@ -2565,7 +2565,7 @@ void MyTextureEditor::openImageDialog()
 	n++;
 	XtSetArg(args[n], GLwNblueSize, 1);
 	n++;
-	glx = XtCreateWidget("imageDialogGLX", glwMDrawingAreaWidgetClass, form,
+	glx = XtCreateWidget((char*)"imageDialogGLX", glwMDrawingAreaWidgetClass, form,
 			args, n);
 	widgetList[DIALOG_IMAGE] = glx;
 
@@ -3171,7 +3171,7 @@ void MyTextureEditor::imageDialogOpenCB(Widget, MyTextureEditor *p, void *) {
 		XtSetArg(args[n], XmNtitle, "Image File Browser");
 		n++;
 		Widget fileDialog = XmCreateFileSelectionDialog(
-				p->widgetList[DIALOG_WINDOW], "fileBrowser", args, n);
+				p->widgetList[DIALOG_WINDOW], (char*)"fileBrowser", args, n);
 
 		p->widgetList[DIALOG_FILE_BROWSER] = fileDialog;
 		XtAddCallback(fileDialog, XmNokCallback,

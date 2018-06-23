@@ -104,14 +104,14 @@ enum ViewerModes {
 
 // Resources for labels.
 typedef struct {
-	char *flyViewer;
-	char *fvPrefSheet;
-	char *flyingSpeed;
-	char *increase;
-	char *decrease;
+	const char* flyViewer;
+	const char* fvPrefSheet;
+	const char* flyingSpeed;
+	const char* increase;
+	const char* decrease;
 } RES_LABELS;
 static RES_LABELS rl;
-static char *defaultLabel[]={ 
+static const char *defaultLabel[]={
 	"Fly Viewer",  
 	"Fly Viewer Preference Sheet", 
 	"Flying speed:",

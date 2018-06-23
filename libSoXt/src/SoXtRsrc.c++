@@ -214,7 +214,7 @@ SoXtResource::getResource(const char *resName, const char *resClass, unsigned sh
 // This gets the value for the resource, returning TRUE if successful.
 //
 SbBool
-SoXtResource::getResource(const char *resName, const char *resClass, char *&s)
+SoXtResource::getResource(const char *resName, const char *resClass, const char *&s)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -601,7 +601,7 @@ SoXtResource::getResource(
     Display *d,
 	const char *strName,
 	const char *strClass,
-    char *&s)
+    const char *&s)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -640,7 +640,7 @@ SoXtResource::getResource(
     Display *d,
     XrmQuarkList qName,
     XrmQuarkList qClass,
-    char *&s)
+	const char *&s)
 //
 ////////////////////////////////////////////////////////////////////////
 {

@@ -108,25 +108,25 @@ ivButton fileData[] = {
 #define IVVIEW_OFFSET(b,m) (((char*)(m)) - (char*)(b))
 
 XtResource intl_file_resources[] = {
-  { "aboutMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"aboutMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&fileData[0].name - (char*)&fileData[0]),
     XtRString, (XtPointer) "About...",},
-  { "openMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"openMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&fileData[1].name - (char*)&fileData[0]),
     XtRString, (XtPointer) "Open...",},
-  { "openMenuLabelAcc", NULL, XtRString, sizeof(XtRString),
+  { (char*)"openMenuLabelAcc", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&fileData[1].accelerator - (char*)&fileData[0]),
     XtRString, (XtPointer) "Alt <Key> o",},
-  { "openMenuLabelAccKey", NULL, XtRString, sizeof(XtRString),
+  { (char*)"openMenuLabelAccKey", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&fileData[1].accelText - (char*)&fileData[0]),
     XtRString, (XtPointer) "Alt+o",},
-  { "quitMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"quitMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&fileData[2].name - (char*)&fileData[0]),
     XtRString, (XtPointer) "Quit",},
-  { "quitMenuLabelAcc", NULL, XtRString, sizeof(XtRString),
+  { (char*)"quitMenuLabelAcc", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&fileData[2].accelerator - (char*)&fileData[0]),
     XtRString, (XtPointer) "Alt <Key> q",},
-  { "quitMenuLabelAccKey", NULL, XtRString, sizeof(XtRString),
+  { (char*)"quitMenuLabelAccKey", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&fileData[2].accelText - (char*)&fileData[0]),
     XtRString, (XtPointer) "Alt+q",},
 };
@@ -138,10 +138,10 @@ ivButton editData[] = {
 };
 
 XtResource intl_edit_resources[] = {
-  { "transparencyMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"transparencyMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&editData[0].name - (char*)&editData[0]),
     XtRString, (XtPointer) "High quality transparency",},
-  { "colorMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"colorMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&editData[1].name - (char*)&editData[0]),
     XtRString, (XtPointer) "Edit Background color...",},
 };
@@ -153,10 +153,10 @@ ivButton optimizeData[] = {
 };
 
 XtResource intl_optimize_resources[] = {
-  { "speedMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"speedMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&optimizeData[0].name - (char*)&optimizeData[0]),
     XtRString, (XtPointer) "Optimize for speed (ivfix)",},
-  { "cullMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"cullMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&optimizeData[1].name - (char*)&optimizeData[0]),
     XtRString, (XtPointer) "Cull backfaces",},
 };
@@ -170,13 +170,13 @@ ivMenu pulldownData[] = {
 };
 
 XtResource intl_pulldown_resources[] = {
-  { "fileMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"fileMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&pulldownData[0].name - (char*)&pulldownData[0]),
     XtRString, (XtPointer) "File",},
-  { "optionsMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"optionsMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&pulldownData[1].name - (char*)&pulldownData[0]),
     XtRString, (XtPointer) "Options",},
-  { "optimizeMenuLabel", NULL, XtRString, sizeof(XtRString),
+  { (char*)"optimizeMenuLabel", NULL, XtRString, sizeof(XtRString),
     (Cardinal) ((char*)&pulldownData[2].name - (char*)&pulldownData[0]),
     XtRString, (XtPointer) "Optimize",},
 };

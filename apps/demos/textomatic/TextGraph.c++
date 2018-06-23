@@ -355,35 +355,35 @@ createPartEditor(Widget w, XtPointer, XtPointer)
 	XtSetArg(resources[n], XmNleftAttachment, XmATTACH_FORM); ++n;
 	XtSetArg(resources[n], XmNrightAttachment, XmATTACH_POSITION); ++n;
 	XtSetArg(resources[n], XmNrightPosition, 32); ++n;
-	w[0] = XmCreateRowColumn(form, "PartsLabels", resources, n);
+	w[0] = XmCreateRowColumn(form, (char*)"PartsLabels", resources, n);
 
 	n = nn;
 	XtSetArg(resources[n], XmNleftAttachment, XmATTACH_POSITION); ++n;
 	XtSetArg(resources[n], XmNleftPosition, 34); ++n;
 	XtSetArg(resources[n], XmNrightAttachment, XmATTACH_POSITION); ++n;
 	XtSetArg(resources[n], XmNrightPosition, 66); ++n;
-	w[1] = XmCreateRowColumn(form, "PartsOnOff", resources, n);
+	w[1] = XmCreateRowColumn(form, (char*)"PartsOnOff", resources, n);
 
 	n = nn;
 	XtSetArg(resources[n], XmNleftAttachment, XmATTACH_POSITION); ++n;
 	XtSetArg(resources[n], XmNleftPosition, 67); ++n;
 	XtSetArg(resources[n], XmNrightAttachment, XmATTACH_FORM); ++n;
-	w[2] = XmCreateRowColumn(form, "PartsEdit", resources, n);
+	w[2] = XmCreateRowColumn(form, (char*)"PartsEdit", resources, n);
 	n = 0;
 
 #define STRING(a) XmStringCreateLocalized(a)
 
 	XtSetArg(resources[n], XmNlabelString, STRING(labels.front)); ++n;
-	w[3] = XmCreateLabelGadget(w[0], "frontLabel", resources, n); n = 0;
+	w[3] = XmCreateLabelGadget(w[0], (char*)"frontLabel", resources, n); n = 0;
 	XtSetArg(resources[n], XmNlabelString, STRING(labels.sides)); ++n;
-	w[4] = XmCreateLabelGadget(w[0], "sidesLabel", resources, n); n = 0;
+	w[4] = XmCreateLabelGadget(w[0], (char*)"sidesLabel", resources, n); n = 0;
 	XtSetArg(resources[n], XmNlabelString, STRING(labels.back)); ++n;
-	w[5] = XmCreateLabelGadget(w[0], "backLabel",  resources, n); n = 0;
+	w[5] = XmCreateLabelGadget(w[0], (char*)"backLabel",  resources, n); n = 0;
 
 	// The three parts toggles
 	XtSetArg(resources[n], XmNlabelString, STRING(labels.on)); ++n;
 	XtSetArg(resources[n], XmNset, 1); ++n;
-	w[6] = XmCreateToggleButtonGadget(w[1], "frontOnOff", resources, n);
+	w[6] = XmCreateToggleButtonGadget(w[1], (char*)"frontOnOff", resources, n);
 	XtAddCallback(w[6], XmNvalueChangedCallback,
 		      togglePart, (XtPointer)SoText3::FRONT);
 	n = 0;
@@ -394,7 +394,7 @@ createPartEditor(Widget w, XtPointer, XtPointer)
 	} else {
 	    XtSetArg(resources[n], XmNset, 0); ++n;
 	}
-	w[7] = XmCreateToggleButtonGadget(w[1], "sidesOnOff", resources, n);
+	w[7] = XmCreateToggleButtonGadget(w[1], (char*)"sidesOnOff", resources, n);
 	XtAddCallback(w[7], XmNvalueChangedCallback,
 		      togglePart, (XtPointer)SoText3::SIDES);
 	n = 0;
@@ -405,7 +405,7 @@ createPartEditor(Widget w, XtPointer, XtPointer)
 	} else {
 	    XtSetArg(resources[n], XmNset, 0); ++n;
 	}
-	w[8] = XmCreateToggleButtonGadget(w[1], "backOnOff", resources, n);
+	w[8] = XmCreateToggleButtonGadget(w[1], (char*)"backOnOff", resources, n);
 	XtAddCallback(w[8], XmNvalueChangedCallback,
 		      togglePart, (XtPointer)SoText3::BACK);
 	n = 0;
@@ -413,15 +413,15 @@ createPartEditor(Widget w, XtPointer, XtPointer)
 	// And the three material toggles
 	XtSetArg(resources[n], XmNlabelString, STRING(labels.edit)); ++n;
 	XtSetArg(resources[n], XmNset, 1); ++n;
-	w[9] = XmCreateToggleButtonGadget(w[2], "frontEdit", resources, n);
+	w[9] = XmCreateToggleButtonGadget(w[2], (char*)"frontEdit", resources, n);
 	XtAddCallback(w[9], XmNvalueChangedCallback,
 		      editToggle, (XtPointer)SoText3::FRONT);
 	
-	w[10] = XmCreateToggleButtonGadget(w[2], "sidesEdit", resources, n);
+	w[10] = XmCreateToggleButtonGadget(w[2], (char*)"sidesEdit", resources, n);
 	XtAddCallback(w[10], XmNvalueChangedCallback,
 		      editToggle, (XtPointer)SoText3::SIDES);
 		      
-	w[11] = XmCreateToggleButtonGadget(w[2], "backEdit",  resources, n);
+	w[11] = XmCreateToggleButtonGadget(w[2], (char*)"backEdit",  resources, n);
 	XtAddCallback(w[11], XmNvalueChangedCallback,
 		      editToggle, (XtPointer)SoText3::BACK);
 	

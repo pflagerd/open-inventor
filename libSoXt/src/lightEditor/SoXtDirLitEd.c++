@@ -107,10 +107,10 @@ enum {
 
 // Resources for labels.
 typedef struct {
-	char *inten;
+	const char *inten;
 } RES_LABELS;
 static RES_LABELS rl;
-static char *defaults[]={ 
+static const char *defaults[]={
 	"Inten "
 };
 

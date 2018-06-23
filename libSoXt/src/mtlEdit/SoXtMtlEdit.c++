@@ -145,23 +145,23 @@ enum {
 #define k_transparency  0x0020
 
 // titles for color editor (also check updateColorEditor() routine)
-static char *ambientString;
-static char *diffuseString;
-static char *specularString;
-static char *emissiveString;
-static char *deftitles[]={
+static const char *ambientString;
+static const char *diffuseString;
+static const char *specularString;
+static const char *emissiveString;
+static const char *deftitles[]={
 	"Material Ambient Color",
 	"Material Diffuse Color",
 	"Material Specular Color",
 	"Material Emissive Color"
 };
 
-static char *mtlDir  = IVMATERIALSDIR;
+static const char *mtlDir  = IVMATERIALSDIR;
 
-static char *slider_labels[] = { (char *)NULL, (char *)NULL, (char *)NULL,
+static const char *slider_labels[] = { (char *)NULL, (char *)NULL, (char *)NULL,
 				 (char *)NULL, (char *)NULL, (char *)NULL
 };
-static char *slider_defs[] = { "Amb: ",  "Diff: ",       "Spec: ", 
+static const char *slider_defs[] = { "Amb: ",  "Diff: ",       "Spec: ",
                                "Emis: ", "Shininess: ",  "Transp: "
 };
 
@@ -881,7 +881,7 @@ SoXtMaterialEditor::buildWidget(Widget parent)
     //
     // read the X resource for this widget (2)
     //
-    char *val;
+    const char *val;
     SbColor c;
     if (xr.getResource("tile1Color", "Tile1Color", c)) {
 	tileColor->rgb.setValues(0, 1, &c);

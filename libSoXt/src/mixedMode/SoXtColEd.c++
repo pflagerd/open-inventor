@@ -421,7 +421,7 @@ _SoXtColorEditor::buildWidget(Widget parent)
     // get default values from X resource!
     //
     SoXtResource xr(mgrWidget);
-    char *val;
+    const char *val;
     SbBool b;
     
     if (xr.getResource("wysiwyg", "Wysiwyg", b))

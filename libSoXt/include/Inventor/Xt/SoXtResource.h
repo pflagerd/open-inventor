@@ -92,7 +92,7 @@ class SoXtResource {
     // C-api: name=getUShort
     SbBool   	getResource(const char *resName, const char *resClass, unsigned short &u);
     // C-api: name=getStr
-    SbBool   	getResource(const char *resName, const char *resClass, char *&s);
+    SbBool   	getResource(const char *resName, const char *resClass, const char *&s);
     // C-api: name=getBool
     SbBool   	getResource(const char *resName, const char *resClass, SbBool &b);
     // C-api: name=getFloat
@@ -111,7 +111,7 @@ class SoXtResource {
     static SbBool getResource(Display *, const char* sName, const char* sClass, SbColor &c);
     static SbBool getResource(Display *, const char* sName, const char* sClass, short &i);
     static SbBool getResource(Display *, const char* sName, const char* sClass, unsigned short &u);
-    static SbBool getResource(Display *, const char* sName, const char* sClass, char *&s);
+    static SbBool getResource(Display *, const char* sName, const char* sClass, const char *&s);
     static SbBool getResource(Display *, const char* sName, const char* sClass, SbBool &b);
     static SbBool getResource(Display *, const char* sName, const char *sClass, float &f);
 
@@ -125,7 +125,7 @@ class SoXtResource {
     static SbBool getResource(Display *, XrmQuarkList qName, XrmQuarkList qClass, SbColor &c);
     static SbBool getResource(Display *, XrmQuarkList qName, XrmQuarkList qClass, short &i);
     static SbBool getResource(Display *, XrmQuarkList qName, XrmQuarkList qClass, unsigned short &u);
-    static SbBool getResource(Display *, XrmQuarkList qName, XrmQuarkList qClass, char *&s);
+    static SbBool getResource(Display *, XrmQuarkList qName, XrmQuarkList qClass, const char *&s);
     static SbBool getResource(Display *, XrmQuarkList qName, XrmQuarkList qClass, SbBool &b);
     static SbBool getResource(Display *, XrmQuarkList qName, XrmQuarkList qClass, float &f);
 };

@@ -101,7 +101,7 @@
 #define POINTS_PER_SKILL_LEVEL 10000
 
 #define NUM_HELP_LINES 21
-static char *helpMessage[] = {
+static const char *helpMessage[] = {
     "Random pieces fall to the green floor.  Maneuver them to completely",
     "fill in the grid.  Use the ARROW KEYS to translate the piece forward",
     "and backward on the grid.  Rotate the piece as follows:",

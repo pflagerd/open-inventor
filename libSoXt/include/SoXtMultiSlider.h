@@ -76,7 +76,7 @@ class SoXtMultiSlider : public SoXtSliderSetBase
     virtual void    importValuesFromInventor() = 0;
       
     Widget          getContainer() { return widget; };
-    void            initTitles( char **titleList );
+    void            initTitles( const char **titleList );
     void            openMinMax();
     void            closeMinMax();
     void            makeSkinnyOpen();
