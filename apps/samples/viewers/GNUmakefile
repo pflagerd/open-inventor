@@ -28,6 +28,6 @@ $(CF): My%: $(IVDEPTH)/libSoXt/src/viewers/SoXt%
 	sed -f ./nameScript \
 		$(IVDEPTH)/libSoXt/src/viewers/$(subst My,SoXt,$@) > $@
 
-LDIRT += $(HF) $(CF)
+#LDIRT += $(HF) $(CF)
 
 include $(IVCOMMONRULES)
