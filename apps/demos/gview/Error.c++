@@ -57,7 +57,7 @@ Error::Error(Widget parent, const char *message)
 
     ADD_ARG(XmNmessageString,
 	    XmStringCreateLtoR((char *) message, XmSTRING_DEFAULT_CHARSET));
-    widget = XmCreateErrorDialog(parent, "Error", ARGS);
+    widget = XmCreateErrorDialog(parent, (char*)"Error", ARGS);
 
     // Get rid of buttons we don't need
     XtUnmanageChild(XmMessageBoxGetChild(widget, XmDIALOG_CANCEL_BUTTON));

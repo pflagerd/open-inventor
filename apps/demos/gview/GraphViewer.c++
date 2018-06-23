@@ -435,7 +435,7 @@ GraphViewer::buildMenu(Widget parent)
     ADD_TOP_FORM(0);
     ADD_LEFT_FORM(0);
     ADD_RIGHT_FORM(0);
-    menu = XmCreateMenuBar(parent, "menuBar", ARGS);
+    menu = XmCreateMenuBar(parent, (char*)"menuBar", ARGS);
     Widget shell = SoXt::getShellWidget(parent);
 
     for (p = 0; p < NUM_PULLDOWNS; p++) {
@@ -447,7 +447,7 @@ GraphViewer::buildMenu(Widget parent)
 	// Create a pulldown menu in the pop-up planes
 	RESET_ARGS();
 	SoXt::getPopupArgs(XtDisplay(menu), SCREEN(menu), args, &argN);
-	pulldown = XmCreatePulldownMenu(menu, "pulldown", ARGS);
+	pulldown = XmCreatePulldownMenu(menu, (char*)"pulldown", ARGS);
 	XtAddCallback(pulldown, XmNmapCallback,
 		      &GraphViewer::menuDisplayCB, (XtPointer) pullInfo);
 
@@ -459,7 +459,7 @@ GraphViewer::buildMenu(Widget parent)
 	RESET_ARGS();
 	ADD_ARG(XmNsubMenuId,	pulldown);
 	ADD_ARG(XmNlabelString,	STRING(pullInfo->name));
-	cascade = XmCreateCascadeButtonGadget(menu, "cascade", ARGS);
+	cascade = XmCreateCascadeButtonGadget(menu, (char*)"cascade", ARGS);
 
 	// Add the appropriate buttons
 	for (b = 0; b < pullInfo->numButtons; b++) {
@@ -477,7 +477,7 @@ GraphViewer::buildMenu(Widget parent)
 	    switch (butInfo->type) {
 
 	      case SEPARATOR:
-		but = XmCreateSeparatorGadget(pulldown, "separator", ARGS);
+		but = XmCreateSeparatorGadget(pulldown, (char*)"separator", ARGS);
 		break;
 
 	      case PUSH:

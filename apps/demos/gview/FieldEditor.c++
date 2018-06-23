@@ -234,7 +234,7 @@ FieldEditor::buildWidget(Widget parent)
     ADD_LEFT_FORM(0);
     ADD_RIGHT_FORM(0);
     ADD_BOTTOM_WIDGET(buttonForm, 4);
-    sep = XmCreateSeparatorGadget(topWidget, "Separator", ARGS);
+    sep = XmCreateSeparatorGadget(topWidget, (char*)"Separator", ARGS);
 
     // Create widget containing all field widgets
     fieldForm = buildFieldForm(topWidget);
@@ -271,7 +271,7 @@ FieldEditor::buildFieldForm(Widget parent)
 
     // Create form to hold all field widgets
     RESET_ARGS();
-    form = XmCreateForm(parent, "Form", ARGS);
+    form = XmCreateForm(parent, (char*)"Form", ARGS);
 
     // Create widget for each field and add them to form
     for (i = 0, info = fieldInfos; i < numFields; i++, info++) {
@@ -283,7 +283,7 @@ FieldEditor::buildFieldForm(Widget parent)
 	    ADD_LEFT_FORM(0);
 	    ADD_RIGHT_FORM(0);
 	    ADD_TOP_WIDGET((info - 1)->widget, 1);
-	    sep = XmCreateSeparatorGadget(form, "Separator", ARGS);
+	    sep = XmCreateSeparatorGadget(form, (char*)"Separator", ARGS);
 	    XtManageChild(sep);
 	}
 
@@ -328,7 +328,7 @@ FieldEditor::buildFieldWidget(Widget parent, FieldInfo *info)
 
     // Create a form widget
     RESET_ARGS();
-    form = XmCreateForm(parent, "Field", ARGS);
+    form = XmCreateForm(parent, (char*)"Field", ARGS);
 
     // Create a label widget with the name of the field
     RESET_ARGS();
@@ -337,7 +337,7 @@ FieldEditor::buildFieldWidget(Widget parent, FieldInfo *info)
     ADD_LEFT_FORM(4);
     ADD_TOP_FORM(4);
     ADD_BOTTOM_FORM(4);
-    label = XmCreateLabelGadget(form, "Label", ARGS);
+    label = XmCreateLabelGadget(form, (char*)"Label", ARGS);
 
     // Create a separator widget
     RESET_ARGS();
@@ -345,13 +345,13 @@ FieldEditor::buildFieldWidget(Widget parent, FieldInfo *info)
     ADD_LEFT_WIDGET(label, 4);
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
-    sep1 = XmCreateSeparatorGadget(form, "Separator", ARGS);
+    sep1 = XmCreateSeparatorGadget(form, (char*)"Separator", ARGS);
 
     // Create a form widget to hold buttons
     RESET_ARGS();
     ADD_BOTTOM_FORM(4);
     ADD_RIGHT_FORM(4);
-    butForm = XmCreateForm(form, "FieldButtons", ARGS);
+    butForm = XmCreateForm(form, (char*)"FieldButtons", ARGS);
 
     // Create a push button to set the field to default value.
     // (Disable it if the field is already the default value)
@@ -362,7 +362,7 @@ FieldEditor::buildFieldWidget(Widget parent, FieldInfo *info)
     ADD_RIGHT_FORM(0);
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
-    def = XmCreatePushButton(butForm, "defaultButton", ARGS);
+    def = XmCreatePushButton(butForm, (char*)"defaultButton", ARGS);
     ADD_CB(def, XmNactivateCallback, &FieldEditor::defaultButtonCB, info);
 
     // Create a toggle button to set the ignore flag
@@ -373,7 +373,7 @@ FieldEditor::buildFieldWidget(Widget parent, FieldInfo *info)
     ADD_BOTTOM_FORM(0);
     ADD_LEFT_FORM(0);
     ADD_RIGHT_WIDGET(def, 4);
-    ign = XmCreateToggleButtonGadget(butForm, "ignoreButton", ARGS);
+    ign = XmCreateToggleButtonGadget(butForm, (char*)"ignoreButton", ARGS);
 
     // Create a separator widget
     RESET_ARGS();
@@ -381,7 +381,7 @@ FieldEditor::buildFieldWidget(Widget parent, FieldInfo *info)
     ADD_RIGHT_WIDGET(butForm, 4);
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
-    sep2 = XmCreateSeparatorGadget(form, "Separator", ARGS);
+    sep2 = XmCreateSeparatorGadget(form, (char*)"Separator", ARGS);
 
     // Field value editor widget
     if (info->isMultiple)
@@ -431,7 +431,7 @@ FieldEditor::buildMultipleValueWidget(Widget parent, FieldInfo *info)
     //
 
     RESET_ARGS();
-    form = XmCreateForm(parent, "Form", ARGS);
+    form = XmCreateForm(parent, (char*)"Form", ARGS);
 
     //////////////////////////////////////////////////////////////////
     //
@@ -445,7 +445,7 @@ FieldEditor::buildMultipleValueWidget(Widget parent, FieldInfo *info)
     ADD_RIGHT_FORM(4);
     ADD_TOP_FORM(4);
     ADD_BOTTOM_FORM(4);
-    text = XmCreateScrolledText(form, "text", ARGS);
+    text = XmCreateScrolledText(form, (char*)"text", ARGS);
 
     // Set up a callback to check changes to text before allowing them
     ADD_CB(text, XmNmodifyVerifyCallback, &FieldEditor::textChangedCB, info);
@@ -483,8 +483,8 @@ FieldEditor::buildMultipleValueWidget(Widget parent, FieldInfo *info)
     ADD_TOP_FORM(6);
     ADD_LEFT_FORM(4);
     ADD_BOTTOM_FORM(4);
-    number = XmCreateText(form, "numbers", ARGS);
-    XmTextSetString(number, "?");	// Bogus value
+    number = XmCreateText(form, (char*)"numbers", ARGS);
+    XmTextSetString(number, (char*)"?");	// Bogus value
 
     // Set up a callback on the line number widget so that users
     // cannot scroll the text in there by moving the cursor
@@ -516,7 +516,7 @@ FieldEditor::buildSingleValueWidget(Widget parent, FieldInfo *info)
     ARG_VARS(20);
 
     RESET_ARGS();
-    form = XmCreateForm(parent, "Form", ARGS);
+    form = XmCreateForm(parent, (char*)"Form", ARGS);
 
     RESET_ARGS();
     ADD_ARG(XmNcolumns,		30);
@@ -525,7 +525,7 @@ FieldEditor::buildSingleValueWidget(Widget parent, FieldInfo *info)
     ADD_RIGHT_FORM(4);
     ADD_TOP_FORM(4);
     ADD_BOTTOM_FORM(4);
-    text = XmCreateText(form, "Text", ARGS);
+    text = XmCreateText(form, (char*)"Text", ARGS);
 
     ADD_CB(text, XmNmodifyVerifyCallback, &FieldEditor::textChangedCB, info);
 
@@ -552,7 +552,7 @@ FieldEditor::buildButtonWidget(Widget parent)
 
     // Create a form widget to hold it all
     RESET_ARGS();
-    form = XmCreateForm(parent, "Field", ARGS);
+    form = XmCreateForm(parent, (char*)"Field", ARGS);
 
     // Create "Apply", "Accept", "Revert", and "Cancel" buttons
     RESET_ARGS();
@@ -561,7 +561,7 @@ FieldEditor::buildButtonWidget(Widget parent)
     ADD_LEFT_FORM(0);
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
-    acceptButton = XmCreatePushButton(form, "acceptButton", ARGS);
+    acceptButton = XmCreatePushButton(form, (char*)"acceptButton", ARGS);
     ADD_CB(acceptButton, XmNactivateCallback,
 	   &FieldEditor::acceptButtonCB, this);
 
@@ -571,7 +571,7 @@ FieldEditor::buildButtonWidget(Widget parent)
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
     ADD_LEFT_WIDGET(acceptButton, 4);
-    applyButton = XmCreatePushButton(form, "applyButton", ARGS);
+    applyButton = XmCreatePushButton(form, (char*)"applyButton", ARGS);
     ADD_CB(applyButton, XmNactivateCallback,
 	   &FieldEditor::applyButtonCB, this);
 
@@ -581,7 +581,7 @@ FieldEditor::buildButtonWidget(Widget parent)
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
     ADD_LEFT_WIDGET(applyButton, 4);
-    revertButton = XmCreatePushButton(form, "revertButton", ARGS);
+    revertButton = XmCreatePushButton(form, (char*)"revertButton", ARGS);
     ADD_CB(revertButton, XmNactivateCallback,
 	   &FieldEditor::revertButtonCB, this);
 
@@ -591,7 +591,7 @@ FieldEditor::buildButtonWidget(Widget parent)
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
     ADD_LEFT_WIDGET(revertButton, 4);
-    cancelButton = XmCreatePushButton(form, "cancelButton", ARGS);
+    cancelButton = XmCreatePushButton(form, (char*)"cancelButton", ARGS);
     ADD_CB(cancelButton, XmNactivateCallback,
 	   &FieldEditor::cancelButtonCB, this);
 
@@ -604,7 +604,7 @@ FieldEditor::buildButtonWidget(Widget parent)
     ADD_TOP_FORM(0);
     ADD_BOTTOM_FORM(0);
     ADD_RIGHT_FORM(0);
-    overrideButton = XmCreateToggleButtonGadget(form, "overrideButton", ARGS);
+    overrideButton = XmCreateToggleButtonGadget(form, (char*)"overrideButton", ARGS);
 
     XtManageChild(acceptButton);
     XtManageChild(applyButton);
