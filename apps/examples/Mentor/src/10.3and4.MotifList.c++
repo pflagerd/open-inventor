@@ -101,7 +101,7 @@ enum objects {
 	NUM_OBJECTS
 };
 
-static char *objectNames[] = {
+static const char *objectNames[] = {
 	"Cube",
 	"Sphere",
 	"Cone",
@@ -249,7 +249,7 @@ createList(Display *display, SoSelection *selection)
    // Create a table of object names
    XmString *table = new XmString[NUM_OBJECTS];
    for (i=0; i<NUM_OBJECTS; i++) {
-       table[i] = XmStringCreate(objectNames[i], 
+       table[i] = XmStringCreate((char*)objectNames[i],
 				 XmSTRING_DEFAULT_CHARSET);
    }
 
