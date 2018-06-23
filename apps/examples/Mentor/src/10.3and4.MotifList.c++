@@ -262,7 +262,7 @@ createList(Display *display, SoSelection *selection)
    XtSetArg(args[n], XmNselectionPolicy, XmEXTENDED_SELECT);
    n++;
 
-   motifList = XmCreateScrolledList(shell, "funcList", args, n);
+   motifList = XmCreateScrolledList(shell, (char*)"funcList", args, n);
    XtAddCallback(motifList, XmNextendedSelectionCallback,
       (XtCallbackProc) myListPickCB, (XtPointer) selection);
 
