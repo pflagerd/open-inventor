@@ -162,13 +162,13 @@ typedef struct _ColorEditorCBData {
  */
 
 // strings used in motif buttons/menus
-static char *slider_labels[] = { "R", "G", "B", "H", "S", "V"};
-static char *button_names[] = { "right", "switch", "left"};
-static char *edit_menu[] = { "Continuous", "Manual", 
+static const char *slider_labels[] = { "R", "G", "B", "H", "S", "V"};
+static const char *button_names[] = { "right", "switch", "left"};
+static const char *edit_menu[] = { "Continuous", "Manual",
     	    	    	    "sep", "WYSIWYG",
 			    "sep", "Copy", "Paste", 
 			    "sep", "Help"};
-static char *slider_menu[] = { "None", "Value", "RGB", "HSV", 
+static const char *slider_menu[] = { "None", "Value", "RGB", "HSV",
     	    	"RGB V", "RGB HSV"};
 
 // arrow pointing to the right
