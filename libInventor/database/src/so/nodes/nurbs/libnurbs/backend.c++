@@ -163,10 +163,9 @@ Backend::endsurf( void )
  *-------------------------------------------------------------------------
  */
 void
-Backend::bgntmesh( char * )		
+Backend::bgntmesh( const char * )
 {
 #ifndef NOWIREFRAME
-
     meshindex = 0;	/* I think these need to be initialized to zero */
     npts = 0;
 

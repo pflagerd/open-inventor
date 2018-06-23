@@ -774,7 +774,7 @@ static void destroyDialogCB(Widget dialog, void *, void *)
 // Use: static public
 void
 SoXt::createSimpleErrorDialog(Widget widget, 
-    char *dialogTitle, char *str1, char *str2)
+    const char *dialogTitle, const char *str1, const char *str2)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -787,11 +787,11 @@ SoXt::createSimpleErrorDialog(Widget widget,
 	return;
     
     Arg args[5];
-    XmString xmstr = XmStringCreateSimple(str1);
+    XmString xmstr = XmStringCreateSimple((char*)str1);
     if (str2 != NULL) {
 	xmstr = XmStringConcat(xmstr, XmStringSeparatorCreate());
 	xmstr = XmStringConcat(xmstr, XmStringSeparatorCreate());
-	xmstr = XmStringConcat(xmstr, XmStringCreateSimple(str2));
+	xmstr = XmStringConcat(xmstr, XmStringCreateSimple((char*)str2));
     }
     
     int n = 0;

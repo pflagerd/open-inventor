@@ -158,7 +158,7 @@ class Interface {
     void fileSaveVanillaEvent();
 
     // These build dialogs and/or call up showcase to give info.
-    void createOkayCancelDialog(Widget, XtCallbackProc,char *,char *,char *);
+    void createOkayCancelDialog(Widget, XtCallbackProc, const char *, const char *, const char *);
     void showAboutDialog();
     void showFileSelectionDialog( XtCallbackProc okCB );
 

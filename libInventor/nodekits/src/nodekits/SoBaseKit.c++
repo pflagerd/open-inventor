@@ -746,7 +746,7 @@ SoBaseKit::set(const char *nameValuePairListString)
 
 SbBool
 SoBaseKit::set(const char *partNameString,     // name of the part
-	       char *parameterString )   // values for the part
+	       const char *parameterString )   // values for the part
 //
 ////////////////////////////////////////////////////////////////////////
 {

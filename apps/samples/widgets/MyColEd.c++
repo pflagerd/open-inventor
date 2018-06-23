@@ -196,7 +196,7 @@ static char left_bits[] = {
    0x80, 0x03, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 
-static char *thisClassName = "MyColorEditor";
+static const char *thisClassName = "MyColorEditor";
 
 
 ////////////////////////////////////////////////////////////////////////

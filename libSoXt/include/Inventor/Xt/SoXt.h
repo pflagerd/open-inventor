@@ -143,8 +143,8 @@ class SoXt {
     // XmCreateErrorDialog()) which will be centered around
     // C-api: name=createSimpleErrDlog
     static void		    createSimpleErrorDialog(
-				    Widget widget, char *dialogTitle, 
-				    char *errorStr1, char *errorStr2 = NULL);
+				    Widget widget, const char *dialogTitle,
+					const char *errorStr1, const char *errorStr2 = NULL);
     
     // Convenience routine which gets visual args for the popup planes.
     // These args can then be passed in to XmCreatePulldownMenu or

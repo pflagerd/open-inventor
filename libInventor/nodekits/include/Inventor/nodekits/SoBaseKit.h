@@ -190,7 +190,7 @@ class SoBaseKit : public SoNode {
     // set routine returns FALSE if it cannot find the parameter to set
     SbBool set(const char *nameValuePairListString);
     // C-api: name=set2
-    SbBool set(const char *partNameString, char *parameterString);
+    SbBool set(const char *partNameString, const char *parameterString);
 
     // DO NODEKITS TRAVERSE THEIR CHILDREN DURING A SEARCH ACTION?
     // By default, they do NOT.

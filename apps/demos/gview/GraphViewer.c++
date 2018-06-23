@@ -458,7 +458,7 @@ GraphViewer::buildMenu(Widget parent)
 	// Create a cascade button in the pulldown
 	RESET_ARGS();
 	ADD_ARG(XmNsubMenuId,	pulldown);
-	ADD_ARG(XmNlabelString,	STRING(pullInfo->name));
+	ADD_ARG(XmNlabelString,	STRING((char*)pullInfo->name));
 	cascade = XmCreateCascadeButtonGadget(menu, (char*)"cascade", ARGS);
 
 	// Add the appropriate buttons
@@ -470,8 +470,8 @@ GraphViewer::buildMenu(Widget parent)
 
 	    // Add keyboard accelerator if there is one
 	    if (butInfo->accelerator != NULL) {
-		ADD_ARG(XmNaccelerator,	    butInfo->accelerator);
-		ADD_ARG(XmNacceleratorText, STRING(butInfo->accelDisplay));
+		ADD_ARG(XmNaccelerator,	    (char*)butInfo->accelerator);
+		ADD_ARG(XmNacceleratorText, STRING((char*)butInfo->accelDisplay));
 	    }
 
 	    switch (butInfo->type) {
@@ -481,15 +481,15 @@ GraphViewer::buildMenu(Widget parent)
 		break;
 
 	      case PUSH:
-		ADD_ARG(XmNlabelString, STRING(butInfo->name));
-		but = XmCreatePushButtonGadget(pulldown, butInfo->name, ARGS);
+		ADD_ARG(XmNlabelString, STRING((char*)butInfo->name));
+		but = XmCreatePushButtonGadget(pulldown, (char*)butInfo->name, ARGS);
 		XtAddCallback(but, XmNactivateCallback,
 			      &GraphViewer::menuButtonCB, (XtPointer) butInfo);
 		break;
 
 	      case TOGGLE:
-		ADD_ARG(XmNlabelString, STRING(butInfo->name));
-		but = XmCreateToggleButtonGadget(pulldown, butInfo->name,ARGS);
+		ADD_ARG(XmNlabelString, STRING((char*)butInfo->name));
+		but = XmCreateToggleButtonGadget(pulldown, (char*)butInfo->name,ARGS);
 		XtAddCallback(but, XmNvalueChangedCallback,
 			      &GraphViewer::menuButtonCB, (XtPointer) butInfo);
 		break;

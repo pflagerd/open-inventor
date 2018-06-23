@@ -357,22 +357,22 @@ Interface::fileQuitEvent()
 //
 void
 Interface::createOkayCancelDialog(Widget widget, XtCallbackProc okCB,
-    char *dialogTitle, char *str1, char *str2)
+    const char *dialogTitle, const char *str1, const char *str2)
 {
     Widget shell = SoXt::getShellWidget(widget);
     if (shell == NULL)
 	return;
     
     Arg args[5];
-    XmString xmstr = XmStringCreateSimple(str1);
+    XmString xmstr = XmStringCreateSimple((char*)str1);
     xmstr = XmStringConcat(xmstr, XmStringSeparatorCreate());
-    xmstr = XmStringConcat(xmstr, XmStringCreateSimple(str2));
+    xmstr = XmStringConcat(xmstr, XmStringCreateSimple((char*)str2));
     
     int n = 0;
     XtSetArg(args[n], XmNautoUnmanage, FALSE); n++;
     XtSetArg(args[n], XtNtitle, dialogTitle); n++;
     XtSetArg(args[n], XmNmessageString, xmstr); n++;
-    Widget dialog = XmCreateErrorDialog(shell, "Error Dialog", args, n);
+    Widget dialog = XmCreateErrorDialog(shell, (char*)"Error Dialog", args, n);
     XmStringFree(xmstr);
     
     XtUnmanageChild(XmMessageBoxGetChild(dialog, XmDIALOG_HELP_BUTTON));
@@ -963,7 +963,7 @@ Interface::build( Widget parentWidget )
     // 
     // Create the topbar menu
     //
-    Widget menuWidget = XmCreateMenuBar(mgrWidget, "menuBar", NULL, 0);
+    Widget menuWidget = XmCreateMenuBar(mgrWidget, (char*)"menuBar", NULL, 0);
 
     Arg popupargs[4];
     int popupn = 0;
@@ -984,7 +984,7 @@ Interface::build( Widget parentWidget )
         // Make Topbar menu button
 	//
         Widget subMenu = 
-		XmCreatePulldownMenu(menuWidget, "subMenu", popupargs, popupn);
+		XmCreatePulldownMenu(menuWidget, (char*)"subMenu", popupargs, popupn);
         XtSetArg(args[0], XmNtearOffModel, XmTEAR_OFF_ENABLED);
         XtSetValues(subMenu, args, 1);
 
