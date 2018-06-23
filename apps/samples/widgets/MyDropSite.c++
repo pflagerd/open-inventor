@@ -47,12 +47,12 @@
 
 #include "MyDropSite.h"
 
-Widget		MyDropSite::siteWidget = NULL;
-MyIconDropCB	*MyDropSite::iconDropCB = NULL;
-MyObjectDropCB	*MyDropSite::objDropCB = NULL;
-void		*MyDropSite::dropCBData = NULL;
-Atom		MyDropSite::importList[10];
-int		MyDropSite::numImportTargets;
+Widget MyDropSite::siteWidget = NULL;
+MyIconDropCB *MyDropSite::iconDropCB = NULL;
+MyObjectDropCB *MyDropSite::objDropCB = NULL;
+void *MyDropSite::dropCBData = NULL;
+Atom MyDropSite::importList[10];
+int MyDropSite::numImportTargets;
 
 #define _ATOM_(NAME) (XmInternAtom(XtDisplay(siteWidget), NAME, False))
 
@@ -62,45 +62,53 @@ int		MyDropSite::numImportTargets;
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void
-MyDropSite::registerCallback(
-    Widget site,
-    MyIconDropCB *iconCB,
-    MyObjectDropCB *objCB,
-    void *data)
-{
-    siteWidget = site;
-    iconDropCB = iconCB;
-    objDropCB = objCB;
-    dropCBData = data;
+void MyDropSite::registerCallback(Widget site, MyIconDropCB *iconCB,
+		MyObjectDropCB *objCB, void *data) {
+	siteWidget = site;
+	iconDropCB = iconCB;
+	objDropCB = objCB;
+	dropCBData = data;
 
-    //
-    // _SGI_ICON is an icon on the desktop being dragged into our app.
-    // We have to figure out what type of file it is.
-    // All the other targets are different flavors of Inventor.
-    // A _FILE suffix means the dropped data is the name of a file to read.
-    // Without _FILE, the actual data is being dropped for us to read from a buffer.
-    //
-    int n = 0;
-    importList[n] = _ATOM_("_SGI_ICON");	    n++;
-    importList[n] = _ATOM_("INVENTOR_2_1");	    n++;
-    importList[n] = _ATOM_("INVENTOR_2_1_FILE");    n++;
-    importList[n] = _ATOM_("VRML_1_0");		    n++;
-    importList[n] = _ATOM_("VRML_1_0_FILE");	    n++;
-    importList[n] = _ATOM_("INVENTOR");		    n++;
-    importList[n] = _ATOM_("INVENTOR_FILE");	    n++;
-    importList[n] = _ATOM_("INVENTOR_2_0");	    n++;
-    importList[n] = _ATOM_("INVENTOR_2_0_FILE");    n++;
-    numImportTargets = n;
-    
-    Arg args[10];
-    n = 0;
-    XtSetArg(args[n], XmNimportTargets,		importList);	    n++;
-    XtSetArg(args[n], XmNnumImportTargets,	numImportTargets);  n++;
-    XtSetArg(args[n], XmNdropSiteOperations,	XmDROP_COPY);	    n++;
-    XtSetArg(args[n], XmNdropProc,		handleDrop);	    n++;
-    
-    XmDropSiteRegister(siteWidget, args, n);
+	//
+	// _SGI_ICON is an icon on the desktop being dragged into our app.
+	// We have to figure out what type of file it is.
+	// All the other targets are different flavors of Inventor.
+	// A _FILE suffix means the dropped data is the name of a file to read.
+	// Without _FILE, the actual data is being dropped for us to read from a buffer.
+	//
+	int n = 0;
+	importList[n] = _ATOM_("_SGI_ICON");
+	n++;
+	importList[n] = _ATOM_("INVENTOR_2_1");
+	n++;
+	importList[n] = _ATOM_("INVENTOR_2_1_FILE");
+	n++;
+	importList[n] = _ATOM_("VRML_1_0");
+	n++;
+	importList[n] = _ATOM_("VRML_1_0_FILE");
+	n++;
+	importList[n] = _ATOM_("INVENTOR");
+	n++;
+	importList[n] = _ATOM_("INVENTOR_FILE");
+	n++;
+	importList[n] = _ATOM_("INVENTOR_2_0");
+	n++;
+	importList[n] = _ATOM_("INVENTOR_2_0_FILE");
+	n++;
+	numImportTargets = n;
+
+	Arg args[10];
+	n = 0;
+	XtSetArg(args[n], XmNimportTargets, importList);
+	n++;
+	XtSetArg(args[n], XmNnumImportTargets, numImportTargets);
+	n++;
+	XtSetArg(args[n], XmNdropSiteOperations, XmDROP_COPY);
+	n++;
+	XtSetArg(args[n], XmNdropProc, handleDrop);
+	n++;
+
+	XmDropSiteRegister(siteWidget, args, n);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -109,73 +117,78 @@ MyDropSite::registerCallback(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void 
-MyDropSite::handleDrop(
-    Widget,
-    XtPointer client_data,
-    XtPointer call_data,
-    XtPointer)
-{
-    Arg args[10];
-    int n = 0;
+void MyDropSite::handleDrop(Widget, XtPointer client_data, XtPointer call_data,
+		XtPointer) {
+	Arg args[10];
+	int n = 0;
 
-    XmDropProcCallback DropData = (XmDropProcCallback) call_data;
-    Widget wDragContext = DropData->dragContext;
+	XmDropProcCallback DropData = (XmDropProcCallback) call_data;
+	Widget wDragContext = DropData->dragContext;
 
-    // Set the transfer resources
-    if ((DropData->dropAction != XmDROP) ||
-	(DropData->operations != XmDROP_COPY)) {
-	XtSetArg(args[n], XmNtransferStatus, XmTRANSFER_FAILURE); n++;
-	XtSetArg(args[n], XmNnumDropTransfers, 0); n++;
+	// Set the transfer resources
+	if ((DropData->dropAction != XmDROP)
+			|| (DropData->operations != XmDROP_COPY)) {
+		XtSetArg(args[n], XmNtransferStatus, XmTRANSFER_FAILURE);
+		n++;
+		XtSetArg(args[n], XmNnumDropTransfers, 0);
+		n++;
+		XmDropTransferStart(wDragContext, args, n);
+		return;
+	} else {
+		// Check the sender's drag targets
+		Atom *senderExportList;
+		Cardinal numSenderTargets;
+		int m = 0;
+		XtSetArg(args[m], XmNexportTargets, &senderExportList);
+		m++;
+		XtSetArg(args[m], XmNnumExportTargets, &numSenderTargets);
+		m++;
+		XtGetValues(wDragContext, args, m);
+
+		// If no targets, cannot drop. (error)
+		if (numSenderTargets == 0) {
+			XtSetArg(args[n], XmNtransferStatus, XmTRANSFER_FAILURE);
+			n++;
+			XtSetArg(args[n], XmNnumDropTransfers, 0);
+			n++;
+			XmDropTransferStart(wDragContext, args, n);
+			return;
+		}
+
+		// Look for a target we want to import.
+		Atom desiredTarget = chooseTarget(senderExportList, numSenderTargets);
+
+		// If nothing desired, bail.
+		if (desiredTarget == 0) {
+			XtSetArg(args[n], XmNtransferStatus, XmTRANSFER_FAILURE);
+			n++;
+			XtSetArg(args[n], XmNnumDropTransfers, 0);
+			n++;
+			XmDropTransferStart(wDragContext, args, n);
+			return;
+		}
+
+		// Tell the sender what we want
+		XmDropTransferEntryRec transferEntries[2];
+		transferEntries[0].target = desiredTarget;
+		transferEntries[0].client_data = client_data;
+		XmDropTransferEntry transferList = transferEntries;
+
+		XtSetArg(args[n], XmNdropTransfers, transferList);
+		n++;
+		XtSetArg(args[n], XmNnumDropTransfers, 1);
+		n++;
+
+		if (desiredTarget == _ATOM_("_SGI_ICON")) {
+			XtSetArg(args[n], XmNtransferProc, transferIconProc);
+			n++;
+		} else {
+			XtSetArg(args[n], XmNtransferProc, transferObjectProc);
+			n++;
+		}
+	}
+
 	XmDropTransferStart(wDragContext, args, n);
-	return;
-    }
-    else {
-	// Check the sender's drag targets
-	Atom *senderExportList;
-	Cardinal numSenderTargets;
-	int m = 0;
-	XtSetArg(args[m], XmNexportTargets, &senderExportList); m++;
-	XtSetArg(args[m], XmNnumExportTargets, &numSenderTargets); m++;
-	XtGetValues(wDragContext, args, m);
-
-	// If no targets, cannot drop. (error)
-	if (numSenderTargets == 0) {
-	    XtSetArg(args[n], XmNtransferStatus, XmTRANSFER_FAILURE); n++;
-	    XtSetArg(args[n], XmNnumDropTransfers, 0); n++;
-	    XmDropTransferStart(wDragContext, args, n);
-	    return;
-	}
-
-	// Look for a target we want to import.
-	Atom desiredTarget = chooseTarget(senderExportList, numSenderTargets);
-
-	// If nothing desired, bail.
-	if (desiredTarget == 0) {
-	    XtSetArg(args[n], XmNtransferStatus, XmTRANSFER_FAILURE); n++;
-	    XtSetArg(args[n], XmNnumDropTransfers, 0); n++;
-	    XmDropTransferStart(wDragContext, args, n);
-	    return;
-	}
-
-	// Tell the sender what we want
-	XmDropTransferEntryRec transferEntries[2];
-	transferEntries[0].target = desiredTarget;
-	transferEntries[0].client_data = client_data;
-	XmDropTransferEntry transferList = transferEntries;
-	
-	XtSetArg(args[n], XmNdropTransfers,	transferList);	n++;
-	XtSetArg(args[n], XmNnumDropTransfers,	1);		n++;
-	
-	if (desiredTarget == _ATOM_("_SGI_ICON")) {
-	    XtSetArg(args[n], XmNtransferProc,	transferIconProc);	n++;
-	}
-	else {
-	    XtSetArg(args[n], XmNtransferProc,	transferObjectProc);	n++;
-	}
-    }
-    
-    XmDropTransferStart(wDragContext, args, n);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -187,26 +200,23 @@ MyDropSite::handleDrop(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-Atom
-MyDropSite::chooseTarget(
-    Atom *exportList,
-    int numExportTargets)
-{
-    Atom chosenType = 0;
+Atom MyDropSite::chooseTarget(Atom *exportList, int numExportTargets) {
+	Atom chosenType = 0;
 
-    // Run through our import list and the sender's export list and find a match
-    for (int i = 0; i < numExportTargets; i++) {
-	for (int j = 0; j < numImportTargets; j++) {
-	    if (exportList[i] == importList[j]) {
-		chosenType = exportList[i];
-		break;
-	    }
+	// Run through our import list and the sender's export list and find a match
+	for (int i = 0; i < numExportTargets; i++) {
+		for (int j = 0; j < numImportTargets; j++) {
+			if (exportList[i] == importList[j]) {
+				chosenType = exportList[i];
+				break;
+			}
+		}
+
+		if (chosenType != 0)
+			break;
 	}
-	
-	if (chosenType != 0) break;
-    }
 
-    return chosenType;
+	return chosenType;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -215,30 +225,25 @@ MyDropSite::chooseTarget(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void 
-MyDropSite::transferObjectProc(Widget w, XtPointer, Atom *, Atom *type,
-		       XtPointer value, unsigned long *length, int)
-{
-    SbBool success = FALSE;
-    
-    // If the object is really a file, invoke the icon callback which 
-    // takes a filename
-    if (*type == _ATOM_("INVENTOR_2_1_FILE") ||
-	*type == _ATOM_("VRML_1_0_FILE") ||
-	*type == _ATOM_("INVENTOR_FILE") ||
-	*type == _ATOM_("INVENTOR_2_0_FILE"))
-    {
-	// Invoke icon drop callback with a filename
-	success = (*iconDropCB)(dropCBData, (const char *) value);
-    }
-    else {
-	// Invoke object drop callback with the object data
-	success = (*objDropCB)(dropCBData, *type, value, *length);
-    }
-    
-    // Do the yellow pullback lines if any of the objects failed
-    if (! success)
-	XtVaSetValues(w, XmNtransferStatus, XmTRANSFER_FAILURE, 0);
+void MyDropSite::transferObjectProc(Widget w, XtPointer, Atom *, Atom *type,
+		XtPointer value, unsigned long *length, int) {
+	SbBool success = FALSE;
+
+	// If the object is really a file, invoke the icon callback which
+	// takes a filename
+	if (*type == _ATOM_("INVENTOR_2_1_FILE") || *type == _ATOM_("VRML_1_0_FILE")
+			|| *type == _ATOM_("INVENTOR_FILE")
+			|| *type == _ATOM_("INVENTOR_2_0_FILE")) {
+		// Invoke icon drop callback with a filename
+		success = (*iconDropCB)(dropCBData, (const char *) value);
+	} else {
+		// Invoke object drop callback with the object data
+		success = (*objDropCB)(dropCBData, *type, value, *length);
+	}
+
+	// Do the yellow pullback lines if any of the objects failed
+	if (!success)
+		XtVaSetValues(w, XmNtransferStatus, XmTRANSFER_FAILURE, (Widget*) 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -247,28 +252,26 @@ MyDropSite::transferObjectProc(Widget w, XtPointer, Atom *, Atom *type,
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void 
-MyDropSite::transferIconProc(Widget w, XtPointer, Atom *, Atom *type,
-		       XtPointer value, unsigned long *length, int)
-{
-    SbStringList fileList;
-    parseIcon(type, value, length, &fileList);
-    
-    SbBool anyFailures = (fileList.getLength() == 0);
+void MyDropSite::transferIconProc(Widget w, XtPointer, Atom *, Atom *type,
+		XtPointer value, unsigned long *length, int) {
+	SbStringList fileList;
+	parseIcon(type, value, length, &fileList);
 
-    for (int i = 0; i < fileList.getLength(); i++) {
+	SbBool anyFailures = (fileList.getLength() == 0);
 
-	// Invoke the callback
-	if (! (*iconDropCB)(dropCBData, fileList[i]->getString()))
-	    anyFailures = TRUE;
+	for (int i = 0; i < fileList.getLength(); i++) {
 
-	// Free up the allocated strings
-	delete fileList[i];
-    }
+		// Invoke the callback
+		if (!(*iconDropCB)(dropCBData, fileList[i]->getString()))
+			anyFailures = TRUE;
 
-    // Do the yellow pullback lines if any of the icons failed
-    if (anyFailures)
-	XtVaSetValues(w, XmNtransferStatus, XmTRANSFER_FAILURE, 0);
+		// Free up the allocated strings
+		delete fileList[i];
+	}
+
+	// Do the yellow pullback lines if any of the icons failed
+	if (anyFailures)
+		XtVaSetValues(w, XmNtransferStatus, XmTRANSFER_FAILURE, (Widget*) 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -278,24 +281,22 @@ MyDropSite::transferIconProc(Widget w, XtPointer, Atom *, Atom *type,
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void
-MyDropSite::parseIcon(Atom *type, XtPointer value, unsigned long *length,
-		    SbStringList *fileList)
-{
-    unsigned long currentLength = 0;
-    char *currString = (char *) value;
+void MyDropSite::parseIcon(Atom *type, XtPointer value, unsigned long *length,
+		SbStringList *fileList) {
+	unsigned long currentLength = 0;
+	char *currString = (char *) value;
 
-    while ((currentLength + 1) < *length) {
-	if (*type == _ATOM_("_SGI_ICON")) {
-	    char category[30];
-	    char name[256];
-	    sscanf(currString, "Category:%s Name:%s", category, name);
+	while ((currentLength + 1) < *length) {
+		if (*type == _ATOM_("_SGI_ICON")) {
+			char category[30];
+			char name[256];
+			sscanf(currString, "Category:%s Name:%s", category, name);
 
-	    if (! strcmp(category, "File"))
-		fileList->append(new SbString(name));
+			if (!strcmp(category, "File"))
+				fileList->append(new SbString(name));
+		}
+		currentLength = currentLength + strlen((char *) currString) + 1;
+		currString = (char *) value + currentLength;
 	}
-	currentLength = currentLength + strlen((char *) currString) + 1;
-	currString = (char *) value + currentLength;
-    }
 }
 
