@@ -17,6 +17,6 @@ SoCalcParse.c++: SoCalcParse.y
 	$(BISON) -y SoCalcParse.y
 	sed -e 's/yy/SoCalc_yy/g' -e 's/2093/12093/' < y.tab.c > SoCalcParse.c++
 
-LDIRT += y.tab.c SoCalcParse.c++
+#LDIRT += y.tab.c SoCalcParse.c++
 
 include $(IVCOMMONRULES)
