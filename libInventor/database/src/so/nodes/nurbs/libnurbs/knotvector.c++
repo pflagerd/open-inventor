@@ -45,94 +45,90 @@
 #include "knotvector.h"
 #include "defines.h"
 
+void Knotvector::init(long _knotcount, long _stride, long _order,
+		INREAL *_knotlist) {
+	knotcount = _knotcount;
+	stride = _stride;
+	order = _order;
+	knotlist = new Knot[_knotcount];
+	assert(knotlist);
 
-void Knotvector::init( long _knotcount, long _stride, long _order, INREAL *_knotlist )
-{
-    knotcount = _knotcount; 
-    stride = _stride; 
-    order = _order; 
-    knotlist = new Knot[_knotcount];
-    assert( knotlist );
-
-    for( int i = 0; i != _knotcount; i++ )
-        knotlist[i] = (Knot) _knotlist[i]; 
+	for (int i = 0; i != _knotcount; i++)
+		knotlist[i] = (Knot) _knotlist[i];
 }
 
-Knotvector::Knotvector( void )
-{
-    knotlist = 0;
+Knotvector ::Knotvector(void) {
+	knotlist = 0;
 }
 
-Knotvector::~Knotvector( void )
-{
-    if( knotlist ) delete[] knotlist;
+Knotvector ::~Knotvector(void) {
+	if (knotlist)
+		delete[] knotlist;
 }
 
-int Knotvector::validate( void )
-{
-   /* kindex is used as an array index so subtract one first, 
-     * this propagates throughout the code so study carefully */
-    long	kindex = knotcount-1;
+int Knotvector::validate(void) {
+	/* kindex is used as an array index so subtract one first,
+	 * this propagates throughout the code so study carefully */
+	long kindex = knotcount - 1;
 
-    if( order < 1 || order > MAXORDER ) {
-	// spline order un-supported
-	return( 1 );
-    }
-
-    if( knotcount < (2 * order) ) {
-	// too few knots
-	return( 2 );
-    }
-
-    if( identical( knotlist[kindex-(order-1)], knotlist[order-1]) ) {
-	// valid knot range is empty 
-	return( 3 );
-    }
-
-    for( long i = 0; i < kindex; i++)
-	if( knotlist[i] > knotlist[i+1] ) {
-	    // decreasing knot sequence
-	    return( 4 );
+	if (order < 1 || order > MAXORDER) {
+		// spline order un-supported
+		return (1);
 	}
-	
-    /* check for valid multiplicity */
 
-    /*	kindex is currently the index of the last knot.
-     *	In the next loop  it is decremented to ignore the last knot
-     *	and the loop stops when kindex  is 2 so as to ignore the first
-     *  knot as well.  These knots are not used in computing 
-     *  knot multiplicities.
-     */
+	if (knotcount < (2 * order)) {
+		// too few knots
+		return (2);
+	}
 
-    long multi = 1;
-    for( ; kindex >= 1; kindex-- ) {
-	if( knotlist[kindex] - knotlist[kindex-1] < TOLERANCE ) {
-	    multi++; 
-	    continue;
-	} 
-	if ( multi > order ) {
-            // knot multiplicity greater than order of spline
-	    return( 5 );
-	} 
-	multi = 1;
-    }
+	if (identical(knotlist[kindex - (order - 1)], knotlist[order - 1])) {
+		// valid knot range is empty
+		return (3);
+	}
 
-    if ( multi > order ) {
-        // knot multiplicity greater than order of spline
-	return( 5 );
-    } 
+	for (long i = 0; i < kindex; i++)
+		if (knotlist[i] > knotlist[i + 1]) {
+			// decreasing knot sequence
+			return (4);
+		}
 
-    return 0;
+	/* check for valid multiplicity */
+
+	/*	kindex is currently the index of the last knot.
+	 *	In the next loop  it is decremented to ignore the last knot
+	 *	and the loop stops when kindex  is 2 so as to ignore the first
+	 *  knot as well.  These knots are not used in computing
+	 *  knot multiplicities.
+	 */
+
+	long multi = 1;
+	for (; kindex >= 1; kindex--) {
+		if (knotlist[kindex] - knotlist[kindex - 1] < TOLERANCE) {
+			multi++;
+			continue;
+		}
+		if (multi > order) {
+			// knot multiplicity greater than order of spline
+			return (5);
+		}
+		multi = 1;
+	}
+
+	if (multi > order) {
+		// knot multiplicity greater than order of spline
+		return (5);
+	}
+
+	return 0;
 }
 
-void Knotvector::show( const char *msg )
-{
+void Knotvector::show(const char *msg) {
 #ifndef NDEBUG
-    dprintf( "%s\n", msg ); 
-    dprintf( "order = %ld, count = %ld\n", order, knotcount );
+	dprintf("%s\n", msg);
+	dprintf("order = %ld, count = %ld\n", order, knotcount);
 
-    for( int i=0; i<knotcount; i++ )
-	dprintf( "knot[%d] = %g\n", i, knotlist[i] );
+	for (int i = 0; i < knotcount; i++)
+		dprintf("knot[%d] = %g\n", i, knotlist[i]);
 #endif
 }
 

@@ -641,7 +641,7 @@ Redisplay(Widget wid, XEvent *event, Region region)
 	(horiz ? 0 : WHEEL_LONG_DIMENSION + 2 * shadow);
   }
 
-  if (thumb->thumbWheel.current_quiet_pixmap == (int)NULL) {
+  if (thumb->thumbWheel.current_quiet_pixmap == (typeof(thumb->thumbWheel.current_quiet_pixmap))NULL) {
     CreateAndRenderPixmaps(thumb);
     thumb->thumbWheel.current_quiet_pixmap = thumb->thumbWheel.pix1;
     thumb->thumbWheel.current_hilite_pixmap = thumb->thumbWheel.pix1_hilite;
@@ -2079,9 +2079,9 @@ FreePixmaps(SgThumbWheelWidget thumb)
 #endif /* _NO_PROTO */
 {
 #define MyFreePixmap(w, field) \
-  if (w->thumbWheel.field != (int)NULL) {\
+  if (w->thumbWheel.field != (typeof(w->thumbWheel.field))NULL) {\
     XFreePixmap(XtDisplay((Widget)w), w->thumbWheel.field);\
-    w->thumbWheel.field = (int)NULL;\
+    w->thumbWheel.field = (typeof(w->thumbWheel.field))NULL;\
   }
 
   MyFreePixmap(thumb, pix1);
@@ -2092,8 +2092,8 @@ FreePixmaps(SgThumbWheelWidget thumb)
   MyFreePixmap(thumb, pix2_hilite);
   MyFreePixmap(thumb, pix3_hilite);
   MyFreePixmap(thumb, pix4_hilite);
-  thumb->thumbWheel.current_quiet_pixmap  = (int)NULL;
-  thumb->thumbWheel.current_hilite_pixmap = (int)NULL;
+  thumb->thumbWheel.current_quiet_pixmap  = (typeof(thumb->thumbWheel.current_quiet_pixmap))NULL;
+  thumb->thumbWheel.current_hilite_pixmap = (typeof(thumb->thumbWheel.current_hilite_pixmap))NULL;
 
   MyFreePixmap(thumb, button_quiet_pixmap);
   MyFreePixmap(thumb, button_hilite_pixmap);

@@ -92,7 +92,7 @@ SoXtClipboard::SoXtClipboard(Widget w,  // widget for copy/paste data transfers
 
 	// _XA_CLIPBOARD_ lets us know to use the X internal atom (char*)"CLIPBOARD".
 	if (selectionAtom == _XA_CLIPBOARD_) {
-		selectionAtom = XmInternAtom(XtDisplay(w), (char*)"CLIPBOARD", False);
+		selectionAtom = XmInternAtom(XtDisplay(w), (char*) "CLIPBOARD", False);
 	}
 
 	widget = w;
@@ -104,28 +104,34 @@ SoXtClipboard::SoXtClipboard(Widget w,  // widget for copy/paste data transfers
 
 	// Default paste interest.
 	pasteInterest = new SoXtImportInterestList;
-	pasteInterest->append(_ATOM_(widget, (char*)"INVENTOR_2_1"), pasteImportCB, this);
-	pasteInterest->append(_ATOM_(widget, (char*)"INVENTOR_2_1_FILE"), pasteImportCB,
+	pasteInterest->append(_ATOM_(widget, (char* )"INVENTOR_2_1"), pasteImportCB,
 			this);
-	pasteInterest->append(_ATOM_(widget, (char*)"VRML_1_0"), pasteImportCB, this);
-	pasteInterest->append(_ATOM_(widget, (char*)"VRML_1_0_FILE"), pasteImportCB, this);
-	pasteInterest->append(_ATOM_(widget, (char*)"INVENTOR"), pasteImportCB, this);
-	pasteInterest->append(_ATOM_(widget, (char*)"INVENTOR_FILE"), pasteImportCB, this);
-	pasteInterest->append(_ATOM_(widget, (char*)"INVENTOR_2_0"), pasteImportCB, this);
-	pasteInterest->append(_ATOM_(widget, (char*)"INVENTOR_2_0_FILE"), pasteImportCB,
+	pasteInterest->append(_ATOM_(widget, (char* )"INVENTOR_2_1_FILE"),
+			pasteImportCB, this);
+	pasteInterest->append(_ATOM_(widget, (char* )"VRML_1_0"), pasteImportCB,
 			this);
+	pasteInterest->append(_ATOM_(widget, (char* )"VRML_1_0_FILE"),
+			pasteImportCB, this);
+	pasteInterest->append(_ATOM_(widget, (char* )"INVENTOR"), pasteImportCB,
+			this);
+	pasteInterest->append(_ATOM_(widget, (char* )"INVENTOR_FILE"),
+			pasteImportCB, this);
+	pasteInterest->append(_ATOM_(widget, (char* )"INVENTOR_2_0"), pasteImportCB,
+			this);
+	pasteInterest->append(_ATOM_(widget, (char* )"INVENTOR_2_0_FILE"),
+			pasteImportCB, this);
 	pasteInterest->append(XA_STRING, pasteImportCB, this);
 
 	// Default copy interest
 	copyInterest = new SbPList();
-	copyInterest->append((void *) _ATOM_(widget, (char*)"INVENTOR_2_1"));
-	copyInterest->append((void *) _ATOM_(widget, (char*)"INVENTOR_2_1_FILE"));
-	copyInterest->append((void *) _ATOM_(widget, (char*)"VRML_1_0"));
-	copyInterest->append((void *) _ATOM_(widget, (char*)"VRML_1_0_FILE"));
-	copyInterest->append((void *) _ATOM_(widget, (char*)"INVENTOR"));
-	copyInterest->append((void *) _ATOM_(widget, (char*)"INVENTOR_FILE"));
-	copyInterest->append((void *) _ATOM_(widget, (char*)"INVENTOR_2_0"));
-	copyInterest->append((void *) _ATOM_(widget, (char*)"INVENTOR_2_0_FILE"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"INVENTOR_2_1"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"INVENTOR_2_1_FILE"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"VRML_1_0"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"VRML_1_0_FILE"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"INVENTOR"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"INVENTOR_FILE"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"INVENTOR_2_0"));
+	copyInterest->append((void *) _ATOM_(widget, (char* )"INVENTOR_2_0_FILE"));
 	copyInterest->append((void *) XA_STRING);
 
 	// By default, don't pass empty path lists to callbacks
@@ -174,7 +180,7 @@ void SoXtClipboard::copy(SoByteStream *byteStream, Time t)
 
 	delete copyBuffer;
 	copyBuffer = byteStream;
-	copyDataType = _ATOM_(widget, (char*)"INVENTOR_2_1");
+	copyDataType = _ATOM_(widget, (char* )"INVENTOR_2_1");
 
 	// SoWWWInline won't write it's data out unless the alternateRep field is set.
 	// Run through each node in each path, and do this so that the resulting file
@@ -328,7 +334,8 @@ void SoXtClipboard::paste(Time t, SoXtClipboardPasteCB *pasteDoneFunc,
 	} else {
 		// Find out what data targets the selection owner supports.
 		// (Of course, we have the server ask the selection owner for us.)
-		XtGetSelectionValue(widget, clipboardAtom, _ATOM_(widget, (char*)"TARGETS"),
+		XtGetSelectionValue(widget, clipboardAtom,
+				_ATOM_(widget, (char* )"TARGETS"),
 				(XtSelectionCallbackProc) SoXtClipboard::importSelectionTargets,
 				(XtPointer) this, eventTime);
 	}
@@ -440,7 +447,7 @@ Boolean SoXtClipboard::exportSelection(Widget widget, Atom *selectionAtom,
 		return False;
 
 	// The most likely case - the pasting app wants to know what data types we have.
-	if (*target == _ATOM_(widget, (char*)"TARGETS")) {
+	if (*target == _ATOM_(widget, (char* )"TARGETS")) {
 		clipboard->getExportTargets(value, length);
 		*format = 32;
 		*returnTarget = *target;
@@ -526,14 +533,14 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 ////////////////////////////////////////////////////////////////////////
 		{
 	// Do we know how to convert to the desired target?
-	if (!(desiredType == _ATOM_(widget, (char*)"INVENTOR_2_1")
-			|| desiredType == _ATOM_(widget, (char*)"INVENTOR_2_1_FILE")
-			|| desiredType == _ATOM_(widget, (char*)"VRML_1_0")
-			|| desiredType == _ATOM_(widget, (char*)"VRML_1_0_FILE")
-			|| desiredType == _ATOM_(widget, (char*)"INVENTOR")
-			|| desiredType == _ATOM_(widget, (char*)"INVENTOR_FILE")
-			|| desiredType == _ATOM_(widget, (char*)"INVENTOR_2_0")
-			|| desiredType == _ATOM_(widget, (char*)"INVENTOR_2_0_FILE"))) {
+	if (!(desiredType == _ATOM_(widget, (char* )"INVENTOR_2_1")
+			|| desiredType == _ATOM_(widget, (char* )"INVENTOR_2_1_FILE")
+			|| desiredType == _ATOM_(widget, (char* )"VRML_1_0")
+			|| desiredType == _ATOM_(widget, (char* )"VRML_1_0_FILE")
+			|| desiredType == _ATOM_(widget, (char* )"INVENTOR")
+			|| desiredType == _ATOM_(widget, (char* )"INVENTOR_FILE")
+			|| desiredType == _ATOM_(widget, (char* )"INVENTOR_2_0")
+			|| desiredType == _ATOM_(widget, (char* )"INVENTOR_2_0_FILE"))) {
 		// It's some type we don't know
 		*returnData = NULL;
 		*returnNumBytes = 0;
@@ -561,8 +568,8 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 	// (For VRML 1.0 destination - we should probably convert ivToVRML???)
 	//
 	////////////////////////////////////////////////////////////////////////
-	if (desiredType == _ATOM_(widget, (char*)"INVENTOR_2_1")
-			|| desiredType == _ATOM_(widget, (char*)"VRML_1_0")) {
+	if (desiredType == _ATOM_(widget, (char* )"INVENTOR_2_1")
+			|| desiredType == _ATOM_(widget, (char* )"VRML_1_0")) {
 		exportData = (char *) malloc((size_t) srcNumBytes);
 		if (exportData != NULL) {
 			memcpy(exportData, srcData, (int) srcNumBytes);
@@ -582,13 +589,13 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 	// Write the bytes to a tmp file which will be the input file to ivdowngrade
 	static const char *tmpdir = NULL;
 	if (tmpdir == NULL) {
-		tmpdir = getenv((char*)(char*)"TMPDIR");
+		tmpdir = getenv((char*) (char*) "TMPDIR");
 		if (tmpdir == NULL)
-			tmpdir = (char*)"/tmp";
+			tmpdir = (char*) "/tmp";
 	}
 
 	// Create temp filename
-	char *filename = tempnam(tmpdir, (char*)"IV21");
+	char *filename = tempnam(tmpdir, (char*) "IV21");
 	SbString tmpfile(filename);
 	free(filename);
 
@@ -602,8 +609,8 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 	// (For VRML 1.0 destination - we should probably convert ivToVRML???)
 	//
 	////////////////////////////////////////////////////////////////////////
-	if (desiredType == _ATOM_(widget, (char*)"INVENTOR_2_1_FILE")
-			|| desiredType == _ATOM_(widget, (char*)"VRML_1_0_FILE")) {
+	if (desiredType == _ATOM_(widget, (char* )"INVENTOR_2_1_FILE")
+			|| desiredType == _ATOM_(widget, (char* )"VRML_1_0_FILE")) {
 		exportData = strdup(tmpfile.getString());
 		numBytes = tmpfile.getLength() + 1; // +1 to grab the \0
 		*returnData = exportData;
@@ -615,7 +622,7 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 	//???
 
 	// Create temp output filename
-	filename = tempnam(tmpdir, (char*)"IV20");
+	filename = tempnam(tmpdir, (char*) "IV20");
 	SbString tmpfile2(filename);
 	free(filename);
 
@@ -624,7 +631,7 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 	char conversionCmd[BUFSIZE];
 	const char *infile = tmpfile.getString();
 	const char *outfile = tmpfile2.getString();
-	sprintf(conversionCmd, (char*)IVBINDIR "/ivdowngrade -v 2.0 %s %s", infile,
+	sprintf(conversionCmd, (char*) IVBINDIR "/ivdowngrade -v 2.0 %s %s", infile,
 			outfile);
 
 	if (system(conversionCmd) == -1) {
@@ -647,8 +654,8 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 	// If the destination target is a 2.0 file, we're done
 	//
 	////////////////////////////////////////////////////////////////////////
-	if (desiredType == _ATOM_(widget, (char*)"INVENTOR_FILE")
-			|| desiredType == _ATOM_(widget, (char*)"INVENTOR_2_0_FILE")) {
+	if (desiredType == _ATOM_(widget, (char* )"INVENTOR_FILE")
+			|| desiredType == _ATOM_(widget, (char* )"INVENTOR_2_0_FILE")) {
 		exportData = strdup(tmpfile2.getString());
 		numBytes = tmpfile2.getLength() + 1; // +1 to grab the \0
 		*returnData = exportData;
@@ -704,8 +711,8 @@ SbBool SoXtClipboard::convertData(Widget widget, void *srcData,
 	// If the destination target is a 2.0 object, we are done!
 	//
 	////////////////////////////////////////////////////////////////////////
-	if (desiredType == _ATOM_(widget, (char*)"INVENTOR")
-			|| desiredType == _ATOM_(widget, (char*)"INVENTOR_2_0")) {
+	if (desiredType == _ATOM_(widget, (char* )"INVENTOR")
+			|| desiredType == _ATOM_(widget, (char* )"INVENTOR_2_0")) {
 		*returnData = (char *) buf;
 		*returnNumBytes = len;
 		return True; // success!
@@ -811,7 +818,7 @@ void SoXtClipboard::importSelectionTargets(Widget widget,
 	}
 
 	Atom supportedAtom = 0;
-	if (*target == _ATOM_(widget, (char*)"TARGETS") || *target == XA_ATOM) {
+	if (*target == _ATOM_(widget, (char* )"TARGETS") || *target == XA_ATOM) {
 		if (*format == 32) {
 			Atom *lval = (Atom *) value;
 			supportedAtom = clipboard->chooseFromImportTargets(lval, *length);
@@ -826,7 +833,7 @@ void SoXtClipboard::importSelectionTargets(Widget widget,
 		// The selection owner does not support the TARGETS inquiry.
 		// Let's see if they at least support INVENTOR.
 		//??? what should we do here?
-		supportedAtom = _ATOM_(widget, (char*)"INVENTOR");
+		supportedAtom = _ATOM_(widget, (char* )"INVENTOR");
 	}
 
 	// if the selection owner supports a target we like, ask for the data
@@ -958,7 +965,7 @@ void SoXtClipboard::addPasteInterest(Atom dataType,
 		SoXtClipboardImportCB *pasteImportFunc, void *userData)
 //
 ////////////////////////////////////////////////////////////////////////
-{
+		{
 	pasteInterest->append(dataType, pasteImportFunc, userData);
 }
 
@@ -1012,18 +1019,18 @@ SoXtClipboard::readData(Widget w, Atom target, void *data, uint32_t numBytes)
 	SoPathList *pathList = NULL;
 
 	if (data != NULL) {
-		if (target == _ATOM_(w, (char*)"INVENTOR_2_1")
-				|| target == _ATOM_(w, (char*)"VRML_1_0")
-				|| target == _ATOM_(w, (char*)"INVENTOR")
-				|| target == _ATOM_(w, (char*)"INVENTOR_2_0")) {
+		if (target == _ATOM_(w, (char* )"INVENTOR_2_1")
+				|| target == _ATOM_(w, (char* )"VRML_1_0")
+				|| target == _ATOM_(w, (char* )"INVENTOR")
+				|| target == _ATOM_(w, (char* )"INVENTOR_2_0")) {
 
 			pathList = SoByteStream::unconvert(data, numBytes);
 		}
 
-		else if (target == _ATOM_(w, (char*)"INVENTOR_2_1_FILE")
-				|| target == _ATOM_(w, (char*)"VRML_1_0_FILE")
-				|| target == _ATOM_(w, (char*)"INVENTOR_FILE")
-				|| target == _ATOM_(w, (char*)"INVENTOR_2_0_FILE")) {
+		else if (target == _ATOM_(w, (char* )"INVENTOR_2_1_FILE")
+				|| target == _ATOM_(w, (char* )"VRML_1_0_FILE")
+				|| target == _ATOM_(w, (char* )"INVENTOR_FILE")
+				|| target == _ATOM_(w, (char* )"INVENTOR_2_0_FILE")) {
 
 			readFile(pathList, (const char *) data);
 		}
