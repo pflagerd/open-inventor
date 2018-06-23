@@ -660,7 +660,7 @@ SoBaseKit::setAnyPart( const SbName &partName, SoNode *from, SbBool anyPart )
 // Use: public
 
 SbBool
-SoBaseKit::set(char *nameValuePairListString) 
+SoBaseKit::set(const char *nameValuePairListString)
 		            // the string to use in setting the values
 //
 ////////////////////////////////////////////////////////////////////////
@@ -745,7 +745,7 @@ SoBaseKit::set(char *nameValuePairListString)
 // Use: public
 
 SbBool
-SoBaseKit::set(char *partNameString,     // name of the part
+SoBaseKit::set(const char *partNameString,     // name of the part
 	       char *parameterString )   // values for the part
 //
 ////////////////////////////////////////////////////////////////////////
