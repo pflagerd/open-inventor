@@ -86,17 +86,17 @@ class SoXtResource {
     //	  xr.getResource("updateFrequency", "UpdateFrequency", freq);
     
     // C-api: name=getCol
-    SbBool   	getResource(char *resName, char *resClass, SbColor &c);
+    SbBool   	getResource(const char *resName, const char *resClass, SbColor &c);
     // C-api: name=getInt
-    SbBool   	getResource(char *resName, char *resClass, short &i);
+    SbBool   	getResource(const char *resName, const char *resClass, short &i);
     // C-api: name=getUShort
-    SbBool   	getResource(char *resName, char *resClass, unsigned short &u);
+    SbBool   	getResource(const char *resName, const char *resClass, unsigned short &u);
     // C-api: name=getStr
-    SbBool   	getResource(char *resName, char *resClass, char *&s);
+    SbBool   	getResource(const char *resName, const char *resClass, char *&s);
     // C-api: name=getBool
-    SbBool   	getResource(char *resName, char *resClass, SbBool &b);
+    SbBool   	getResource(const char *resName, const char *resClass, SbBool &b);
     // C-api: name=getFloat
-    SbBool   	getResource(char *resName, char *resClass, float &f);
+    SbBool   	getResource(const char *resName, const char *resClass, float &f);
 
   private:
     XrmQuarkList    nameList;
@@ -108,12 +108,12 @@ class SoXtResource {
     // e.g. getResource("*backgroundColor", "*BackgroundColor", c);
     // They return TRUE if successfully located the resource.
     
-    static SbBool getResource(Display *, char *sName, char *sClass, SbColor &c);
-    static SbBool getResource(Display *, char *sName, char *sClass, short &i);
-    static SbBool getResource(Display *, char *sName, char *sClass, unsigned short &u);
-    static SbBool getResource(Display *, char *sName, char *sClass, char *&s);
-    static SbBool getResource(Display *, char *sName, char *sClass, SbBool &b);
-    static SbBool getResource(Display *, char *sName, char *sClass, float &f);
+    static SbBool getResource(Display *, const char* sName, const char* sClass, SbColor &c);
+    static SbBool getResource(Display *, const char* sName, const char* sClass, short &i);
+    static SbBool getResource(Display *, const char* sName, const char* sClass, unsigned short &u);
+    static SbBool getResource(Display *, const char* sName, const char* sClass, char *&s);
+    static SbBool getResource(Display *, const char* sName, const char* sClass, SbBool &b);
+    static SbBool getResource(Display *, const char* sName, const char *sClass, float &f);
 
 
     // These methods look up X resource values by calling XrmQGetResource.

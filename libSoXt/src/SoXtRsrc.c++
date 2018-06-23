@@ -172,7 +172,7 @@ SoXtResource::~SoXtResource()
 // This gets the 'SbColor' resource value, returning TRUE if successful.
 //
 SbBool
-SoXtResource::getResource(char *resName, char *resClass, SbColor &c)
+SoXtResource::getResource(const char *resName, const char *resClass, SbColor &c)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -186,7 +186,7 @@ SoXtResource::getResource(char *resName, char *resClass, SbColor &c)
 // This gets the 'short' resource value, returning TRUE if successful.
 //
 SbBool
-SoXtResource::getResource(char *resName, char *resClass, short &i)
+SoXtResource::getResource(const char *resName, const char *resClass, short &i)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -200,7 +200,7 @@ SoXtResource::getResource(char *resName, char *resClass, short &i)
 // This gets the 'u_short' resource value, returning TRUE if successful.
 //
 SbBool
-SoXtResource::getResource(char *resName, char *resClass, unsigned short &u)
+SoXtResource::getResource(const char *resName, const char *resClass, unsigned short &u)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -214,7 +214,7 @@ SoXtResource::getResource(char *resName, char *resClass, unsigned short &u)
 // This gets the value for the resource, returning TRUE if successful.
 //
 SbBool
-SoXtResource::getResource(char *resName, char *resClass, char *&s)
+SoXtResource::getResource(const char *resName, const char *resClass, char *&s)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -228,7 +228,7 @@ SoXtResource::getResource(char *resName, char *resClass, char *&s)
 // This gets the 'SbBool' resource value, returning TRUE if successful.
 //
 SbBool
-SoXtResource::getResource(char *resName, char *resClass, SbBool &b)
+SoXtResource::getResource(const char *resName, const char *resClass, SbBool &b)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -242,7 +242,7 @@ SoXtResource::getResource(char *resName, char *resClass, SbBool &b)
 // This gets the 'SbBool' resource value, returning TRUE if successful.
 //
 SbBool
-SoXtResource::getResource(char *resName, char *resClass, float &f)
+SoXtResource::getResource(const char *resName, const char *resClass, float &f)
 //
 ////////////////////////////////////////////////////////////////////////
 {
@@ -380,8 +380,8 @@ SbBool getFloat(char *val, float &f)
 SbBool
 SoXtResource::getResource(
     Display *d,
-    char *strName,
-    char *strClass,
+	const char *strName,
+	const char *strClass,
     SbColor &c)
 //
 ////////////////////////////////////////////////////////////////////////
@@ -453,8 +453,8 @@ SoXtResource::getResource(
 SbBool
 SoXtResource::getResource(
     Display *d,
-    char *strName,
-    char *strClass,
+	const char *strName,
+	const char *strClass,
     short &s)
 //
 ////////////////////////////////////////////////////////////////////////
@@ -526,8 +526,8 @@ SoXtResource::getResource(
 SbBool
 SoXtResource::getResource(
     Display *d,
-    char *strName,
-    char *strClass,
+	const char *strName,
+	const char *strClass,
     unsigned short &u)
 //
 ////////////////////////////////////////////////////////////////////////
@@ -599,8 +599,8 @@ SoXtResource::getResource(
 SbBool
 SoXtResource::getResource(
     Display *d,
-    char *strName,
-    char *strClass,
+	const char *strName,
+	const char *strClass,
     char *&s)
 //
 ////////////////////////////////////////////////////////////////////////
@@ -678,8 +678,8 @@ SoXtResource::getResource(
 SbBool
 SoXtResource::getResource(
     Display *d,
-    char *strName,
-    char *strClass,
+	const char *strName,
+	const char *strClass,
     SbBool &b)
 //
 ////////////////////////////////////////////////////////////////////////
@@ -751,8 +751,8 @@ SoXtResource::getResource(
 SbBool
 SoXtResource::getResource(
     Display *d,
-    char *strName,
-    char *strClass,
+	const char *strName,
+	const char *strClass,
     float &f)
 //
 ////////////////////////////////////////////////////////////////////////
