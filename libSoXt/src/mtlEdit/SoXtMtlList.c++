@@ -89,165 +89,144 @@ static char *bogusFile = "<none>";
 //	returns true if the passed file is a subdirectory in the current directory.
 //	(call chdir() before calling this).
 //
-static SbBool
-isDirectory(char *file)
-{
-    struct stat buf;
-    SbBool is_dir = FALSE;
+static SbBool isDirectory(char *file) {
+	struct stat buf;
+	SbBool is_dir = FALSE;
 
-    if (stat(file, &buf) == 0)
-	if ((buf.st_mode & S_IFMT) == S_IFDIR)
-	    is_dir = 1;
+	if (stat(file, &buf) == 0)
+		if ((buf.st_mode & S_IFMT) == S_IFDIR)
+			is_dir = 1;
 
-    return (is_dir);
+	return (is_dir);
 }
 
 //
 //  this returns TRUE if the file contains a material
 //
-static SbBool
-isMtlFile(char *filename)
-{
-    // Make sure it's not . or ..
-    if (filename[0] == '.') return FALSE;
-    
-    // read the file, search for SoMaterial
-    SbBool fileHasMtl = FALSE;
-    SoInput in;
-    SoNode  *root;
-    if (in.openFile(filename)) {
-	if (SoDB::read(&in, root)) {
-	    root->ref();
-	    
-	    // find the material node
-	    SoSearchAction sa;
-	    sa.setType(SoMaterial::getClassTypeId());
-	    sa.apply(root);
-	    fileHasMtl = (sa.getPath() != NULL);
-	    
-	    root->unref();
-	}
-    }
-    
-    return (fileHasMtl);
-}
+static SbBool isMtlFile(char *filename) {
+	// Make sure it's not . or ..
+	if (filename[0] == '.')
+		return FALSE;
 
+	// read the file, search for SoMaterial
+	SbBool fileHasMtl = FALSE;
+	SoInput in;
+	SoNode *root;
+	if (in.openFile(filename)) {
+		if (SoDB::read(&in, root)) {
+			root->ref();
+
+			// find the material node
+			SoSearchAction sa;
+			sa.setType(SoMaterial::getClassTypeId());
+			sa.apply(root);
+			fileHasMtl = (sa.getPath() != NULL);
+
+			root->unref();
+		}
+	}
+
+	return (fileHasMtl);
+}
 
 //
 //  Fill in palette with material files
 //
-static void
-createStringTable(char *dir, XmString **table, int *size)
-{
-    XmString *tbl;
-    int numFiles = 0;
+static void createStringTable(char *dir, XmString **table, int *size) {
+	XmString *tbl;
+	int numFiles = 0;
 
-    // build the list of files
-    struct dirent *direntry;
-    DIR  *dirp;
-    char *f;
-    if (dirp = opendir(dir)) {
-    	char currentDir[MAXPATHLEN];
-	getcwd(currentDir, MAXPATHLEN-1);
-        chdir(dir);
-	
-	// count the number of files so we can allocate space in the str table
-        while (direntry = readdir(dirp)) {
-	    f = direntry->d_name;
-	    if (isMtlFile(f))
-		numFiles++;
-        }
-        (void) closedir(dirp);
-	
-	// now build the string table
-	if (numFiles != 0) {
-	    // get space for the table
-	    tbl = (XmString *) malloc(numFiles * sizeof(XmString));
-	    *table = tbl;
-	    *size = numFiles;
-	
-	    // fill the table in
-	    dirp = opendir(dir);
-	    chdir(dir);
-	    while (direntry = readdir(dirp)) {
-		f = direntry->d_name;
-		if (isMtlFile(f)) {
-		    *tbl = SoXt::encodeString(f);
-		    tbl++;
+	// build the list of files
+	char *f;
+	DIR *dirp = opendir(dir);
+	if (dirp) {
+		char currentDir[MAXPATHLEN];
+		getcwd(currentDir, MAXPATHLEN - 1);
+		chdir(dir);
+
+		// count the number of files so we can allocate space in the str table
+		struct dirent *direntry = readdir(dirp);
+		while (direntry) {
+			f = direntry->d_name;
+			if (isMtlFile(f))
+				numFiles++;
 		}
-	    }
-	    (void) closedir(dirp);
+		(void) closedir(dirp);
+
+		// now build the string table
+		if (numFiles != 0) {
+			// get space for the table
+			tbl = (XmString *) malloc(numFiles * sizeof(XmString));
+			*table = tbl;
+			*size = numFiles;
+
+			// fill the table in
+			dirp = opendir(dir);
+			chdir(dir);
+			direntry = readdir(dirp);
+			while (direntry) {
+				f = direntry->d_name;
+				if (isMtlFile(f)) {
+					*tbl = SoXt::encodeString(f);
+					tbl++;
+				}
+			}
+			(void) closedir(dirp);
+		} else {
+			// get space for one entry - bogusFile
+			tbl = (XmString *) malloc(sizeof(XmString));
+			*table = tbl;
+			*size = 1;
+			*tbl = SoXt::encodeString(bogusFile);
+		}
+		chdir(currentDir); // back to our working directory
 	}
-	else {
-	    // get space for one entry - bogusFile
-	    tbl = (XmString *) malloc(sizeof(XmString));
-	    *table = tbl;
-	    *size = 1;
-	    *tbl = SoXt::encodeString(bogusFile);
-	}
-	chdir(currentDir); // back to our working directory
-    }
 #ifdef DEBUG
-    else {
-	SoDebugError::post("SoXtMaterialList::createStringTable",
-		"Cannot open directory %s.", dir);
-    }
+	else {
+		SoDebugError::post("SoXtMaterialList::createStringTable",
+				"Cannot open directory %s.", dir);
+	}
 #endif
 }
 
-static void
-destroyStringTable(XmString *table, int size)
-{
-    int i;
+static void destroyStringTable(XmString *table, int size) {
+	int i;
 
-    // nuke the table entries
-    for (i = 0; i < size; i++)
-	XmStringFree(table[i]);
+	// nuke the table entries
+	for (i = 0; i < size; i++)
+		XmStringFree(table[i]);
 
-    free(table);
+	free(table);
 }
 
 ////////////////////////////////////////////////////////////////////////
 //
 // Public constructor - build the widget right now
 //
-SoXtMaterialList::SoXtMaterialList(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent, 
-    const char *dir)
-	: SoXtComponent(
-	    parent,
-	    name, 
-	    buildInsideParent)
+SoXtMaterialList::SoXtMaterialList(Widget parent, const char *name,
+		SbBool buildInsideParent, const char *dir) :
+		SoXtComponent(parent, name, buildInsideParent)
 //
 ////////////////////////////////////////////////////////////////////////
 {
-    // In this case, this component is what the app wants, so buildNow = TRUE
-    constructorCommon(dir, TRUE);
+	// In this case, this component is what the app wants, so buildNow = TRUE
+	constructorCommon(dir, TRUE);
 }
 
 ////////////////////////////////////////////////////////////////////////
 //
 // SoEXTENDER constructor - the subclass tells us whether to build or not
 //
-SoXtMaterialList::SoXtMaterialList(
-    Widget parent,
-    const char *name, 
-    SbBool buildInsideParent, 
-    const char *dir, 
-    SbBool buildNow)
-	: SoXtComponent(
-	    parent,
-	    name, 
-	    buildInsideParent)
+SoXtMaterialList::SoXtMaterialList(Widget parent, const char *name,
+		SbBool buildInsideParent, const char *dir, SbBool buildNow) :
+		SoXtComponent(parent, name, buildInsideParent)
 //
 ////////////////////////////////////////////////////////////////////////
 {
-    // In this case, this component may be what the app wants, 
-    // or it may want a subclass of this component. Pass along buildNow
-    // as it was passed to us.
-    constructorCommon(dir, buildNow);
+	// In this case, this component may be what the app wants,
+	// or it may want a subclass of this component. Pass along buildNow
+	// as it was passed to us.
+	constructorCommon(dir, buildNow);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -256,27 +235,26 @@ SoXtMaterialList::SoXtMaterialList(
 //
 // private
 //
-void
-SoXtMaterialList::constructorCommon(const char *dir, SbBool buildNow)
+void SoXtMaterialList::constructorCommon(const char *dir, SbBool buildNow)
 //
 //////////////////////////////////////////////////////////////////////
-{
-    setClassName("SoXtMaterialList");
-    if (dir != NULL)
-	materialDir = strdup(dir);
-    else materialDir = strdup(IVMATERIALSDIR);
+		{
+	setClassName("SoXtMaterialList");
+	if (dir != NULL)
+		materialDir = strdup(dir);
+	else
+		materialDir = strdup(IVMATERIALSDIR);
 
-    callbackList = new SoCallbackList;
-    curPalette = -1;
-    
-    // Build the widget tree, and let SoXtComponent know about our base widget.
-    if (buildNow) {
-	Widget w = buildWidget(getParentWidget());
-	if (w != NULL)
-	    setBaseWidget(w);
-    }
+	callbackList = new SoCallbackList;
+	curPalette = -1;
+
+	// Build the widget tree, and let SoXtComponent know about our base widget.
+	if (buildNow) {
+		Widget w = buildWidget(getParentWidget());
+		if (w != NULL)
+			setBaseWidget(w);
+	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -286,10 +264,11 @@ SoXtMaterialList::~SoXtMaterialList()
 //
 ////////////////////////////////////////////////////////////////////////
 {
-    delete callbackList;
-    if (materialDir != NULL) free(materialDir);
-    for (int i = 0; i < mtlPalettes.getLength(); i++)
-    	free((char *) mtlPalettes[i]);
+	delete callbackList;
+	if (materialDir != NULL)
+		free(materialDir);
+	for (int i = 0; i < mtlPalettes.getLength(); i++)
+		free((char *) mtlPalettes[i]);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -301,55 +280,52 @@ SoXtMaterialList::~SoXtMaterialList()
 //
 // private
 //
-SbBool
-SoXtMaterialList::setupPalettes()
+SbBool SoXtMaterialList::setupPalettes()
 //
 ////////////////////////////////////////////////////////////////////////
 {
-    // see if SO_MATERIAL_DIR has changed.
-    char *envDir = getenv("SO_MATERIAL_DIR");
-    if (envDir != NULL) {
-	if ((strcmp(envDir, materialDir) == 0) && (curPalette != -1))
-	    return TRUE; // env dir is same as current dir, palette is already OK
-	    
-	if (materialDir != NULL) free(materialDir);
-        materialDir = strdup(envDir);
-    }
-    else if (curPalette != -1)
-	return TRUE; // env dir not set, but palette is already OK
-    
-    // read the palette!
-    curPalette = 0;
+	// see if SO_MATERIAL_DIR has changed.
+	char *envDir = getenv("SO_MATERIAL_DIR");
+	if (envDir != NULL) {
+		if ((strcmp(envDir, materialDir) == 0) && (curPalette != -1))
+			return TRUE; // env dir is same as current dir, palette is already OK
 
-    // build the list of directories
-    struct dirent *direntry;
-    DIR  *dirp;
-    char *f;
-    if (dirp = opendir(materialDir)) {
-    	char currentDir[MAXPATHLEN];
-	getcwd(currentDir, MAXPATHLEN-1);
-        chdir(materialDir);
-        while (direntry = readdir(dirp)) {
-	    f = direntry->d_name;
-	    /* hide '.' files */
-	    if (f[0] != '.') {
-		if (isDirectory(f)) {
-		    mtlPalettes.append(strdup(f));
+		if (materialDir != NULL)
+			free(materialDir);
+		materialDir = strdup(envDir);
+	} else if (curPalette != -1)
+		return TRUE; // env dir not set, but palette is already OK
+
+	// read the palette!
+	curPalette = 0;
+
+	// build the list of directories
+	DIR *dirp = opendir(materialDir);
+	if (dirp) {
+		char currentDir[MAXPATHLEN];
+		getcwd(currentDir, MAXPATHLEN - 1);
+		chdir(materialDir);
+		struct dirent *direntry = readdir(dirp);
+		while (direntry) {
+			char* f = direntry->d_name;
+			/* hide '.' files */
+			if (f[0] != '.') {
+				if (isDirectory(f)) {
+					mtlPalettes.append(strdup(f));
+				}
+			}
 		}
-	    }
-        }
-        (void) closedir(dirp);
-	chdir(currentDir); // back to our working directory
-    }
-    else {
+		(void) closedir(dirp);
+		chdir(currentDir); // back to our working directory
+	} else {
 #ifdef DEBUG
-	SoDebugError::post("SoXtMaterialList::setupPalettes",
-		"Cannot open directory %s.  Try setting the environment variable SO_MATERIAL_DIR to a directory which has material files in it.", materialDir);
+		SoDebugError::post("SoXtMaterialList::setupPalettes",
+				"Cannot open directory %s.  Try setting the environment variable SO_MATERIAL_DIR to a directory which has material files in it.", materialDir);
 #endif
-	curPalette = -1;
-    }
-    
-    return (curPalette != -1); // if not -1, return TRUE
+		curPalette = -1;
+	}
+
+	return (curPalette != -1); // if not -1, return TRUE
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -359,28 +335,28 @@ SoXtMaterialList::setupPalettes()
 //
 // usage: private
 //
-Widget
-SoXtMaterialList::buildPulldownMenu(Widget parent)
+Widget SoXtMaterialList::buildPulldownMenu(Widget parent)
 //
 ////////////////////////////////////////////////////////////////////////
-{
-    Widget menubar, pulldown;
-    Widget submenu;
-    Arg    args[5];
-    int    n;
-    
-    n = 0;
-    XtSetArg(args[n], XmNuserData, this); n++;
+		{
+	Widget menubar, pulldown;
+	Widget submenu;
+	Arg args[5];
+	int n;
 
-    menubar = XmCreateMenuBar(parent, "menuBar", NULL, 0);
+	n = 0;
+	XtSetArg(args[n], XmNuserData, this);
+	n++;
 
-    pulldown = XmCreatePulldownMenu(menubar, "controlPulldown", args, n);
+	menubar = XmCreateMenuBar(parent, "menuBar", NULL, 0);
 
-    n = 0;
-    XtSetArg(args[n], XmNsubMenuId, pulldown); n++;
-    submenu = XtCreateManagedWidget("Palettes",
-				xmCascadeButtonGadgetClass,
-				menubar, args, n);
+	pulldown = XmCreatePulldownMenu(menubar, "controlPulldown", args, n);
+
+	n = 0;
+	XtSetArg(args[n], XmNsubMenuId, pulldown);
+	n++;
+	submenu = XtCreateManagedWidget("Palettes", xmCascadeButtonGadgetClass,
+			menubar, args, n);
 
 #define MENU_ITEM(BUTTON,NAME,KONST) \
     n = 0; \
@@ -393,34 +369,32 @@ SoXtMaterialList::buildPulldownMenu(Widget parent)
 	(XtCallbackProc) SoXtMaterialList::menuPick, \
 	(XtPointer) KONST);
 
-
-    // create the menu items ???pass in the dir names!
-    Widget button;
-    menuItems.truncate(0);
-    for (int i = 0; i < mtlPalettes.getLength(); i++) {
-    	char *dir = (char *) mtlPalettes[i];
-	MENU_ITEM(button, dir, (unsigned long) i)
-	menuItems.append(button); // store these buttons for future reference
-    }
+	// create the menu items ???pass in the dir names!
+	Widget button;
+	menuItems.truncate(0);
+	for (int i = 0; i < mtlPalettes.getLength(); i++) {
+		char *dir = (char *) mtlPalettes[i];
+		MENU_ITEM(button, dir, (unsigned long ) i)
+		menuItems.append(button); // store these buttons for future reference
+	}
 #undef MENU_ITEM
-    
-    if (menuItems.getLength() == 0) {
+
+	if (menuItems.getLength() == 0) {
 #ifdef DEBUG
-	SoDebugError::post("SoXtMaterialList::buildPulldownMenu",
-		"Directory %s has no material palettes.", materialDir);
+		SoDebugError::post("SoXtMaterialList::buildPulldownMenu",
+				"Directory %s has no material palettes.", materialDir);
 #endif
-    	curPalette = -1;
-    }
-    
-    XtManageChild(submenu);
-    
-    // set the current palette toggle to on
-    if (curPalette != -1)
-	TOGGLE_ON(menuItems[curPalette]);
+		curPalette = -1;
+	}
 
-    return menubar;
+	XtManageChild(submenu);
+
+	// set the current palette toggle to on
+	if (curPalette != -1)
+		TOGGLE_ON(menuItems[curPalette]);
+
+	return menubar;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -428,31 +402,32 @@ SoXtMaterialList::buildPulldownMenu(Widget parent)
 //
 // usage: virtual private
 //
-void
-SoXtMaterialList::fillInMaterialList()
+void SoXtMaterialList::fillInMaterialList()
 //
 ////////////////////////////////////////////////////////////////////////
 {
-    if (curPalette == -1)
-    	return;
-	
-    XmString *table;
-    int	   count;
-    Arg    args[2];
-    int    n;
-    char curdir[256];
-    
-    // create a string table for the current palette directory
-    sprintf(curdir, "%s/%s", materialDir, (char *)mtlPalettes[curPalette]);
-    createStringTable(curdir, &table, &count);
-    
-    n = 0;
-    XtSetArg(args[n], XmNitems, table); n++;
-    XtSetArg(args[n], XmNitemCount, count); n++;
-    XtSetValues(mtlList, args, n);
+	if (curPalette == -1)
+		return;
 
-    /* free our local table - XmCreateScrolledList made a copy */
-    destroyStringTable(table, count);
+	XmString *table;
+	int count;
+	Arg args[2];
+	int n;
+	char curdir[256];
+
+	// create a string table for the current palette directory
+	sprintf(curdir, "%s/%s", materialDir, (char *) mtlPalettes[curPalette]);
+	createStringTable(curdir, &table, &count);
+
+	n = 0;
+	XtSetArg(args[n], XmNitems, table);
+	n++;
+	XtSetArg(args[n], XmNitemCount, count);
+	n++;
+	XtSetValues(mtlList, args, n);
+
+	/* free our local table - XmCreateScrolledList made a copy */
+	destroyStringTable(table, count);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -462,77 +437,86 @@ SoXtMaterialList::fillInMaterialList()
 //
 // usage: protected
 //
-Widget
-SoXtMaterialList::buildWidget(Widget parent)
+Widget SoXtMaterialList::buildWidget(Widget parent)
 //
 ////////////////////////////////////////////////////////////////////////
-{
-    // setup palette if needed. return NULL on error.
-    if (! setupPalettes())
-	return NULL;
+		{
+	// setup palette if needed. return NULL on error.
+	if (!setupPalettes())
+		return NULL;
 
-    Widget  	menubar;
-    int		n;
-    Arg		wargs[10];
+	Widget menubar;
+	int n;
+	Arg wargs[10];
 
-    // create the top level widget
-    Widget widget = XtCreateWidget(getWidgetName(),xmFormWidgetClass,parent,NULL,0);
+	// create the top level widget
+	Widget widget = XtCreateWidget(getWidgetName(), xmFormWidgetClass, parent,
+	NULL, 0);
 
-    // build the subcomponents
-    menubar = buildPulldownMenu(widget);
-    if (curPalette == -1) {
-    	XtDestroyWidget(menubar);
-    	XtDestroyWidget(widget);
-	widget = NULL;
-    	return NULL;
-    }
+	// build the subcomponents
+	menubar = buildPulldownMenu(widget);
+	if (curPalette == -1) {
+		XtDestroyWidget(menubar);
+		XtDestroyWidget(widget);
+		widget = NULL;
+		return NULL;
+	}
 
-    XmString *table;
-    int	   count;
-    char curdir[256];
-    
-    // create a string table for the current palette directory
-    sprintf(curdir, "%s/%s", materialDir, (char *)mtlPalettes[curPalette]);
-    createStringTable(curdir, &table, &count);
+	XmString *table;
+	int count;
+	char curdir[256];
 
-    // Layout
-    n = 0;
-    XtSetArg(wargs[n], XmNtopAttachment,    XmATTACH_FORM); n++;
-    XtSetArg(wargs[n], XmNleftAttachment,   XmATTACH_FORM); n++;
-    XtSetArg(wargs[n], XmNrightAttachment,  XmATTACH_FORM); n++;
-    XtSetValues(menubar, wargs, n);
+	// create a string table for the current palette directory
+	sprintf(curdir, "%s/%s", materialDir, (char *) mtlPalettes[curPalette]);
+	createStringTable(curdir, &table, &count);
 
-    //??? BUG IN LIST WIDGET - I cannot build the widget,  and then
-    // call XtSetValues to set up the layout. I must do it all at once!
-    // This seems to me like a bug in motif!
-    n = 0;
-XtSetArg(wargs[n], XmNitems, table); n++;
-XtSetArg(wargs[n], XmNitemCount, count); n++;
-XtSetArg(wargs[n], XmNvisibleItemCount, 8); n++;
-XtSetArg(wargs[n], XmNselectionPolicy, XmSINGLE_SELECT); n++;
-    XtSetArg(wargs[n], XmNbottomAttachment, XmATTACH_FORM); n++;
-    XtSetArg(wargs[n], XmNleftAttachment,   XmATTACH_FORM); n++;
-    XtSetArg(wargs[n], XmNrightAttachment,  XmATTACH_FORM); n++;
-    XtSetArg(wargs[n], XmNtopAttachment,    XmATTACH_WIDGET); n++;
-    XtSetArg(wargs[n], XmNtopWidget,        menubar); n++;
-    //???XtSetValues(mtlList, wargs, n);
-    
-mtlList = XmCreateScrolledList(widget, "materialList", wargs, n);
-XtAddCallback(mtlList,
-    XmNsingleSelectionCallback,
-    (XtCallbackProc) SoXtMaterialList::listPick,
-    (XtPointer) this);
-    
-/* free our local table - XmCreateScrolledList made a copy */
-destroyStringTable(table, count);
+	// Layout
+	n = 0;
+	XtSetArg(wargs[n], XmNtopAttachment, XmATTACH_FORM);
+	n++;
+	XtSetArg(wargs[n], XmNleftAttachment, XmATTACH_FORM);
+	n++;
+	XtSetArg(wargs[n], XmNrightAttachment, XmATTACH_FORM);
+	n++;
+	XtSetValues(menubar, wargs, n);
 
+	//??? BUG IN LIST WIDGET - I cannot build the widget,  and then
+	// call XtSetValues to set up the layout. I must do it all at once!
+	// This seems to me like a bug in motif!
+	n = 0;
+	XtSetArg(wargs[n], XmNitems, table);
+	n++;
+	XtSetArg(wargs[n], XmNitemCount, count);
+	n++;
+	XtSetArg(wargs[n], XmNvisibleItemCount, 8);
+	n++;
+	XtSetArg(wargs[n], XmNselectionPolicy, XmSINGLE_SELECT);
+	n++;
+	XtSetArg(wargs[n], XmNbottomAttachment, XmATTACH_FORM);
+	n++;
+	XtSetArg(wargs[n], XmNleftAttachment, XmATTACH_FORM);
+	n++;
+	XtSetArg(wargs[n], XmNrightAttachment, XmATTACH_FORM);
+	n++;
+	XtSetArg(wargs[n], XmNtopAttachment, XmATTACH_WIDGET);
+	n++;
+	XtSetArg(wargs[n], XmNtopWidget, menubar);
+	n++;
+	//???XtSetValues(mtlList, wargs, n);
 
+	mtlList = XmCreateScrolledList(widget, "materialList", wargs, n);
+	XtAddCallback(mtlList,
+	XmNsingleSelectionCallback, (XtCallbackProc) SoXtMaterialList::listPick,
+			(XtPointer) this);
 
-    /* manage those children! */
-    XtManageChild(mtlList);
-    XtManageChild(menubar);
+	/* free our local table - XmCreateScrolledList made a copy */
+	destroyStringTable(table, count);
 
-    return widget;
+	/* manage those children! */
+	XtManageChild(mtlList);
+	XtManageChild(menubar);
+
+	return widget;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -541,36 +525,35 @@ destroyStringTable(table, count);
 //
 //  Use: static private
 //
-void
-SoXtMaterialList::menuPick(Widget w, int id, XtPointer)
+void SoXtMaterialList::menuPick(Widget w, int id, XtPointer)
 //
 ////////////////////////////////////////////////////////////////////////
-{
-    SoXtMaterialList *ml;
-    Arg	args[1];
-    
-    XtSetArg(args[0], XmNuserData, &ml);
-    XtGetValues(w, args, 1);
+		{
+	SoXtMaterialList *ml;
+	Arg args[1];
+
+	XtSetArg(args[0], XmNuserData, &ml);
+	XtGetValues(w, args, 1);
 
 #ifdef DEBUG
-    if (ml == NULL) {
-	SoDebugError::post("SoXtMaterialList::menuPick",
-		"ml is NULL");
-	return;
-    }
+	if (ml == NULL) {
+		SoDebugError::post("SoXtMaterialList::menuPick",
+				"ml is NULL");
+		return;
+	}
 #endif
 
-    if (id != ml->curPalette) {
-	// toggle the previous current palette item to OFF
-    	TOGGLE_OFF(ml->menuItems[ml->curPalette]);
-	ml->curPalette = id;
-	
-	// and fill in the mtlList with the new current palette
-	ml->fillInMaterialList();
-    }
-    
-    // make sure the current palette item is set to ON
-    TOGGLE_ON(ml->menuItems[ml->curPalette]);
+	if (id != ml->curPalette) {
+		// toggle the previous current palette item to OFF
+		TOGGLE_OFF(ml->menuItems[ml->curPalette]);
+		ml->curPalette = id;
+
+		// and fill in the mtlList with the new current palette
+		ml->fillInMaterialList();
+	}
+
+	// make sure the current palette item is set to ON
+	TOGGLE_ON(ml->menuItems[ml->curPalette]);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -579,86 +562,86 @@ SoXtMaterialList::menuPick(Widget w, int id, XtPointer)
 //
 //  Use: static private
 //
-void
-SoXtMaterialList::listPick(Widget, SoXtMaterialList *ml, XtPointer p)
+void SoXtMaterialList::listPick(Widget, SoXtMaterialList *ml, XtPointer p)
 //
 ////////////////////////////////////////////////////////////////////////
-{
-    XmListCallbackStruct *listdata = (XmListCallbackStruct *) p;
-    char *name;
-    char filename[256];
-    
-    name = SoXt::decodeString(listdata->item);
-    if (strcmp(name, bogusFile) == 0)
-    	return;
-    
-    // construct the file name from all our information
-    sprintf(filename, "%s/%s/%s",
-    	ml->materialDir,
-	(char *) ml->mtlPalettes[ml->curPalette],
-	name);
+		{
+	XmListCallbackStruct *listdata = (XmListCallbackStruct *) p;
+	char *name;
+	char filename[256];
 
-    // read the file, search for SoMaterial, and pass data to callbacks
-    SoInput in;
-    SoNode  *root;
-    if (in.openFile(filename)) {
-	if (SoDB::read(&in, root)) {
-	    root->ref();
-	    
-	    // find the material node
-	    SoSearchAction sa;
-	    SoFullPath *fullPath;
-	
-	    // Look for existing camera
-	    sa.setType(SoMaterial::getClassTypeId());
-	    sa.apply(root);
-	
-	    fullPath = (SoFullPath *) sa.getPath();
-	    if (fullPath != NULL) {
-	    	// invoke the callbacks with this material!
-		fullPath->ref();
-	    	SoMaterial *mtl = (SoMaterial *) fullPath->getTail();
-		ml->callbackList->invokeCallbacks(mtl);
-		fullPath->unref();
-	    }
+	name = SoXt::decodeString(listdata->item);
+	if (strcmp(name, bogusFile) == 0)
+		return;
+
+	// construct the file name from all our information
+	sprintf(filename, "%s/%s/%s", ml->materialDir,
+			(char *) ml->mtlPalettes[ml->curPalette], name);
+
+	// read the file, search for SoMaterial, and pass data to callbacks
+	SoInput in;
+	SoNode *root;
+	if (in.openFile(filename)) {
+		if (SoDB::read(&in, root)) {
+			root->ref();
+
+			// find the material node
+			SoSearchAction sa;
+			SoFullPath *fullPath;
+
+			// Look for existing camera
+			sa.setType(SoMaterial::getClassTypeId());
+			sa.apply(root);
+
+			fullPath = (SoFullPath *) sa.getPath();
+			if (fullPath != NULL) {
+				// invoke the callbacks with this material!
+				fullPath->ref();
+				SoMaterial *mtl = (SoMaterial *) fullPath->getTail();
+				ml->callbackList->invokeCallbacks(mtl);
+				fullPath->unref();
+			}
 #ifdef DEBUG
-	    else {
-		SoDebugError::post("SoXtMaterialList::listPick",
-		    "%s has no Material node.", filename);
-	    }
+			else {
+				SoDebugError::post("SoXtMaterialList::listPick",
+						"%s has no Material node.", filename);
+			}
 #endif
-	    
-	    root->unref();
+
+			root->unref();
+		}
+#ifdef DEBUG
+		else {
+			SoDebugError::post("SoXtMaterialList::listPick",
+					"Cannot read file %s.", filename);
+		}
+#endif
 	}
 #ifdef DEBUG
 	else {
-	    SoDebugError::post("SoXtMaterialList::listPick",
-		    "Cannot read file %s.", filename);
+		SoDebugError::post("SoXtMaterialList::listPick",
+				"Cannot open file %s.", filename);
 	}
 #endif
-    }
-#ifdef DEBUG
-    else {
-	SoDebugError::post("SoXtMaterialList::listPick",
-		"Cannot open file %s.", filename);
-    }
-#endif
-    
-    free(name);
+
+	free(name);
 }
 
 //
 // redefine those generic virtual functions
 //
 const char *
-SoXtMaterialList::getDefaultWidgetName() const
-{ return "SoXtMaterialList"; }
+SoXtMaterialList::getDefaultWidgetName() const {
+	return "SoXtMaterialList";
+}
 
 const char *
-SoXtMaterialList::getDefaultTitle() const
-{ return "Material List"; }
+SoXtMaterialList::getDefaultTitle() const {
+	return "Material List";
+}
 
 const char *
-SoXtMaterialList::getDefaultIconTitle() const
-{ return "Mat List"; }
+SoXtMaterialList::getDefaultIconTitle() const {
+	return "Mat List";
+}
 
